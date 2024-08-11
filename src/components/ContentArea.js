@@ -23,18 +23,26 @@ const ContentArea = () => {
 
   const createNote = () => {
     const newNote = {
-      id: `note-${notes.length + 1}`,
+      id: `note-${Date.now()}`,
       title: `Note ${notes.length + 1}`,
       content: '',
-      color: '#ADD8E6' // Example color for new notes
+      color: '#ADD8E6',
     };
-    setNotes([...notes, newNote]);
-    setSelectedNote(newNote); // Open the modal to edit the new note
+    setSelectedNote(newNote);  // Open modal without adding to state yet
   };
 
-  const saveNoteContent = (id, newContent) => {
-    setNotes(notes.map(note => note.id === id ? { ...note, content: newContent } : note));
-    setSelectedNote(null); // Close the modal after saving
+  const saveNoteContent = (newTitle, newContent) => {
+    const newNote = { ...selectedNote, title: newTitle, content: newContent };
+    setNotes([...notes, newNote]);
+    setSelectedNote(null);  // Close the modal after saving
+  };
+
+  const cancelNoteCreation = () => {
+    setSelectedNote(null);  // Close modal without adding the note
+  };
+
+  const deleteNote = (id) => {
+    setNotes(notes.filter(note => note.id !== id));  // Remove the note with the given id
   };
 
   return (
@@ -43,7 +51,16 @@ const ContentArea = () => {
         <CreateNote onCreate={createNote} />
         <Droppable droppableId="notes">
           {(provided) => (
-            <div {...provided.droppableProps} ref={provided.innerRef} style={{ display: 'flex', flexWrap: 'wrap' }}>
+            <div
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+              style={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                overflowY: 'auto',
+                maxHeight: '100%',
+              }}
+            >
               {notes.map((note, index) => (
                 <Draggable key={note.id} draggableId={note.id} index={index}>
                   {(provided) => (
@@ -51,13 +68,19 @@ const ContentArea = () => {
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
+                      style={{
+                        ...provided.draggableProps.style,
+                        margin: '10px',
+                        cursor: 'grab',
+                        height: '150px',
+                      }}
                       onClick={() => setSelectedNote(note)}
-                      style={{ margin: '10px' }}
                     >
                       <Note
                         title={note.title}
                         color={note.color}
                         content={note.content}
+                        onDelete={() => deleteNote(note.id)}  // Pass the delete function
                       />
                     </div>
                   )}
@@ -71,9 +94,10 @@ const ContentArea = () => {
       {selectedNote && (
         <NoteModal
           isOpen={!!selectedNote}
-          onRequestClose={() => setSelectedNote(null)}
+          onRequestClose={cancelNoteCreation}
+          title={selectedNote.title}
           content={selectedNote.content}
-          onSave={(newContent) => saveNoteContent(selectedNote.id, newContent)}
+          onSave={saveNoteContent}
         />
       )}
     </DragDropContext>
