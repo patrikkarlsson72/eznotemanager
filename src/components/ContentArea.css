@@ -1,0 +1,8 @@
+/* src/components/ContentArea.css */
+.content-area {
+    display: flex;
+    padding: 20px;
+    gap: 10px;
+    flex: 1;
+  }
+  

@@ -1,0 +1,21 @@
+/* src/components/Sidebar.css */
+.sidebar {
+    width: 200px;
+    background-color: #004d40;
+    color: white;
+    padding: 10px;
+  }
+  
+  .sidebar h2 {
+    margin-top: 0;
+  }
+  
+  .sidebar ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .sidebar ul li {
+    margin: 10px 0;
+  }
+  
