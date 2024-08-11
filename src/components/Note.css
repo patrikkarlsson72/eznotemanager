@@ -1,12 +1,13 @@
 /* src/components/Note.css */
+
 .note {
-    width: 150px;
-    height: 150px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
-    font-size: 18px;
-    color: black;
-  }
-  
+  width: 150px;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+  font-size: 18px;
+  color: black;
+  margin-right: 10px;
+}
