@@ -1,5 +1,3 @@
-// src/components/NoteModal.js
-
 import React, { useState } from 'react';
 import Modal from 'react-modal';
 
@@ -19,36 +17,32 @@ const NoteModal = ({ isOpen, onRequestClose, title, content, onSave }) => {
       isOpen={isOpen}
       onRequestClose={onRequestClose}
       contentLabel="Edit Note"
-      style={{
-        content: {
-          top: '50%',
-          left: '50%',
-          right: 'auto',
-          bottom: 'auto',
-          marginRight: '-50%',
-          transform: 'translate(-50%, -50%)',
-          width: '400px',
-          height: '350px',
-        },
-      }}
+      className="bg-white p-6 rounded-lg shadow-lg w-1/2 h-auto"
+      overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center"
     >
-      <h2>Edit Note</h2>
-      <input
-        type="text"
-        value={editedTitle}
-        onChange={(e) => setEditedTitle(e.target.value)}
-        style={{ width: '100%', padding: '8px', marginBottom: '10px', fontSize: '18px' }}
-        placeholder="Note Title"
-      />
-      <textarea
-        value={editedContent}
-        onChange={(e) => setEditedContent(e.target.value)}
-        style={{ width: '100%', height: '150px', padding: '8px' }}
-        placeholder="Note Content"
-      />
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px' }}>
-        <button onClick={handleSave}>Save</button>
-        <button onClick={onRequestClose}>Cancel</button>
+      <div className="w-full">
+        <h2 className="text-2xl font-semibold mb-4">Edit Note</h2>
+        <input
+          type="text"
+          value={editedTitle}
+          onChange={(e) => setEditedTitle(e.target.value)}
+          className="w-full p-2 mb-4 border border-gray-300 rounded"
+          placeholder="Note Title"
+        />
+        <textarea
+          value={editedContent}
+          onChange={(e) => setEditedContent(e.target.value)}
+          className="w-full h-48 p-2 border border-gray-300 rounded"
+          placeholder="Note Content"
+        />
+        <div className="flex justify-end mt-4">
+          <button onClick={handleSave} className="btn btn-primary mr-2">
+            Save
+          </button>
+          <button onClick={onRequestClose} className="btn btn-secondary">
+            Cancel
+          </button>
+        </div>
       </div>
     </Modal>
   );

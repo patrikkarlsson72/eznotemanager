@@ -1,5 +1,3 @@
-// src/components/Note.js
-
 import React from 'react';
 
 const Note = ({ title, color, content, onDelete }) => {
@@ -12,7 +10,7 @@ const Note = ({ title, color, content, onDelete }) => {
 
   return (
     <div
-      className="bg-white shadow-md rounded-md relative w-96 h-80 p-4"
+      className="bg-white shadow-md rounded-md w-full h-64 p-4 relative"
       style={{
         backgroundColor: color,
       }}
@@ -21,7 +19,7 @@ const Note = ({ title, color, content, onDelete }) => {
       <p className="text-sm text-gray-600">{previewContent}</p>
       <button
         onClick={handleDeleteClick}  // Ensure the delete function is triggered correctly
-        className="absolute top-0 right-0 p-1 text-2xl"  // Increase the icon size here
+        className="absolute top-0 right-0 p-1 text-xl"
         style={{
           backgroundColor: 'transparent',
           border: 'none',
