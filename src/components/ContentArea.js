@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Note from './Note';
 import CreateNote from './CreateNote';
 import NoteModal from './NoteModal';
@@ -7,6 +7,20 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 const ContentArea = () => {
   const [notes, setNotes] = useState([]);
+
+  // Load notes from localStorage when the component mounts
+  useEffect(() => {
+    const savedNotes = JSON.parse(localStorage.getItem('notes'));
+    if (savedNotes) {
+      setNotes(savedNotes);
+    }
+  }, []);
+
+  // Save notes to localStorage whenever the notes state changes
+  useEffect(() => {
+    localStorage.setItem('notes', JSON.stringify(notes));
+  }, [notes]);
+
   const [selectedNote, setSelectedNote] = useState(null);
 
   const onDragEnd = (result) => {
@@ -32,22 +46,9 @@ const ContentArea = () => {
   };
 
   const saveNoteContent = (newTitle, newContent) => {
-    setNotes(prevNotes => 
-      prevNotes.map(note => 
-        note.id === selectedNote.id 
-        ? { ...note, title: newTitle, content: newContent } 
-        : note
-      )
-    );
-    
-    // If note is new, add it
-    if (!notes.some(note => note.id === selectedNote.id)) {
-      setNotes(prevNotes => [
-        ...prevNotes,
-        { ...selectedNote, title: newTitle, content: newContent }
-      ]);
-    }
-
+    const newNote = { ...selectedNote, title: newTitle, content: newContent };
+    const updatedNotes = [...notes, newNote];
+    setNotes(updatedNotes);
     setSelectedNote(null);  // Close the modal after saving
   };
 
@@ -56,7 +57,8 @@ const ContentArea = () => {
   };
 
   const deleteNote = (id) => {
-    setNotes(notes.filter(note => note.id !== id));  // Remove the note with the given id
+    const updatedNotes = notes.filter(note => note.id !== id);
+    setNotes(updatedNotes);  // Remove the note with the given id
   };
 
   return (
