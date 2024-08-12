@@ -1,11 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
+import NoteEditor from './NoteEditor';
 
 Modal.setAppElement('#root');
 
 const NoteModal = ({ isOpen, onRequestClose, title, content, onSave }) => {
   const [editedTitle, setEditedTitle] = useState(title);
   const [editedContent, setEditedContent] = useState(content);
+
+  useEffect(() => {
+    setEditedTitle(title);
+    setEditedContent(content);
+  }, [title, content]);
 
   const handleSave = () => {
     onSave(editedTitle, editedContent);
@@ -29,11 +35,9 @@ const NoteModal = ({ isOpen, onRequestClose, title, content, onSave }) => {
           className="w-full p-2 mb-4 border border-gray-300 rounded"
           placeholder="Note Title"
         />
-        <textarea
-          value={editedContent}
-          onChange={(e) => setEditedContent(e.target.value)}
-          className="w-full h-48 p-2 border border-gray-300 rounded"
-          placeholder="Note Content"
+        <NoteEditor
+          initialContent={editedContent}
+          onChange={(content) => setEditedContent(content)}
         />
         <div className="flex justify-end mt-4">
           <button onClick={handleSave} className="btn btn-primary mr-2">
