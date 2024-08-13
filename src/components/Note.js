@@ -20,13 +20,11 @@ const Note = ({ title, color, content, onDelete }) => {
 
   return (
     <div
-      className="bg-white shadow-md rounded-md w-full h-64 p-4 relative"
-      style={{
-        backgroundColor: color,
-      }}
+      className="bg-gray-200 p-4 rounded shadow-sm border border-gray-300 w-full h-64 p-4 relative"
+      
     >
       <h3 className="text-lg font-semibold">{title}</h3>
-      <p className="text-sm text-gray-600">{previewContent}...</p>
+      <p className="text-sm text-gray-700">{previewContent}...</p>
       {imageUrls.length > 0 && (
         <div className="mt-2">
           {imageUrls.map((url, index) => (

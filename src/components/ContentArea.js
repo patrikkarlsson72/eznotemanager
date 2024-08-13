@@ -70,7 +70,8 @@ const ContentArea = () => {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div className="content-area">
+      <div className="content-area bg-gray-100 p-6 rounded-lg shadow-lg">
+        
         <CreateNote onCreate={createNote} />
         {notes.map((note, index) => (
           <Droppable droppableId={`droppable-${index}`} key={note.id}>

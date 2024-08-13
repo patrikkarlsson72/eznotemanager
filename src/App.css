@@ -1,12 +1,10 @@
 /* src/App.css */
+
 .app {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  background-color: #e0f7fa;
+  /* Remove any background styles */
 }
 
 .main {
   display: flex;
-  flex: 1;
+  /* Remove any background styles */
 }

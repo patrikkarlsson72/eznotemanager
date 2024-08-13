@@ -1,5 +1,3 @@
-// src/App.js
-
 import React from 'react';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
@@ -8,9 +6,9 @@ import './App.css';
 
 function App() {
   return (
-    <div className="app">
+    <div className="bg-gray-100 flex-1">
       <Header />
-      <div className="main">
+      <div className="flex">
         <Sidebar />
         <ContentArea />
       </div>
