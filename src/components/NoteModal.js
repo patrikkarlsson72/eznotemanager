@@ -5,20 +5,31 @@ import NoteEditor from './NoteEditor';
 Modal.setAppElement('#root');
 
 const NoteModal = ({ isOpen, onRequestClose, title, content, onSave, categories, selectedCategory }) => {
-  const [editedTitle, setEditedTitle] = useState(title);
+  const [editedTitle, setEditedTitle] = useState(title || '');
   const [editedContent, setEditedContent] = useState(content);
   const [selectedCat, setSelectedCat] = useState(selectedCategory || 'Uncategorized');
 
   useEffect(() => {
-    setEditedTitle(title);
+    setEditedTitle(title || '');
     setEditedContent(content);
     setSelectedCat(selectedCategory || 'Uncategorized');
   }, [title, content, selectedCategory]);
 
+  // Generate today's date in the desired format
+  const today = new Date().toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+
   const handleSave = () => {
-    onSave(editedTitle, editedContent, selectedCat);
+    const titleToSave = editedTitle.trim() === '' ? today : editedTitle;
+    onSave(titleToSave, editedContent, selectedCat);
     onRequestClose();
   };
+
+  // Filter out the "All Notes" category
+  const availableCategories = categories.filter(category => category.name !== 'All Notes');
 
   return (
     <Modal
@@ -35,7 +46,7 @@ const NoteModal = ({ isOpen, onRequestClose, title, content, onSave, categories,
           value={editedTitle}
           onChange={(e) => setEditedTitle(e.target.value)}
           className="w-full p-2 mb-4 border border-gray-300 rounded"
-          placeholder="Note Title"
+          placeholder={today}  // Use today's date as the placeholder
         />
         <NoteEditor
           initialContent={editedContent}
@@ -52,7 +63,7 @@ const NoteModal = ({ isOpen, onRequestClose, title, content, onSave, categories,
             onChange={(e) => setSelectedCat(e.target.value)}
             className="w-full p-2 mb-4 border border-gray-300 rounded"
           >
-            {categories.map((category, index) => (
+            {availableCategories.map((category, index) => (
               <option key={index} value={category.name}>
                 {category.name}
               </option>

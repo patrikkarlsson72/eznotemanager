@@ -55,13 +55,14 @@ const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory
   const createNote = () => {
     const newNote = {
       id: `note-${Date.now()}`,
-      title: `New Note`,
+      title: '', // Set title to an empty string
       content: '',
       color: '#ADD8E6', // Default color, can be changed as needed
       category: 'Uncategorized' // Default category
     };
     setSelectedNote(newNote);  // Open modal without adding to state yet
   };
+  
 
   const saveNoteContent = (newTitle, newContent, newCategory) => {
     const updatedNote = { ...selectedNote, title: newTitle, content: newContent, category: newCategory };
