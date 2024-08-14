@@ -10,8 +10,8 @@ const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory
 
   // Categories state
   const [categories, setCategories] = useState([
-    { name: 'My Notes', color: 'bg-gray-800' },
-    { name: 'Work/Projects', color: 'bg-gray-800' },
+    { name: 'All Notes', color: 'bg-lime-200' },
+    { name: 'Work/Projects', color: 'bg-teal-200' },
     { name: 'Personal', color: 'bg-blue-200' },
     { name: 'Urgent', color: 'bg-red-500' },
     { name: 'Ideas', color: 'bg-yellow-200' },
@@ -87,6 +87,11 @@ const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory
     setNotes(notes.filter(note => note.id !== id));  // Remove the note with the given id
   };
 
+  const getCategoryColor = (categoryName) => {
+    const category = categories.find(cat => cat.name === categoryName);
+    return category ? category.color : 'bg-gray-300'; // Default to gray if no category found
+  };
+
   const filteredNotes = selectedCategory === 'All Notes'
     ? notes
     : notes.filter(note => note.category === selectedCategory);
@@ -113,7 +118,7 @@ const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory
                     >
                       <Note
                         title={note.title}
-                        color={note.color}
+                        color={getCategoryColor(note.category)}  // Pass the category's color as the background color
                         content={note.content}
                         onDelete={() => deleteNote(note.id)}
                       />

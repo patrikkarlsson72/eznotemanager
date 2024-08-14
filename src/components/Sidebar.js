@@ -11,8 +11,8 @@ const availableColors = [
 
 const Sidebar = ({ onCategorySelect }) => {
   const [categories, setCategories] = useState([
-    { name: 'All Notes', color: 'bg-gray-800' }, // Renamed "My Notes" to "All Notes"
-    { name: 'Work/Projects', color: 'bg-gray-800' },
+    { name: 'All Notes', color: 'bg-lime-200' }, // Renamed "My Notes" to "All Notes"
+    { name: 'Work/Projects', color: 'bg-teal-200' },
     { name: 'Personal', color: 'bg-blue-200' },
     { name: 'Urgent', color: 'bg-red-500' },
     { name: 'Ideas', color: 'bg-yellow-200' },

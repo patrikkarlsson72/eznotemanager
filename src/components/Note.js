@@ -1,10 +1,7 @@
 import React from 'react';
 
 const Note = ({ title, color, content, onDelete }) => {
-  // Strip HTML tags from the content to create a clean text preview
   const previewContent = content.replace(/<[^>]+>/g, '').substring(0, 100);
-
-  // Extract image URLs from the content for preview
   const imgRegex = /<img.*?src="(.*?)"/g;
   let imgMatch;
   const imageUrls = [];
@@ -14,13 +11,13 @@ const Note = ({ title, color, content, onDelete }) => {
   }
 
   const handleDeleteClick = (e) => {
-    e.stopPropagation(); // Prevent the click from propagating to the parent
-    onDelete(); // Call the delete function
+    e.stopPropagation();
+    onDelete();
   };
 
   return (
     <div
-      className="bg-gray-200 p-4 rounded shadow-sm border border-gray-300 w-full h-64 p-4 relative"
+      className={`p-4 rounded shadow-sm border border-gray-300 w-full h-64 relative ${color}`}
     >
       <h3 className="text-lg font-semibold">{title}</h3>
       <p className="text-sm text-gray-700">{previewContent}...</p>
@@ -37,7 +34,7 @@ const Note = ({ title, color, content, onDelete }) => {
         </div>
       )}
       <button
-        onClick={handleDeleteClick}  // Ensure the delete function is triggered correctly
+        onClick={handleDeleteClick}
         className="absolute top-0 right-0 p-1 text-xl"
         style={{
           backgroundColor: 'transparent',
