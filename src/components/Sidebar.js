@@ -70,7 +70,7 @@ const Sidebar = ({ onCategorySelect }) => {
   };
 
   return (
-    <aside className="bg-gray-700 text-gray-300 w-64 p-4">
+    <aside className="bg-blue-950 text-gray-300 w-64 p-4 border-r border-blue-200">
       <nav className="space-y-2">
         {categories.map((category, index) => (
           <div

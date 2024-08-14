@@ -5,21 +5,22 @@ import NoteEditor from './NoteEditor';
 Modal.setAppElement('#root');
 
 const NoteModal = ({ isOpen, onRequestClose, title, content, onSave, categories, selectedCategory, tags }) => {
-  const [editedTitle, setEditedTitle] = useState(title);
+  const [editedTitle, setEditedTitle] = useState(title || new Date().toLocaleDateString());
   const [editedContent, setEditedContent] = useState(content);
   const [selectedCat, setSelectedCat] = useState(selectedCategory || 'Uncategorized');
-  const [tagList, setTagList] = useState(tags || []); // Initialize tags here
-  const [newTag, setNewTag] = useState(''); // State for the new tag input
+  const [tagList, setTagList] = useState(tags || []); 
+  const [newTag, setNewTag] = useState('');
 
   useEffect(() => {
-    setEditedTitle(title);
+    setEditedTitle(title || new Date().toLocaleDateString());  // Set the title to today's date if it's empty
     setEditedContent(content);
     setSelectedCat(selectedCategory || 'Uncategorized');
-    setTagList(tags || []);  // Initialize tags state here
+    setTagList(tags || []);
   }, [title, content, selectedCategory, tags]);
 
   const handleSave = () => {
-    onSave(editedTitle, editedContent, selectedCat, tagList); // Pass tags along with title and content
+    const finalTitle = editedTitle.trim() === '' ? new Date().toLocaleDateString() : editedTitle;
+    onSave(finalTitle, editedContent, selectedCat, tagList);  // Ensure the date is used as the title if no title is provided
     onRequestClose();
   };
 
@@ -49,14 +50,13 @@ const NoteModal = ({ isOpen, onRequestClose, title, content, onSave, categories,
           value={editedTitle}
           onChange={(e) => setEditedTitle(e.target.value)}
           className="w-full p-2 mb-4 border border-gray-300 rounded"
-          placeholder="Note Title"
+          placeholder={new Date().toLocaleDateString()}  // Placeholder set to today's date
         />
         <NoteEditor
           initialContent={editedContent}
           onChange={(content) => setEditedContent(content)}
         />
 
-        {/* Category Selection */}
         <div className="mt-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
             Category
@@ -75,7 +75,6 @@ const NoteModal = ({ isOpen, onRequestClose, title, content, onSave, categories,
           </select>
         </div>
 
-        {/* Tag Input */}
         <div className="mt-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
             Tags
@@ -84,7 +83,7 @@ const NoteModal = ({ isOpen, onRequestClose, title, content, onSave, categories,
             type="text"
             value={newTag}
             onChange={(e) => setNewTag(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && addTag()}  // Add tag on Enter key
+            onKeyDown={(e) => e.key === 'Enter' && addTag()}
             className="w-full p-2 mb-2 border border-gray-300 rounded"
             placeholder="Add a tag and press Enter"
           />

@@ -2,7 +2,7 @@ import React from 'react';
 
 const Header = ({ onSearchChange, searchQuery, triggerNewNote }) => {
   return (
-    <header className="bg-gray-700 text-white p-4">
+    <header className="bg-blue-950 text-white p-4">
       <div className="flex items-center justify-between">
         <h1 className="text-xl font-bold">EzNotemanager</h1>
         <div className="ml-auto flex items-center space-x-4">
