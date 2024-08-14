@@ -4,17 +4,19 @@ import NoteEditor from './NoteEditor';
 
 Modal.setAppElement('#root');
 
-const NoteModal = ({ isOpen, onRequestClose, title, content, onSave }) => {
+const NoteModal = ({ isOpen, onRequestClose, title, content, onSave, categories, selectedCategory }) => {
   const [editedTitle, setEditedTitle] = useState(title);
   const [editedContent, setEditedContent] = useState(content);
+  const [selectedCat, setSelectedCat] = useState(selectedCategory || 'Uncategorized');
 
   useEffect(() => {
     setEditedTitle(title);
     setEditedContent(content);
-  }, [title, content]);
+    setSelectedCat(selectedCategory || 'Uncategorized');
+  }, [title, content, selectedCategory]);
 
   const handleSave = () => {
-    onSave(editedTitle, editedContent);
+    onSave(editedTitle, editedContent, selectedCat);
     onRequestClose();
   };
 
@@ -39,6 +41,26 @@ const NoteModal = ({ isOpen, onRequestClose, title, content, onSave }) => {
           initialContent={editedContent}
           onChange={(content) => setEditedContent(content)}
         />
+
+        {/* Category Selection */}
+        <div className="mt-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">
+            Category
+          </label>
+          <select
+            value={selectedCat}
+            onChange={(e) => setSelectedCat(e.target.value)}
+            className="w-full p-2 mb-4 border border-gray-300 rounded"
+          >
+            {categories.map((category, index) => (
+              <option key={index} value={category.name}>
+                {category.name}
+              </option>
+            ))}
+            <option value="Uncategorized">Uncategorized</option>
+          </select>
+        </div>
+
         <div className="flex justify-end mt-4">
           <button onClick={handleSave} className="btn btn-primary mr-2">
             Save

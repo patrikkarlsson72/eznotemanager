@@ -4,9 +4,20 @@ import NoteModal from './NoteModal';
 import './ContentArea.css';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
-const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger }) => {
+const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory }) => {
   const [notes, setNotes] = useState([]);
   const [selectedNote, setSelectedNote] = useState(null);
+
+  // Categories state
+  const [categories, setCategories] = useState([
+    { name: 'My Notes', color: 'bg-gray-800' },
+    { name: 'Work/Projects', color: 'bg-gray-800' },
+    { name: 'Personal', color: 'bg-blue-200' },
+    { name: 'Urgent', color: 'bg-red-500' },
+    { name: 'Ideas', color: 'bg-yellow-200' },
+    { name: 'Meetings', color: 'bg-blue-500' },
+    { name: 'Uncategorized', color: 'bg-gray-300' }
+  ]);
 
   // Load notes from localStorage when the component mounts
   useEffect(() => {
@@ -47,12 +58,13 @@ const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger }) => {
       title: `New Note`,
       content: '',
       color: '#ADD8E6', // Default color, can be changed as needed
+      category: 'Uncategorized' // Default category
     };
     setSelectedNote(newNote);  // Open modal without adding to state yet
   };
 
-  const saveNoteContent = (newTitle, newContent) => {
-    const updatedNote = { ...selectedNote, title: newTitle, content: newContent };
+  const saveNoteContent = (newTitle, newContent, newCategory) => {
+    const updatedNote = { ...selectedNote, title: newTitle, content: newContent, category: newCategory };
 
     if (notes.some(note => note.id === selectedNote.id)) {
       // Update existing note
@@ -75,10 +87,14 @@ const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger }) => {
     setNotes(notes.filter(note => note.id !== id));  // Remove the note with the given id
   };
 
+  const filteredNotes = selectedCategory === 'All Notes'
+    ? notes
+    : notes.filter(note => note.category === selectedCategory);
+
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <div className="content-area bg-gray-100 p-6 rounded-lg shadow-lg">
-        {notes.map((note, index) => (
+        {filteredNotes.map((note, index) => (
           <Droppable droppableId={`droppable-${index}`} key={note.id}>
             {(provided) => (
               <div
@@ -117,6 +133,8 @@ const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger }) => {
           title={selectedNote.title}
           content={selectedNote.content}
           onSave={saveNoteContent}
+          categories={categories}
+          selectedCategory={selectedNote.category}
         />
       )}
     </DragDropContext>

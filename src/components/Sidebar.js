@@ -9,9 +9,9 @@ const availableColors = [
   'bg-lime-200'
 ];
 
-const Sidebar = () => {
+const Sidebar = ({ onCategorySelect }) => {
   const [categories, setCategories] = useState([
-    { name: 'My Notes', color: 'bg-gray-800' },
+    { name: 'All Notes', color: 'bg-gray-800' }, // Renamed "My Notes" to "All Notes"
     { name: 'Work/Projects', color: 'bg-gray-800' },
     { name: 'Personal', color: 'bg-blue-200' },
     { name: 'Urgent', color: 'bg-red-500' },
@@ -64,7 +64,8 @@ const Sidebar = () => {
         {categories.map((category, index) => (
           <div
             key={index}
-            className="flex items-center justify-between p-2 rounded hover:bg-gray-600 text-gray-300 group relative"
+            className="flex items-center justify-between p-2 rounded hover:bg-gray-600 text-gray-300 group relative cursor-pointer"
+            onClick={() => onCategorySelect(category.name)}  // Select category on click
           >
             <div className="flex items-center">
               <div className={`w-3 h-3 rounded-full ${category.color} mr-3`}></div>
@@ -74,12 +75,12 @@ const Sidebar = () => {
               <FontAwesomeIcon
                 icon={faEdit}
                 className="text-gray-400 hover:text-white cursor-pointer"
-                onClick={() => startEditing(category, index)}
+                onClick={(e) => {e.stopPropagation(); startEditing(category, index);}}
               />
               <FontAwesomeIcon
                 icon={faTrash}
                 className="text-gray-400 hover:text-red-500 cursor-pointer"
-                onClick={() => handleDeleteCategory(index)}
+                onClick={(e) => {e.stopPropagation(); handleDeleteCategory(index);}}
               />
             </div>
           </div>
