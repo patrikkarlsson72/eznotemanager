@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Note from './Note';
-import CreateNote from './CreateNote';
 import NoteModal from './NoteModal';
 import './ContentArea.css';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
-const ContentArea = () => {
+const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger }) => {
   const [notes, setNotes] = useState([]);
   const [selectedNote, setSelectedNote] = useState(null);
 
@@ -22,6 +21,14 @@ const ContentArea = () => {
     localStorage.setItem('notes', JSON.stringify(notes));
   }, [notes]);
 
+  // Create a new note when triggered by the header button
+  useEffect(() => {
+    if (createNoteTrigger) {
+      createNote();
+      setCreateNoteTrigger(false); // Reset the trigger
+    }
+  }, [createNoteTrigger, setCreateNoteTrigger]);
+
   const onDragEnd = (result) => {
     const { destination, source } = result;
 
@@ -37,9 +44,9 @@ const ContentArea = () => {
   const createNote = () => {
     const newNote = {
       id: `note-${Date.now()}`,
-      title: `Note ${notes.length + 1}`,
+      title: `New Note`,
       content: '',
-      color: '#ADD8E6',
+      color: '#ADD8E6', // Default color, can be changed as needed
     };
     setSelectedNote(newNote);  // Open modal without adding to state yet
   };
@@ -71,7 +78,6 @@ const ContentArea = () => {
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <div className="content-area bg-gray-100 p-6 rounded-lg shadow-lg">
-        <CreateNote onCreate={createNote} />
         {notes.map((note, index) => (
           <Droppable droppableId={`droppable-${index}`} key={note.id}>
             {(provided) => (
