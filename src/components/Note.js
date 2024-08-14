@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Note = ({ title, color, content, onDelete }) => {
+const Note = ({ title, color, content, tags = [], onDelete }) => {
   const previewContent = content.replace(/<[^>]+>/g, '').substring(0, 100);
   const imgRegex = /<img.*?src="(.*?)"/g;
   let imgMatch;
@@ -33,6 +33,17 @@ const Note = ({ title, color, content, onDelete }) => {
           ))}
         </div>
       )}
+
+      {/* Display Tags */}
+      <div className="mt-2 flex flex-wrap gap-2">
+        {tags.map((tag, index) => (
+          <span key={index} className="bg-gray-200 text-gray-700 px-2 py-1 rounded-full text-xs">
+            {tag}
+          </span>
+        ))}
+      </div>
+
+
       <button
         onClick={handleDeleteClick}
         className="absolute top-0 right-0 p-1 text-xl"

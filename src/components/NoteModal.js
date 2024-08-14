@@ -4,32 +4,35 @@ import NoteEditor from './NoteEditor';
 
 Modal.setAppElement('#root');
 
-const NoteModal = ({ isOpen, onRequestClose, title, content, onSave, categories, selectedCategory }) => {
-  const [editedTitle, setEditedTitle] = useState(title || '');
+const NoteModal = ({ isOpen, onRequestClose, title, content, onSave, categories, selectedCategory, tags }) => {
+  const [editedTitle, setEditedTitle] = useState(title);
   const [editedContent, setEditedContent] = useState(content);
   const [selectedCat, setSelectedCat] = useState(selectedCategory || 'Uncategorized');
+  const [tagList, setTagList] = useState(tags || []); // Initialize tags here
+  const [newTag, setNewTag] = useState(''); // State for the new tag input
 
   useEffect(() => {
-    setEditedTitle(title || '');
+    setEditedTitle(title);
     setEditedContent(content);
     setSelectedCat(selectedCategory || 'Uncategorized');
-  }, [title, content, selectedCategory]);
-
-  // Generate today's date in the desired format
-  const today = new Date().toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
+    setTagList(tags || []);  // Initialize tags state here
+  }, [title, content, selectedCategory, tags]);
 
   const handleSave = () => {
-    const titleToSave = editedTitle.trim() === '' ? today : editedTitle;
-    onSave(titleToSave, editedContent, selectedCat);
+    onSave(editedTitle, editedContent, selectedCat, tagList); // Pass tags along with title and content
     onRequestClose();
   };
 
-  // Filter out the "All Notes" category
-  const availableCategories = categories.filter(category => category.name !== 'All Notes');
+  const addTag = () => {
+    if (newTag && !tagList.includes(newTag)) {
+      setTagList([...tagList, newTag]);
+      setNewTag('');
+    }
+  };
+
+  const removeTag = (tagToRemove) => {
+    setTagList(tagList.filter(tag => tag !== tagToRemove));
+  };
 
   return (
     <Modal
@@ -46,7 +49,7 @@ const NoteModal = ({ isOpen, onRequestClose, title, content, onSave, categories,
           value={editedTitle}
           onChange={(e) => setEditedTitle(e.target.value)}
           className="w-full p-2 mb-4 border border-gray-300 rounded"
-          placeholder={today}  // Use today's date as the placeholder
+          placeholder="Note Title"
         />
         <NoteEditor
           initialContent={editedContent}
@@ -63,13 +66,36 @@ const NoteModal = ({ isOpen, onRequestClose, title, content, onSave, categories,
             onChange={(e) => setSelectedCat(e.target.value)}
             className="w-full p-2 mb-4 border border-gray-300 rounded"
           >
-            {availableCategories.map((category, index) => (
+            {categories.map((category, index) => (
               <option key={index} value={category.name}>
                 {category.name}
               </option>
             ))}
             <option value="Uncategorized">Uncategorized</option>
           </select>
+        </div>
+
+        {/* Tag Input */}
+        <div className="mt-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">
+            Tags
+          </label>
+          <input
+            type="text"
+            value={newTag}
+            onChange={(e) => setNewTag(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && addTag()}  // Add tag on Enter key
+            className="w-full p-2 mb-2 border border-gray-300 rounded"
+            placeholder="Add a tag and press Enter"
+          />
+          <div className="flex flex-wrap gap-2">
+            {tagList.map((tag, index) => (
+              <span key={index} className="bg-gray-200 text-gray-700 px-2 py-1 rounded-full">
+                {tag}
+                <button onClick={() => removeTag(tag)} className="ml-2 text-red-500">x</button>
+              </span>
+            ))}
+          </div>
         </div>
 
         <div className="flex justify-end mt-4">

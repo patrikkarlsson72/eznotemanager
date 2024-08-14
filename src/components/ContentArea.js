@@ -4,7 +4,7 @@ import NoteModal from './NoteModal';
 import './ContentArea.css';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
-const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory }) => {
+const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory, searchQuery }) => {
   const [notes, setNotes] = useState([]);
   const [selectedNote, setSelectedNote] = useState(null);
 
@@ -62,11 +62,16 @@ const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory
     };
     setSelectedNote(newNote);  // Open modal without adding to state yet
   };
+
+  const saveNoteContent = (newTitle, newContent, newCategory, newTags) => {
+    const updatedNote = { 
+      ...selectedNote, 
+      title: newTitle || new Date().toLocaleDateString(), // Use the date if no title is provided
+      content: newContent, 
+      category: newCategory,
+      tags: newTags // Save the tags as part of the note
+    };
   
-
-  const saveNoteContent = (newTitle, newContent, newCategory) => {
-    const updatedNote = { ...selectedNote, title: newTitle, content: newContent, category: newCategory };
-
     if (notes.some(note => note.id === selectedNote.id)) {
       // Update existing note
       const updatedNotes = notes.map(note =>
@@ -79,6 +84,9 @@ const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory
     }
     setSelectedNote(null);  // Close the modal after saving
   };
+  
+
+
 
   const cancelNoteCreation = () => {
     setSelectedNote(null);  // Close modal without adding the note
@@ -93,9 +101,13 @@ const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory
     return category ? category.color : 'bg-gray-300'; // Default to gray if no category found
   };
 
-  const filteredNotes = selectedCategory === 'All Notes'
-    ? notes
-    : notes.filter(note => note.category === selectedCategory);
+  // Filter notes based on search query and selected category
+  const filteredNotes = notes.filter(note => {
+    const matchesCategory = selectedCategory === 'All Notes' || note.category === selectedCategory;
+    const matchesSearch = note.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                          note.content.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
@@ -119,10 +131,12 @@ const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory
                     >
                       <Note
                         title={note.title}
-                        color={getCategoryColor(note.category)}  // Pass the category's color as the background color
+                        color={getCategoryColor(note.category)}
                         content={note.content}
+                        tags={note.tags}  // Ensure tags are passed here
                         onDelete={() => deleteNote(note.id)}
                       />
+
                     </div>
                   )}
                 </Draggable>
@@ -134,14 +148,16 @@ const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory
       </div>
       {selectedNote && (
         <NoteModal
-          isOpen={!!selectedNote}
-          onRequestClose={cancelNoteCreation}
-          title={selectedNote.title}
-          content={selectedNote.content}
-          onSave={saveNoteContent}
-          categories={categories}
-          selectedCategory={selectedNote.category}
-        />
+        isOpen={!!selectedNote}
+        onRequestClose={cancelNoteCreation}
+        title={selectedNote.title}
+        content={selectedNote.content}
+        onSave={saveNoteContent}
+        categories={categories}
+        selectedCategory={selectedNote.category}
+        tags={selectedNote.tags || []}  // Ensure tags are passed and default to an empty array if undefined
+      />
+      
       )}
     </DragDropContext>
   );
