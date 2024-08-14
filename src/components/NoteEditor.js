@@ -13,16 +13,15 @@ const NoteEditor = ({ initialContent, onChange }) => {
 
   return (
     <CKEditor
-  editor={ClassicEditor}
-  config={{
-    ckfinder: {
-      uploadUrl: 'http://localhost:5000/upload',  // Make sure this URL is correct
-    },
-  }}
-  data={content}
-  onChange={handleEditorChange}
-/>
-
+      editor={ClassicEditor}
+      config={{
+        ckfinder: {
+          uploadUrl: 'http://localhost:5000/upload',  // Make sure this URL is correct
+        },
+      }}
+      data={content}
+      onChange={handleEditorChange}
+    />
   );
 };
 
