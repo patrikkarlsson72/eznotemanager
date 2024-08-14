@@ -47,8 +47,19 @@ const Sidebar = ({ onCategorySelect }) => {
   };
 
   const handleDeleteCategory = (index) => {
-    const updatedCategories = categories.filter((_, i) => i !== index);
-    setCategories(updatedCategories);
+    const categoryName = categories[index].name;
+
+    // Prevent deletion of "Uncategorized" and "All Notes" categories
+    if (categoryName === 'Uncategorized' || categoryName === 'All Notes') {
+      alert(`The category "${categoryName}" cannot be deleted.`);
+      return;
+    }
+
+    const confirmDelete = window.confirm(`Are you sure you want to delete the category "${categoryName}"?`);
+    if (confirmDelete) {
+      const updatedCategories = categories.filter((_, i) => i !== index);
+      setCategories(updatedCategories);
+    }
   };
 
   const startEditing = (category, index) => {
@@ -71,18 +82,21 @@ const Sidebar = ({ onCategorySelect }) => {
               <div className={`w-3 h-3 rounded-full ${category.color} mr-3`}></div>
               <span>{category.name}</span>
             </div>
-            <div className="absolute right-2 opacity-0 group-hover:opacity-100 flex space-x-2">
-              <FontAwesomeIcon
-                icon={faEdit}
-                className="text-gray-400 hover:text-white cursor-pointer"
-                onClick={(e) => {e.stopPropagation(); startEditing(category, index);}}
-              />
-              <FontAwesomeIcon
-                icon={faTrash}
-                className="text-gray-400 hover:text-red-500 cursor-pointer"
-                onClick={(e) => {e.stopPropagation(); handleDeleteCategory(index);}}
-              />
-            </div>
+            {/* Only show edit and delete icons for categories other than "Uncategorized" and "All Notes" */}
+            {category.name !== 'Uncategorized' && category.name !== 'All Notes' && (
+              <div className="absolute right-2 opacity-0 group-hover:opacity-100 flex space-x-2">
+                <FontAwesomeIcon
+                  icon={faEdit}
+                  className="text-gray-400 hover:text-white cursor-pointer"
+                  onClick={(e) => {e.stopPropagation(); startEditing(category, index);}}
+                />
+                <FontAwesomeIcon
+                  icon={faTrash}
+                  className="text-gray-400 hover:text-red-500 cursor-pointer"
+                  onClick={(e) => {e.stopPropagation(); handleDeleteCategory(index);}}
+                />
+              </div>
+            )}
           </div>
         ))}
 
