@@ -70,8 +70,8 @@ const Sidebar = ({ onCategorySelect }) => {
   };
 
   return (
-    <aside className="bg-blue-950 text-gray-300 w-64 p-4 border-r border-blue-200">
-      <nav className="space-y-2">
+    <aside className="bg-transperant text-gray-300 w-64 p-4 border-r border-blue-950">
+      <nav className="space-y-2 bg-blue-900 rounded-xl">
         {categories.map((category, index) => (
           <div
             key={index}
@@ -107,7 +107,7 @@ const Sidebar = ({ onCategorySelect }) => {
             value={newCategoryName}
             onChange={(e) => setNewCategoryName(e.target.value)}
             placeholder={isEditing ? "Edit Category" : "New Category"}
-            className="bg-gray-700 text-white p-2 mb-2 rounded border border-gray-500 w-full"
+            className="bg-gray-700 text-white p-2 mb-2 rounded border border-gray-300 w-full"
           />
           
           {/* Color Picker */}
@@ -123,7 +123,7 @@ const Sidebar = ({ onCategorySelect }) => {
 
           <button
             onClick={isEditing ? () => handleEditCategory(categoryToEdit) : handleAddCategory}
-            className="mt-2 block w-full p-2 rounded bg-blue-500 text-white hover:bg-blue-600"
+            className="mt-2 block w-full p-2 rounded bg-blue-700 text-white hover:bg-blue-600"
           >
             <FontAwesomeIcon icon={faPlus} /> {isEditing ? "Save Changes" : "Create Category"}
           </button>

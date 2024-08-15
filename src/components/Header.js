@@ -2,9 +2,9 @@ import React from 'react';
 
 const Header = ({ onSearchChange, searchQuery, triggerNewNote }) => {
   return (
-    <header className="bg-blue-950 text-white p-4">
+    <header className="bg-transperant text-white p-4">
       <div className="flex items-center justify-between">
-        <h1 className="text-xl font-bold">EzNotemanager</h1>
+      <h1 class="font-sans text-2xl font-bold">EzNote<span class="text-yellow-500">Manager</span></h1>
         <div className="ml-auto flex items-center space-x-4">
           <button className="text-yellow-400" onClick={triggerNewNote}>
             New Note

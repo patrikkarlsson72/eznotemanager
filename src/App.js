@@ -14,7 +14,7 @@ function App() {
   };
 
   return (
-    <div className="bg-gray-100 flex-1">
+    <div className="min-h-screen bg-gradient-to-br from-blue-950 via-blue-800 to-gray-900 flex-1">
       <Header
         onSearchChange={setSearchQuery}  // Pass the search query handler
         searchQuery={searchQuery}  // Pass the current search query

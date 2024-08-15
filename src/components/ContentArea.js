@@ -111,7 +111,7 @@ const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div className="content-area bg-gray-100 p-6 rounded-lg shadow-lg">
+      <div className="content-area bg-transperant p-6 rounded-lg shadow-lg">
         {filteredNotes.map((note, index) => (
           <Droppable droppableId={`droppable-${index}`} key={note.id}>
             {(provided) => (
