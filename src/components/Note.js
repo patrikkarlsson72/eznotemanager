@@ -1,18 +1,23 @@
 import React from 'react';
 
 const Note = ({ title, color, content, tags = [], onDelete }) => {
-  const previewContent = content.replace(/<[^>]+>/g, '').substring(0, 100);
-  const imgRegex = /<img.*?src="(.*?)"/g;
-  let imgMatch;
-  const imageUrls = [];
-
-  while ((imgMatch = imgRegex.exec(content)) !== null) {
-    imageUrls.push(imgMatch[1]);
-  }
-
   const handleDeleteClick = (e) => {
     e.stopPropagation();
     onDelete();
+  };
+
+  // Function to render the content and adjust images
+  const renderContent = (content) => {
+    const div = document.createElement('div');
+    div.innerHTML = content;
+
+    // Select all images in the content
+    const images = div.querySelectorAll('img');
+    images.forEach((img) => {
+      img.classList.add('max-w-full', 'h-auto', 'max-h-24'); // Tailwind classes to constrain image size
+    });
+
+    return { __html: div.innerHTML };
   };
 
   return (
@@ -20,19 +25,10 @@ const Note = ({ title, color, content, tags = [], onDelete }) => {
       className={`p-4 rounded shadow-sm border border-gray-300 w-full h-64 relative ${color}`}
     >
       <h3 className="text-lg font-semibold">{title}</h3>
-      <p className="text-sm text-gray-700">{previewContent}...</p>
-      {imageUrls.length > 0 && (
-        <div className="mt-2">
-          {imageUrls.map((url, index) => (
-            <img
-              key={index}
-              src={url}
-              alt="Note preview"
-              className="h-12 w-12 object-cover mr-2 inline-block"
-            />
-          ))}
-        </div>
-      )}
+      <div
+        className="text-base text-gray-700 text-preview"
+        dangerouslySetInnerHTML={renderContent(content)}  // Render HTML content with image resizing
+      ></div>
 
       {/* Display Tags */}
       <div className="mt-2 flex flex-wrap gap-2">
@@ -42,7 +38,6 @@ const Note = ({ title, color, content, tags = [], onDelete }) => {
           </span>
         ))}
       </div>
-
 
       <button
         onClick={handleDeleteClick}

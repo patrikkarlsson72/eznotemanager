@@ -16,3 +16,12 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* Custom class for multi-line text truncation */
+.text-preview {
+  @apply overflow-hidden text-ellipsis; /* Tailwind utilities */
+  display: -webkit-box;
+  -webkit-line-clamp: 6; /* Limit to 3 lines */
+  -webkit-box-orient: vertical;
+}
+

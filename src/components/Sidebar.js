@@ -9,16 +9,7 @@ const availableColors = [
   'bg-lime-200'
 ];
 
-const Sidebar = ({ onCategorySelect }) => {
-  const [categories, setCategories] = useState([
-    { name: 'All Notes', color: 'bg-lime-200' }, // Renamed "My Notes" to "All Notes"
-    { name: 'Work/Projects', color: 'bg-teal-200' },
-    { name: 'Personal', color: 'bg-blue-200' },
-    { name: 'Urgent', color: 'bg-red-500' },
-    { name: 'Ideas', color: 'bg-yellow-200' },
-    { name: 'Meetings', color: 'bg-blue-500' },
-    { name: 'Uncategorized', color: 'bg-gray-300' }
-  ]);
+const Sidebar = ({ categories, setCategories, onCategorySelect }) => {
   const [newCategoryName, setNewCategoryName] = useState('');
   const [selectedColor, setSelectedColor] = useState(availableColors[0]); // Default to first color
   const [isEditing, setIsEditing] = useState(false);
@@ -30,7 +21,9 @@ const Sidebar = ({ onCategorySelect }) => {
       name: newCategoryName,
       color: selectedColor, // Use the selected color
     };
-    setCategories([...categories, newCategory]);
+    // Insert the new category before the last element ("Uncategorized")
+    const updatedCategories = [...categories.slice(0, categories.length - 1), newCategory, categories[categories.length - 1]];
+    setCategories(updatedCategories);
     setNewCategoryName('');
     setSelectedColor(availableColors[0]); // Reset to default color after adding
   };

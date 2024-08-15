@@ -4,20 +4,9 @@ import NoteModal from './NoteModal';
 import './ContentArea.css';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
-const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory, searchQuery }) => {
+const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory, searchQuery, categories }) => {
   const [notes, setNotes] = useState([]);
   const [selectedNote, setSelectedNote] = useState(null);
-
-  // Categories state
-  const [categories, setCategories] = useState([
-    { name: 'All Notes', color: 'bg-lime-200' },
-    { name: 'Work/Projects', color: 'bg-teal-200' },
-    { name: 'Personal', color: 'bg-blue-200' },
-    { name: 'Urgent', color: 'bg-red-500' },
-    { name: 'Ideas', color: 'bg-yellow-200' },
-    { name: 'Meetings', color: 'bg-blue-500' },
-    { name: 'Uncategorized', color: 'bg-gray-300' }
-  ]);
 
   // Load notes from localStorage when the component mounts
   useEffect(() => {
@@ -84,9 +73,6 @@ const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory
     }
     setSelectedNote(null);  // Close the modal after saving
   };
-  
-
-
 
   const cancelNoteCreation = () => {
     setSelectedNote(null);  // Close modal without adding the note
@@ -136,7 +122,6 @@ const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory
                         tags={note.tags}  // Ensure tags are passed here
                         onDelete={() => deleteNote(note.id)}
                       />
-
                     </div>
                   )}
                 </Draggable>
@@ -148,16 +133,15 @@ const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory
       </div>
       {selectedNote && (
         <NoteModal
-        isOpen={!!selectedNote}
-        onRequestClose={cancelNoteCreation}
-        title={selectedNote.title}
-        content={selectedNote.content}
-        onSave={saveNoteContent}
-        categories={categories}
-        selectedCategory={selectedNote.category}
-        tags={selectedNote.tags || []}  // Ensure tags are passed and default to an empty array if undefined
-      />
-      
+          isOpen={!!selectedNote}
+          onRequestClose={cancelNoteCreation}
+          title={selectedNote.title}
+          content={selectedNote.content}
+          onSave={saveNoteContent}
+          categories={categories} // Pass categories to NoteModal
+          selectedCategory={selectedNote.category}
+          tags={selectedNote.tags || []}  // Ensure tags are passed and default to an empty array if undefined
+        />
       )}
     </DragDropContext>
   );
