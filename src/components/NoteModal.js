@@ -5,22 +5,28 @@ import NoteEditor from './NoteEditor';
 Modal.setAppElement('#root');
 
 const NoteModal = ({ isOpen, onRequestClose, title, content, onSave, categories, selectedCategory, tags }) => {
-  const [editedTitle, setEditedTitle] = useState(title || new Date().toLocaleDateString());
+  const [editedTitle, setEditedTitle] = useState('');
   const [editedContent, setEditedContent] = useState(content);
   const [selectedCat, setSelectedCat] = useState(selectedCategory || 'Uncategorized');
   const [tagList, setTagList] = useState(tags || []); 
   const [newTag, setNewTag] = useState('');
 
   useEffect(() => {
-    setEditedTitle(title || new Date().toLocaleDateString());  // Set the title to today's date if it's empty
+    setEditedTitle(title || '');  // Start with an empty title if not provided
     setEditedContent(content);
     setSelectedCat(selectedCategory || 'Uncategorized');
     setTagList(tags || []);
   }, [title, content, selectedCategory, tags]);
 
+  const handleTitleFocus = () => {
+    if (editedTitle === '') {
+      setEditedTitle('');  // Clear placeholder when focused
+    }
+  };
+
   const handleSave = () => {
     const finalTitle = editedTitle.trim() === '' ? new Date().toLocaleDateString() : editedTitle;
-    onSave(finalTitle, editedContent, selectedCat, tagList);  // Ensure the date is used as the title if no title is provided
+    onSave(finalTitle, editedContent, selectedCat, tagList);
     onRequestClose();
   };
 
@@ -49,8 +55,9 @@ const NoteModal = ({ isOpen, onRequestClose, title, content, onSave, categories,
           type="text"
           value={editedTitle}
           onChange={(e) => setEditedTitle(e.target.value)}
+          onFocus={handleTitleFocus}
           className="w-full p-2 mb-4 border border-gray-300 rounded"
-          placeholder={new Date().toLocaleDateString()}  // Placeholder set to today's date
+          placeholder={new Date().toLocaleDateString()}
         />
         <NoteEditor
           initialContent={editedContent}
@@ -66,11 +73,13 @@ const NoteModal = ({ isOpen, onRequestClose, title, content, onSave, categories,
             onChange={(e) => setSelectedCat(e.target.value)}
             className="w-full p-2 mb-4 border border-gray-300 rounded"
           >
-            {categories.map((category, index) => (
-              <option key={index} value={category.name}>
-                {category.name}
-              </option>
-            ))}
+            {categories
+              .filter(category => category.name !== 'All Notes')  // Exclude "All Notes"
+              .map((category, index) => (
+                <option key={index} value={category.name}>
+                  {category.name}
+                </option>
+              ))}
             <option value="Uncategorized">Uncategorized</option>
           </select>
         </div>

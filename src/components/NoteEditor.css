@@ -1,0 +1,35 @@
+.ck.ck-content ul,
+.ck.ck-content ul li {
+  list-style-type: inherit;
+}
+.ck.ck-content ul {
+  padding-left: 40px;
+}
+
+.ck.ck-content ol,
+.ck.ck-content ol li {
+  list-style-type: decimal;
+}
+.ck.ck-content ol {
+  padding-left: 40px;
+}
+.ck-editor__editable_inline {
+  padding: 0 30px !important;
+}
+.ck-content h1 {
+  font-size: 2em;
+  font-weight: bold;
+  margin-top: 1em;
+}
+
+.ck-content h2 {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-top: 0.75em;
+}
+
+.ck-content h3 {
+  font-size: 1.25em;
+  font-weight: bold;
+  margin-top: 0.5em;
+}

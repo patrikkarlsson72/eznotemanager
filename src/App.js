@@ -20,6 +20,9 @@ function App() {
     { name: 'Uncategorized', color: 'bg-gray-300' }
   ]);
 
+  // Manage notes at the top level
+  const [notes, setNotes] = useState([]);
+
   // Load categories from localStorage when the component mounts
   useEffect(() => {
     const storedCategories = JSON.parse(localStorage.getItem('categories'));
@@ -32,6 +35,19 @@ function App() {
   useEffect(() => {
     localStorage.setItem('categories', JSON.stringify(categories));
   }, [categories]);
+
+  // Load notes from localStorage when the component mounts
+  useEffect(() => {
+    const storedNotes = JSON.parse(localStorage.getItem('notes'));
+    if (storedNotes) {
+      setNotes(storedNotes);
+    }
+  }, []);
+
+  // Save notes to localStorage whenever they change
+  useEffect(() => {
+    localStorage.setItem('notes', JSON.stringify(notes));
+  }, [notes]);
 
   const triggerNewNote = () => {
     setCreateNoteTrigger(true);  // This will trigger the creation of a new note
@@ -49,6 +65,8 @@ function App() {
           categories={categories}  // Pass the categories state to Sidebar
           setCategories={setCategories}  // Pass the setCategories function to Sidebar
           onCategorySelect={setSelectedCategory}  // Handle category selection
+          notes={notes}  // Pass notes to Sidebar
+          setNotes={setNotes}  // Pass setNotes function to Sidebar
         />
         <ContentArea
           createNoteTrigger={createNoteTrigger}
@@ -56,6 +74,8 @@ function App() {
           selectedCategory={selectedCategory}
           searchQuery={searchQuery}  // Pass the search query to ContentArea
           categories={categories}  // Pass the categories state to ContentArea
+          notes={notes}  // Pass notes to ContentArea
+          setNotes={setNotes}  // Pass setNotes to ContentArea if needed
         />
       </div>
       {/* Floating Action Button */}

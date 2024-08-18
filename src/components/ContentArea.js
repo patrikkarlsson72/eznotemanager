@@ -5,23 +5,25 @@ import './ContentArea.css';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory, searchQuery, categories }) => {
-  const [notes, setNotes] = useState([]);
-  const [selectedNote, setSelectedNote] = useState(null);
-
-  // Load notes from localStorage when the component mounts
-  useEffect(() => {
-    const storedNotes = JSON.parse(localStorage.getItem('notes'));
-    if (storedNotes) {
-      setNotes(storedNotes);
+  // Initialize notes state with function initializer
+  const [notes, setNotes] = useState(() => {
+    try {
+      const storedNotes = JSON.parse(localStorage.getItem('notes'));
+      return storedNotes || [];
+    } catch (e) {
+      console.error('Failed to load notes from localStorage', e);
+      return [];
     }
-  }, []);
+  });
+  
+  const [selectedNote, setSelectedNote] = useState(null);
 
   // Save notes to localStorage whenever they change
   useEffect(() => {
     localStorage.setItem('notes', JSON.stringify(notes));
   }, [notes]);
 
-  // Create a new note when triggered by the header button
+  // Handle the create note trigger
   useEffect(() => {
     if (createNoteTrigger) {
       createNote();

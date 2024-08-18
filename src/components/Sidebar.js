@@ -9,7 +9,7 @@ const availableColors = [
   'bg-lime-200'
 ];
 
-const Sidebar = ({ categories, setCategories, onCategorySelect }) => {
+const Sidebar = ({ categories, setCategories, onCategorySelect, notes, setNotes }) => {
   const [newCategoryName, setNewCategoryName] = useState('');
   const [selectedColor, setSelectedColor] = useState(availableColors[0]); // Default to first color
   const [isEditing, setIsEditing] = useState(false);
@@ -41,19 +41,61 @@ const Sidebar = ({ categories, setCategories, onCategorySelect }) => {
 
   const handleDeleteCategory = (index) => {
     const categoryName = categories[index].name;
-
+  
     // Prevent deletion of "Uncategorized" and "All Notes" categories
     if (categoryName === 'Uncategorized' || categoryName === 'All Notes') {
       alert(`The category "${categoryName}" cannot be deleted.`);
       return;
     }
-
-    const confirmDelete = window.confirm(`Are you sure you want to delete the category "${categoryName}"?`);
-    if (confirmDelete) {
-      const updatedCategories = categories.filter((_, i) => i !== index);
-      setCategories(updatedCategories);
+  
+    console.log(`Attempting to delete category: ${categoryName}`);
+  
+    // Check if there are any notes in this category
+    const notesInCategory = notes.filter(note => note.category === categoryName);
+  
+    console.log(`Notes in this category: `, notesInCategory);
+  
+    if (notesInCategory.length > 0) {
+      const confirmDelete = window.confirm(
+        `The category "${categoryName}" contains ${notesInCategory.length} note${notesInCategory.length > 1 ? 's' : ''}. ` +
+        `If you delete this category, the notes will also be removed. Do you want to proceed?`
+      );
+  
+      if (confirmDelete) {
+        // Delete both the category and the notes in it
+        const updatedCategories = categories.filter((_, i) => i !== index);
+        const updatedNotes = notes.filter(note => note.category !== categoryName);
+  
+        setCategories(updatedCategories);
+        setNotes(updatedNotes);
+  
+        // Persist the updated categories and notes in localStorage
+        localStorage.setItem('categories', JSON.stringify(updatedCategories));
+        localStorage.setItem('notes', JSON.stringify(updatedNotes));
+  
+        console.log(`Category and associated notes deleted.`);
+      } else {
+        // User canceled the deletion, do nothing
+        alert(`Please change the category of the notes in "${categoryName}" before deleting the category.`);
+      }
+    } else {
+      // No notes in this category, safe to delete
+      const confirmDelete = window.confirm(`Are you sure you want to delete the category "${categoryName}"?`);
+  
+      if (confirmDelete) {
+        const updatedCategories = categories.filter((_, i) => i !== index);
+        setCategories(updatedCategories);
+  
+        // Persist the updated categories in localStorage
+        localStorage.setItem('categories', JSON.stringify(updatedCategories));
+  
+        console.log(`Category deleted successfully.`);
+      }
     }
   };
+  
+  
+  
 
   const startEditing = (category, index) => {
     setIsEditing(true);
