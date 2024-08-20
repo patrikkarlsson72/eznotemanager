@@ -4,13 +4,14 @@ import NoteModal from './NoteModal';
 import './ContentArea.css';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
-const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory, searchQuery = '', searchFilter = 'title', categories, notes, setNotes, selectedTag }) => {
+const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory, searchQuery, categories, notes, setNotes, selectedTag }) => {
   const [selectedNote, setSelectedNote] = useState(null);
 
+  // Handle the create note trigger
   useEffect(() => {
     if (createNoteTrigger) {
       createNote();
-      setCreateNoteTrigger(false);
+      setCreateNoteTrigger(false); // Reset the trigger
     }
   }, [createNoteTrigger, setCreateNoteTrigger]);
 
@@ -29,12 +30,13 @@ const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory
   const createNote = () => {
     const newNote = {
       id: `note-${Date.now()}`,
-      title: '', 
+      title: '',
       content: '',
-      color: '#ADD8E6', 
+      color: '#ADD8E6',
       category: 'Uncategorized',
       tags: [],
-      isArchived: false 
+      isArchived: false,
+      pinned: false
     };
     setSelectedNote(newNote);
   };
@@ -42,18 +44,20 @@ const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory
   const saveNoteContent = (newTitle, newContent, newCategory, newTags) => {
     const updatedNote = { 
       ...selectedNote, 
-      title: newTitle || new Date().toLocaleDateString(), 
-      content: newContent, 
+      title: newTitle || new Date().toLocaleDateString(),
+      content: newContent,
       category: newCategory,
-      tags: newTags 
+      tags: newTags
     };
-
+  
     if (notes.some(note => note.id === selectedNote.id)) {
+      // Update existing note
       const updatedNotes = notes.map(note =>
         note.id === selectedNote.id ? updatedNote : note
       );
       setNotes(updatedNotes);
     } else {
+      // Add new note
       setNotes([...notes, updatedNote]);
     }
     setSelectedNote(null);
@@ -74,38 +78,33 @@ const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory
     setNotes(updatedNotes);
   };
 
-  const getCategoryColor = (categoryName) => {
-    const category = categories.find(cat => cat.name === categoryName);
-    return category ? category.color : 'bg-gray-300'; 
+  const pinNote = (id, pinStatus) => {
+    const updatedNotes = notes.map(note =>
+      note.id === id ? { ...note, pinned: pinStatus } : note
+    );
+    setNotes(updatedNotes);
   };
 
-  const filteredNotes = notes.filter(note => {
-    const matchesCategory = selectedCategory === 'All Notes' && !note.isArchived ||
-                            selectedCategory === 'Archived' && note.isArchived ||
-                            selectedCategory !== 'Archived' && note.category === selectedCategory && !note.isArchived;
+  const getCategoryColor = (categoryName) => {
+    const category = categories.find(cat => cat.name === categoryName);
+    return category ? category.color : 'bg-gray-300';
+  };
 
-    let matchesSearch = false;
-
-    switch (searchFilter) {
-      case 'title':
-        matchesSearch = note.title.toLowerCase().includes(searchQuery.toLowerCase());
-        break;
-      case 'content':
-        matchesSearch = note.content.toLowerCase().includes(searchQuery.toLowerCase());
-        break;
-      case 'tags':
-        matchesSearch = note.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
-        break;
-      case 'category':
-        matchesSearch = note.category.toLowerCase().includes(searchQuery.toLowerCase());
-        break;
-      default:
-        matchesSearch = false;
-    }
-
-    const matchesTag = !selectedTag || (note.tags && note.tags.includes(selectedTag));
-    return matchesCategory && matchesSearch && matchesTag;
-  });
+  const filteredNotes = notes
+    .filter(note => {
+      const matchesCategory = selectedCategory === 'All Notes' && !note.isArchived ||
+                              selectedCategory === 'Archived' && note.isArchived ||
+                              selectedCategory !== 'Archived' && note.category === selectedCategory && !note.isArchived;
+      const matchesSearch = note.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                            note.content.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesTag = !selectedTag || (note.tags && note.tags.includes(selectedTag));
+      return matchesCategory && matchesSearch && matchesTag;
+    })
+    .sort((a, b) => {
+      if (a.pinned && !b.pinned) return -1;
+      if (!a.pinned && b.pinned) return 1;
+      return 0;  // Keep the existing order if both are pinned or both are not pinned
+    });
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
@@ -131,10 +130,12 @@ const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory
                         title={note.title}
                         color={getCategoryColor(note.category)}
                         content={note.content}
-                        tags={note.tags}  // Ensure tags are passed here
+                        tags={note.tags}
                         isArchived={note.isArchived}
+                        isPinned={note.pinned}
                         onDelete={() => deleteNote(note.id)}
                         onArchive={() => archiveNote(note.id, !note.isArchived)}
+                        onPin={() => pinNote(note.id, !note.pinned)}
                       />
                     </div>
                   )}
@@ -152,9 +153,9 @@ const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory
           title={selectedNote.title}
           content={selectedNote.content}
           onSave={saveNoteContent}
-          categories={categories} // Pass categories to NoteModal
+          categories={categories}
           selectedCategory={selectedNote.category}
-          tags={selectedNote.tags || []}  // Ensure tags are passed and default to an empty array if undefined
+          tags={selectedNote.tags || []}
         />
       )}
     </DragDropContext>
@@ -162,3 +163,4 @@ const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory
 };
 
 export default ContentArea;
+

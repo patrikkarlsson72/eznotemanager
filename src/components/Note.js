@@ -1,8 +1,8 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBoxArchive, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faBoxArchive, faTrash, faThumbtack } from '@fortawesome/free-solid-svg-icons';
 
-const Note = ({ title, color, content, tags = [], onDelete, onArchive, isArchived }) => {
+const Note = ({ title, color, content, tags = [], onDelete, onArchive, onPin, isArchived, isPinned }) => {
   const handleDeleteClick = (e) => {
     e.stopPropagation();
     onDelete();
@@ -11,6 +11,11 @@ const Note = ({ title, color, content, tags = [], onDelete, onArchive, isArchive
   const handleArchiveClick = (e) => {
     e.stopPropagation();
     onArchive();
+  };
+
+  const handlePinClick = (e) => {
+    e.stopPropagation();
+    onPin();
   };
 
   // Function to render the content and adjust images
@@ -29,9 +34,9 @@ const Note = ({ title, color, content, tags = [], onDelete, onArchive, isArchive
 
   return (
     <div
-      className={`p-4 rounded shadow-sm border border-gray-300 w-full h-64 relative ${color}`}
+      className={`p-4 rounded shadow-sm border border-gray-300 w-full h-64 relative ${color} ${isPinned ? 'ring-4 ring-yellow-500' : ''}`}
     >
-      <h3 className="text-lg font-semibold">{title}</h3>
+      <h3 className="text-lg font-semibold text-center relative" style={{ left: '0rem' }}>{title}</h3>
       <div
         className="text-base text-gray-700 text-preview"
         dangerouslySetInnerHTML={renderContent(content)}  // Render HTML content with image resizing
@@ -49,33 +54,43 @@ const Note = ({ title, color, content, tags = [], onDelete, onArchive, isArchive
       {/* Delete Button */}
       <button
         onClick={handleDeleteClick}
-        className="absolute top-0 right-0 p-1 text-xl group"
+        className="absolute top-0 right-0 p-1 text-xl"
         style={{
           backgroundColor: 'transparent',
           border: 'none',
           cursor: 'pointer',
         }}
+        title="Delete"
       >
         <FontAwesomeIcon icon={faTrash} className="text-gray-600 hover:text-black" />
-        <span className="absolute right-0 top-full mt-1 hidden group-hover:block bg-black text-white text-lg rounded py-1 px-2">
-          Delete
-        </span>
       </button>
 
       {/* Archive/Unarchive Button */}
       <button
         onClick={handleArchiveClick}
-        className="absolute bottom-0 right-0 p-2 text-xl group"
+        className="absolute bottom-0 right-0 p-2 text-xl"
         style={{
           backgroundColor: 'transparent',
           border: 'none',
           cursor: 'pointer',
         }}
+        title={isArchived ? "Unarchive" : "Archive"}
       >
         <FontAwesomeIcon icon={faBoxArchive} className="text-gray-600 hover:text-black" />
-        <span className="absolute right-0 bottom-full mb-1 hidden group-hover:block bg-black text-white text-lg rounded py-1 px-2">
-          {isArchived ? "Unarchive" : "Archive"}
-        </span>
+      </button>
+
+      {/* Pin/Unpin Button */}
+      <button
+        onClick={handlePinClick}
+        className="absolute top-0 left-0 p-2 text-xl"
+        style={{
+          backgroundColor: 'transparent',
+          border: 'none',
+          cursor: 'pointer',
+        }}
+        title={isPinned ? "Unpin" : "Pin"}
+      >
+        <FontAwesomeIcon icon={faThumbtack} className={isPinned ? "text-yellow-500" : "text-gray-600"} />
       </button>
     </div>
   );
