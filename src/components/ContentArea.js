@@ -4,14 +4,13 @@ import NoteModal from './NoteModal';
 import './ContentArea.css';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
-const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory, searchQuery, categories, notes, setNotes, selectedTag }) => {
+const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory, searchQuery = '', searchFilter = 'title', categories, notes, setNotes, selectedTag }) => {
   const [selectedNote, setSelectedNote] = useState(null);
 
-  // Handle the create note trigger
   useEffect(() => {
     if (createNoteTrigger) {
       createNote();
-      setCreateNoteTrigger(false); // Reset the trigger
+      setCreateNoteTrigger(false);
     }
   }, [createNoteTrigger, setCreateNoteTrigger]);
 
@@ -30,44 +29,42 @@ const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory
   const createNote = () => {
     const newNote = {
       id: `note-${Date.now()}`,
-      title: '', // Set title to an empty string
+      title: '', 
       content: '',
-      color: '#ADD8E6', // Default color, can be changed as needed
-      category: 'Uncategorized', // Default category
-      tags: [], // Default to no tags
-      isArchived: false // Default to not archived
+      color: '#ADD8E6', 
+      category: 'Uncategorized',
+      tags: [],
+      isArchived: false 
     };
-    setSelectedNote(newNote);  // Open modal without adding to state yet
+    setSelectedNote(newNote);
   };
 
   const saveNoteContent = (newTitle, newContent, newCategory, newTags) => {
     const updatedNote = { 
       ...selectedNote, 
-      title: newTitle || new Date().toLocaleDateString(), // Use the date if no title is provided
+      title: newTitle || new Date().toLocaleDateString(), 
       content: newContent, 
       category: newCategory,
-      tags: newTags // Save the tags as part of the note
+      tags: newTags 
     };
-  
+
     if (notes.some(note => note.id === selectedNote.id)) {
-      // Update existing note
       const updatedNotes = notes.map(note =>
         note.id === selectedNote.id ? updatedNote : note
       );
       setNotes(updatedNotes);
     } else {
-      // Add new note
       setNotes([...notes, updatedNote]);
     }
-    setSelectedNote(null);  // Close the modal after saving
+    setSelectedNote(null);
   };
 
   const cancelNoteCreation = () => {
-    setSelectedNote(null);  // Close modal without adding the note
+    setSelectedNote(null);
   };
 
   const deleteNote = (id) => {
-    setNotes(notes.filter(note => note.id !== id));  // Remove the note with the given id
+    setNotes(notes.filter(note => note.id !== id));
   };
 
   const archiveNote = (id, archiveStatus) => {
@@ -79,16 +76,33 @@ const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory
 
   const getCategoryColor = (categoryName) => {
     const category = categories.find(cat => cat.name === categoryName);
-    return category ? category.color : 'bg-gray-300'; // Default to gray if no category found
+    return category ? category.color : 'bg-gray-300'; 
   };
 
-  // Filter notes based on search query, selected category, and selected tag
   const filteredNotes = notes.filter(note => {
     const matchesCategory = selectedCategory === 'All Notes' && !note.isArchived ||
                             selectedCategory === 'Archived' && note.isArchived ||
                             selectedCategory !== 'Archived' && note.category === selectedCategory && !note.isArchived;
-    const matchesSearch = note.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          note.content.toLowerCase().includes(searchQuery.toLowerCase());
+
+    let matchesSearch = false;
+
+    switch (searchFilter) {
+      case 'title':
+        matchesSearch = note.title.toLowerCase().includes(searchQuery.toLowerCase());
+        break;
+      case 'content':
+        matchesSearch = note.content.toLowerCase().includes(searchQuery.toLowerCase());
+        break;
+      case 'tags':
+        matchesSearch = note.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
+        break;
+      case 'category':
+        matchesSearch = note.category.toLowerCase().includes(searchQuery.toLowerCase());
+        break;
+      default:
+        matchesSearch = false;
+    }
+
     const matchesTag = !selectedTag || (note.tags && note.tags.includes(selectedTag));
     return matchesCategory && matchesSearch && matchesTag;
   });

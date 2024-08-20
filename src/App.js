@@ -7,10 +7,12 @@ import './App.css';
 
 function App() {
   const [searchQuery, setSearchQuery] = useState('');
+  const [searchFilter, setSearchFilter] = useState('title');
   const [selectedCategory, setSelectedCategory] = useState('All Notes');
   const [selectedTag, setSelectedTag] = useState(null);
   const [createNoteTrigger, setCreateNoteTrigger] = useState(false);
   const [showTagManager, setShowTagManager] = useState(false);
+  const [fadeClass, setFadeClass] = useState('fade-in');  // Manage fade animation
 
   // Manage categories at the top level
   const [categories, setCategories] = useState([
@@ -80,39 +82,53 @@ function App() {
     }
   };
 
+  // Function to clear all filters with animation
+  const clearFilters = () => {
+    setFadeClass('fade-out');  // Trigger fade-out
+    setTimeout(() => {
+      setSearchQuery('');
+      setSearchFilter('title');
+      setSelectedCategory('All Notes');
+      setSelectedTag(null);
+      setFadeClass('fade-in');  // Trigger fade-in after clearing filters
+    }, 500);  // Match the duration of the fade-out transition
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-950 via-blue-800 to-gray-900 flex-1">
+    <div className={`min-h-screen bg-gradient-to-br from-blue-950 via-blue-800 to-gray-900 flex-1 ${fadeClass}`}>
       <Header
-        onSearchChange={setSearchQuery}  // Pass the search query handler
-        searchQuery={searchQuery}  // Pass the current search query
-        triggerNewNote={triggerNewNote}  // Pass the function to trigger new note creation
+        onSearchChange={setSearchQuery}
+        searchQuery={searchQuery}
+        searchFilter={searchFilter}
+        setSearchFilter={setSearchFilter}
+        onClearFilters={clearFilters}
       />
       <div className="flex">
         <Sidebar 
-          categories={categories}  // Pass the categories state to Sidebar
-          setCategories={setCategories}  // Pass the setCategories function to Sidebar
-          onCategorySelect={setSelectedCategory}  // Handle category selection
-          notes={notes}  // Pass notes to Sidebar
-          setNotes={setNotes}  // Pass setNotes function to Sidebar
-          tags={tags}  // Pass the tags state to Sidebar
-          setShowTagManager={setShowTagManager}  // Handle showing the Tag Manager
-          onTagSelect={handleTagSelect}  // Handle tag selection
+          categories={categories}
+          setCategories={setCategories}
+          onCategorySelect={setSelectedCategory}
+          notes={notes}
+          setNotes={setNotes}
+          tags={tags}
+          setShowTagManager={setShowTagManager}
+          onTagSelect={handleTagSelect}
         />
         <ContentArea
           createNoteTrigger={createNoteTrigger}
           setCreateNoteTrigger={setCreateNoteTrigger}
           selectedCategory={selectedCategory}
-          searchQuery={searchQuery}  // Pass the search query to ContentArea
-          categories={categories}  // Pass the categories state to ContentArea
-          notes={notes}  // Pass notes to ContentArea
-          setNotes={setNotes}  // Pass setNotes to ContentArea if needed
-          selectedTag={selectedTag}  // Pass selected tag to ContentArea
+          searchQuery={searchQuery}
+          searchFilter={searchFilter}
+          categories={categories}
+          notes={notes}
+          setNotes={setNotes}
+          selectedTag={selectedTag}
         />
       </div>
-      {/* Floating Action Button */}
       <button
         className="fixed bottom-4 right-4 bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded-full shadow-lg text-xl"
-        onClick={triggerNewNote}  // Trigger the creation of a new note
+        onClick={triggerNewNote}
       >
         + Add Note
       </button>
@@ -121,7 +137,7 @@ function App() {
         <TagManager
           tags={tags}
           setTags={setTags}
-          onClose={() => setShowTagManager(false)}  // Close Tag Manager
+          onClose={() => setShowTagManager(false)}
         />
       )}
     </div>
