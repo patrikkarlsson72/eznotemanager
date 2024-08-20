@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faEdit, faTrash, faTag } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faEdit, faTrash, faTag, faBoxArchive } from '@fortawesome/free-solid-svg-icons';
 
 const availableColors = [
   'bg-gray-800', 'bg-blue-200', 'bg-red-500', 'bg-yellow-200', 'bg-blue-500', 
@@ -199,7 +199,10 @@ const Sidebar = ({ categories, setCategories, onCategorySelect, notes, setNotes,
 
         {/* Archived Notes Section */}
         <div className="mt-16"> 
-          <h3 className="mt-12 text-lg font-semibold text-white mb-2">Archived Notes</h3>
+          <h3 className="mt-12 text-lg font-semibold text-white mb-2 flex items-center">
+            <FontAwesomeIcon icon={faBoxArchive} className="mr-2" />
+            Archived Notes
+          </h3>
           <div
             className="p-2 rounded hover:bg-gray-600 text-gray-300 cursor-pointer"
             onClick={() => onCategorySelect('Archived')}

@@ -84,9 +84,9 @@ const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory
 
   // Filter notes based on search query, selected category, and selected tag
   const filteredNotes = notes.filter(note => {
-    const matchesCategory = selectedCategory === 'All Notes' || 
-                            (selectedCategory === 'Archived' && note.isArchived) ||
-                            (!note.isArchived && note.category === selectedCategory);
+    const matchesCategory = selectedCategory === 'All Notes' && !note.isArchived ||
+                            selectedCategory === 'Archived' && note.isArchived ||
+                            selectedCategory !== 'Archived' && note.category === selectedCategory && !note.isArchived;
     const matchesSearch = note.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           note.content.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesTag = !selectedTag || (note.tags && note.tags.includes(selectedTag));

@@ -1,4 +1,6 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBoxArchive, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 const Note = ({ title, color, content, tags = [], onDelete, onArchive, isArchived }) => {
   const handleDeleteClick = (e) => {
@@ -47,27 +49,33 @@ const Note = ({ title, color, content, tags = [], onDelete, onArchive, isArchive
       {/* Delete Button */}
       <button
         onClick={handleDeleteClick}
-        className="absolute top-0 right-0 p-1 text-xl"
+        className="absolute top-0 right-0 p-1 text-xl group"
         style={{
           backgroundColor: 'transparent',
           border: 'none',
           cursor: 'pointer',
         }}
       >
-        🗑️
+        <FontAwesomeIcon icon={faTrash} className="text-gray-600 hover:text-black" />
+        <span className="absolute right-0 top-full mt-1 hidden group-hover:block bg-black text-white text-lg rounded py-1 px-2">
+          Delete
+        </span>
       </button>
 
       {/* Archive/Unarchive Button */}
       <button
         onClick={handleArchiveClick}
-        className="absolute bottom-0 right-0 p-1 text-xl"
+        className="absolute bottom-0 right-0 p-2 text-xl group"
         style={{
           backgroundColor: 'transparent',
           border: 'none',
           cursor: 'pointer',
         }}
       >
-        {isArchived ? '📦 Unarchive' : '📦 Archive'}
+        <FontAwesomeIcon icon={faBoxArchive} className="text-gray-600 hover:text-black" />
+        <span className="absolute right-0 bottom-full mb-1 hidden group-hover:block bg-black text-white text-lg rounded py-1 px-2">
+          {isArchived ? "Unarchive" : "Archive"}
+        </span>
       </button>
     </div>
   );
