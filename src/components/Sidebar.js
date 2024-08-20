@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faEdit, faTrash, faTag } from '@fortawesome/free-solid-svg-icons';
 
 const availableColors = [
   'bg-gray-800', 'bg-blue-200', 'bg-red-500', 'bg-yellow-200', 'bg-blue-500', 
@@ -9,7 +9,7 @@ const availableColors = [
   'bg-lime-200'
 ];
 
-const Sidebar = ({ categories, setCategories, onCategorySelect, notes, setNotes }) => {
+const Sidebar = ({ categories, setCategories, onCategorySelect, notes, setNotes, tags, setShowTagManager, onTagSelect }) => {
   const [newCategoryName, setNewCategoryName] = useState('');
   const [selectedColor, setSelectedColor] = useState(availableColors[0]); // Default to first color
   const [isEditing, setIsEditing] = useState(false);
@@ -93,9 +93,6 @@ const Sidebar = ({ categories, setCategories, onCategorySelect, notes, setNotes 
       }
     }
   };
-  
-  
-  
 
   const startEditing = (category, index) => {
     setIsEditing(true);
@@ -107,6 +104,7 @@ const Sidebar = ({ categories, setCategories, onCategorySelect, notes, setNotes 
   return (
     <aside className="bg-transperant text-gray-300 w-64 p-4 border-r border-blue-950">
       <nav className="space-y-2 bg-blue-900 rounded-xl">
+        {/* Category Section */}
         {categories.map((category, index) => (
           <div
             key={index}
@@ -162,6 +160,52 @@ const Sidebar = ({ categories, setCategories, onCategorySelect, notes, setNotes 
           >
             <FontAwesomeIcon icon={faPlus} /> {isEditing ? "Save Changes" : "Create Category"}
           </button>
+        </div>
+
+        {/* Tag Filter Section */}
+        <div className="mt-8">
+          <h3 className="text-lg font-semibold text-white mb-2">Filter by Tag</h3>
+          <div className="flex flex-wrap">
+            {tags.map((tag, index) => (
+              <span
+                key={index}
+                className="bg-gray-200 text-gray-700 px-2 py-1 rounded-full text-xs mr-2 mb-2 cursor-pointer"
+                onClick={() => onTagSelect(tag)}
+              >
+                <FontAwesomeIcon icon={faTag} className="mr-1" />
+                {tag}
+              </span>
+            ))}
+          </div>
+          {/* Clear Filter Button */}
+          {tags.length > 0 && (
+            <button
+              onClick={() => onTagSelect(null)}
+              className="mt-2 block w-full p-2 rounded bg-red-600 text-white hover:bg-red-500"
+            >
+              Clear Filter
+            </button>
+          )}
+        </div>
+
+        <div className="mt-4">
+          <button
+            onClick={() => setShowTagManager(true)}
+            className="mt-2 block w-full p-2 rounded bg-blue-700 text-white hover:bg-blue-600"
+          >
+            Manage Tags
+          </button>
+        </div>
+
+        {/* Archived Notes Section */}
+        <div className="mt-16"> 
+          <h3 className="mt-12 text-lg font-semibold text-white mb-2">Archived Notes</h3>
+          <div
+            className="p-2 rounded hover:bg-gray-600 text-gray-300 cursor-pointer"
+            onClick={() => onCategorySelect('Archived')}
+          >
+            View Archived Notes
+          </div>
         </div>
       </nav>
     </aside>

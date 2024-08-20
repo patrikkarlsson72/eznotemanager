@@ -4,24 +4,8 @@ import NoteModal from './NoteModal';
 import './ContentArea.css';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
-const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory, searchQuery, categories }) => {
-  // Initialize notes state with function initializer
-  const [notes, setNotes] = useState(() => {
-    try {
-      const storedNotes = JSON.parse(localStorage.getItem('notes'));
-      return storedNotes || [];
-    } catch (e) {
-      console.error('Failed to load notes from localStorage', e);
-      return [];
-    }
-  });
-  
+const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory, searchQuery, categories, notes, setNotes, selectedTag }) => {
   const [selectedNote, setSelectedNote] = useState(null);
-
-  // Save notes to localStorage whenever they change
-  useEffect(() => {
-    localStorage.setItem('notes', JSON.stringify(notes));
-  }, [notes]);
 
   // Handle the create note trigger
   useEffect(() => {
@@ -49,7 +33,9 @@ const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory
       title: '', // Set title to an empty string
       content: '',
       color: '#ADD8E6', // Default color, can be changed as needed
-      category: 'Uncategorized' // Default category
+      category: 'Uncategorized', // Default category
+      tags: [], // Default to no tags
+      isArchived: false // Default to not archived
     };
     setSelectedNote(newNote);  // Open modal without adding to state yet
   };
@@ -84,17 +70,27 @@ const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory
     setNotes(notes.filter(note => note.id !== id));  // Remove the note with the given id
   };
 
+  const archiveNote = (id, archiveStatus) => {
+    const updatedNotes = notes.map(note =>
+      note.id === id ? { ...note, isArchived: archiveStatus } : note
+    );
+    setNotes(updatedNotes);
+  };
+
   const getCategoryColor = (categoryName) => {
     const category = categories.find(cat => cat.name === categoryName);
     return category ? category.color : 'bg-gray-300'; // Default to gray if no category found
   };
 
-  // Filter notes based on search query and selected category
+  // Filter notes based on search query, selected category, and selected tag
   const filteredNotes = notes.filter(note => {
-    const matchesCategory = selectedCategory === 'All Notes' || note.category === selectedCategory;
+    const matchesCategory = selectedCategory === 'All Notes' || 
+                            (selectedCategory === 'Archived' && note.isArchived) ||
+                            (!note.isArchived && note.category === selectedCategory);
     const matchesSearch = note.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           note.content.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesCategory && matchesSearch;
+    const matchesTag = !selectedTag || (note.tags && note.tags.includes(selectedTag));
+    return matchesCategory && matchesSearch && matchesTag;
   });
 
   return (
@@ -122,7 +118,9 @@ const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory
                         color={getCategoryColor(note.category)}
                         content={note.content}
                         tags={note.tags}  // Ensure tags are passed here
+                        isArchived={note.isArchived}
                         onDelete={() => deleteNote(note.id)}
+                        onArchive={() => archiveNote(note.id, !note.isArchived)}
                       />
                     </div>
                   )}

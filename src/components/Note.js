@@ -1,9 +1,14 @@
 import React from 'react';
 
-const Note = ({ title, color, content, tags = [], onDelete }) => {
+const Note = ({ title, color, content, tags = [], onDelete, onArchive, isArchived }) => {
   const handleDeleteClick = (e) => {
     e.stopPropagation();
     onDelete();
+  };
+
+  const handleArchiveClick = (e) => {
+    e.stopPropagation();
+    onArchive();
   };
 
   // Function to render the content and adjust images
@@ -39,6 +44,7 @@ const Note = ({ title, color, content, tags = [], onDelete }) => {
         ))}
       </div>
 
+      {/* Delete Button */}
       <button
         onClick={handleDeleteClick}
         className="absolute top-0 right-0 p-1 text-xl"
@@ -49,6 +55,19 @@ const Note = ({ title, color, content, tags = [], onDelete }) => {
         }}
       >
         🗑️
+      </button>
+
+      {/* Archive/Unarchive Button */}
+      <button
+        onClick={handleArchiveClick}
+        className="absolute bottom-0 right-0 p-1 text-xl"
+        style={{
+          backgroundColor: 'transparent',
+          border: 'none',
+          cursor: 'pointer',
+        }}
+      >
+        {isArchived ? '📦 Unarchive' : '📦 Archive'}
       </button>
     </div>
   );

@@ -2,12 +2,15 @@ import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import ContentArea from './components/ContentArea';
+import TagManager from './components/TagManager';
 import './App.css';
 
 function App() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All Notes');
+  const [selectedTag, setSelectedTag] = useState(null);
   const [createNoteTrigger, setCreateNoteTrigger] = useState(false);
+  const [showTagManager, setShowTagManager] = useState(false);
 
   // Manage categories at the top level
   const [categories, setCategories] = useState([
@@ -22,6 +25,9 @@ function App() {
 
   // Manage notes at the top level
   const [notes, setNotes] = useState([]);
+
+  // Manage tags at the top level
+  const [tags, setTags] = useState([]);
 
   // Load categories from localStorage when the component mounts
   useEffect(() => {
@@ -49,8 +55,29 @@ function App() {
     localStorage.setItem('notes', JSON.stringify(notes));
   }, [notes]);
 
+  // Load tags from localStorage when the component mounts
+  useEffect(() => {
+    const storedTags = JSON.parse(localStorage.getItem('tags'));
+    if (storedTags) {
+      setTags(storedTags);
+    }
+  }, []);
+
+  // Save tags to localStorage whenever they change
+  useEffect(() => {
+    localStorage.setItem('tags', JSON.stringify(tags));
+  }, [tags]);
+
   const triggerNewNote = () => {
     setCreateNoteTrigger(true);  // This will trigger the creation of a new note
+  };
+
+  const handleTagSelect = (tag) => {
+    if (selectedTag === tag) {
+      setSelectedTag(null); // Toggle off if the same tag is clicked
+    } else {
+      setSelectedTag(tag);
+    }
   };
 
   return (
@@ -67,6 +94,9 @@ function App() {
           onCategorySelect={setSelectedCategory}  // Handle category selection
           notes={notes}  // Pass notes to Sidebar
           setNotes={setNotes}  // Pass setNotes function to Sidebar
+          tags={tags}  // Pass the tags state to Sidebar
+          setShowTagManager={setShowTagManager}  // Handle showing the Tag Manager
+          onTagSelect={handleTagSelect}  // Handle tag selection
         />
         <ContentArea
           createNoteTrigger={createNoteTrigger}
@@ -76,6 +106,7 @@ function App() {
           categories={categories}  // Pass the categories state to ContentArea
           notes={notes}  // Pass notes to ContentArea
           setNotes={setNotes}  // Pass setNotes to ContentArea if needed
+          selectedTag={selectedTag}  // Pass selected tag to ContentArea
         />
       </div>
       {/* Floating Action Button */}
@@ -86,6 +117,13 @@ function App() {
         + Add Note
       </button>
 
+      {showTagManager && (
+        <TagManager
+          tags={tags}
+          setTags={setTags}
+          onClose={() => setShowTagManager(false)}  // Close Tag Manager
+        />
+      )}
     </div>
   );
 }

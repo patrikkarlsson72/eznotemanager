@@ -8,19 +8,36 @@ const NoteModal = ({ isOpen, onRequestClose, title, content, onSave, categories,
   const [editedTitle, setEditedTitle] = useState('');
   const [editedContent, setEditedContent] = useState(content);
   const [selectedCat, setSelectedCat] = useState(selectedCategory || 'Uncategorized');
-  const [tagList, setTagList] = useState(tags || []); 
+  const [tagList, setTagList] = useState(tags || []);
   const [newTag, setNewTag] = useState('');
+  const [availableTags, setAvailableTags] = useState([]); // All tags available
+  const [tagSuggestions, setTagSuggestions] = useState([]); // Filtered tag suggestions
 
   useEffect(() => {
-    setEditedTitle(title || '');  // Start with an empty title if not provided
+    setEditedTitle(title || '');
     setEditedContent(content);
     setSelectedCat(selectedCategory || 'Uncategorized');
     setTagList(tags || []);
+
+    // Load all tags from localStorage or backend
+    const storedTags = JSON.parse(localStorage.getItem('tags')) || [];
+    setAvailableTags(storedTags);
   }, [title, content, selectedCategory, tags]);
+
+  useEffect(() => {
+    if (newTag) {
+      const suggestions = availableTags.filter(tag => 
+        tag.toLowerCase().includes(newTag.toLowerCase()) && !tagList.includes(tag)
+      );
+      setTagSuggestions(suggestions);
+    } else {
+      setTagSuggestions([]);
+    }
+  }, [newTag, availableTags, tagList]);
 
   const handleTitleFocus = () => {
     if (editedTitle === '') {
-      setEditedTitle('');  // Clear placeholder when focused
+      setEditedTitle('');
     }
   };
 
@@ -30,10 +47,19 @@ const NoteModal = ({ isOpen, onRequestClose, title, content, onSave, categories,
     onRequestClose();
   };
 
-  const addTag = () => {
-    if (newTag && !tagList.includes(newTag)) {
-      setTagList([...tagList, newTag]);
+  const addTag = (tag) => {
+    if (tag && !tagList.includes(tag)) {
+      const updatedTags = [...tagList, tag];
+      setTagList(updatedTags);
       setNewTag('');
+      setTagSuggestions([]);
+
+      // Add new tag to localStorage if it doesn't exist
+      if (!availableTags.includes(tag)) {
+        const updatedAvailableTags = [...availableTags, tag];
+        setAvailableTags(updatedAvailableTags);
+        localStorage.setItem('tags', JSON.stringify(updatedAvailableTags));
+      }
     }
   };
 
@@ -74,7 +100,7 @@ const NoteModal = ({ isOpen, onRequestClose, title, content, onSave, categories,
             className="w-full p-2 mb-4 border border-gray-300 rounded"
           >
             {categories
-              .filter(category => category.name !== 'All Notes')  // Exclude "All Notes"
+              .filter(category => category.name !== 'All Notes')
               .map((category, index) => (
                 <option key={index} value={category.name}>
                   {category.name}
@@ -85,26 +111,40 @@ const NoteModal = ({ isOpen, onRequestClose, title, content, onSave, categories,
         </div>
 
         <div className="mt-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            Tags
-          </label>
-          <input
-            type="text"
-            value={newTag}
-            onChange={(e) => setNewTag(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && addTag()}
-            className="w-full p-2 mb-2 border border-gray-300 rounded"
-            placeholder="Add a tag and press Enter"
-          />
-          <div className="flex flex-wrap gap-2">
-            {tagList.map((tag, index) => (
-              <span key={index} className="bg-gray-200 text-gray-700 px-2 py-1 rounded-full">
-                {tag}
-                <button onClick={() => removeTag(tag)} className="ml-2 text-red-500">x</button>
-              </span>
-            ))}
-          </div>
-        </div>
+  <label className="block text-gray-700 text-sm font-bold mb-2">
+    Tags
+  </label>
+  <input
+    type="text"
+    value={newTag}
+    onChange={(e) => setNewTag(e.target.value)}
+    onKeyDown={(e) => e.key === 'Enter' && addTag(newTag)}
+    className="w-full p-2 mb-2 border border-gray-300 rounded"
+    placeholder="Add a tag and press Enter"
+  />
+  {tagSuggestions.length > 0 && (
+    <ul className="absolute z-10 w-full bg-white border border-gray-300 rounded-md shadow-md max-h-48 overflow-y-auto mt-1">
+      {tagSuggestions.map((suggestion, index) => (
+        <li 
+          key={index} 
+          onClick={() => addTag(suggestion)}
+          className="cursor-pointer hover:bg-gray-100 p-2"
+        >
+          {suggestion}
+        </li>
+      ))}
+    </ul>
+  )}
+  <div className="flex flex-wrap gap-2 mt-2">
+    {tagList.map((tag, index) => (
+      <span key={index} className="bg-gray-200 text-gray-700 px-2 py-1 rounded-full">
+        {tag}
+        <button onClick={() => removeTag(tag)} className="ml-2 text-red-500">x</button>
+      </span>
+    ))}
+  </div>
+</div>
+
 
         <div className="flex justify-end mt-4">
           <button onClick={handleSave} className="btn btn-primary mr-2">
