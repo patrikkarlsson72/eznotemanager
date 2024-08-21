@@ -135,28 +135,29 @@ const Sidebar = ({ categories, setCategories, onCategorySelect, notes, setNotes,
         </div>
 
         <div className="mt-8">
-          <h3 className="text-lg font-semibold text-white mb-2">Filter by Tag</h3>
-          <div className="flex flex-wrap">
-            {tags.map((tag, index) => (
-              <span
-                key={index}
-                className="bg-gray-200 text-gray-700 px-2 py-1 rounded-full text-xs mr-2 mb-2 cursor-pointer"
-                onClick={() => onTagSelect(tag)}
-              >
-                <FontAwesomeIcon icon={faTag} className="mr-1" />
-                {tag}
-              </span>
-            ))}
-          </div>
-          {tags.length > 0 && (
-            <button
-              onClick={() => onTagSelect(null)}
-              className="mt-2 block w-full p-2 rounded bg-red-600 text-white hover:bg-red-500"
-            >
-              Clear Filter
-            </button>
-          )}
-        </div>
+  <h3 className="text-lg font-semibold text-white mb-2">Filter by Tag</h3>
+  <div className="flex flex-wrap max-h-40 overflow-y-auto">
+    {tags.map((tag, index) => (
+      <span
+        key={index}
+        className="bg-gray-200 text-gray-700 px-2 py-1 rounded-full text-xs mr-2 mb-2 cursor-pointer"
+        onClick={() => onTagSelect(tag)}
+      >
+        <FontAwesomeIcon icon={faTag} className="mr-1" />
+        {tag}
+      </span>
+    ))}
+  </div>
+  {tags.length > 0 && (
+    <button
+      onClick={() => onTagSelect(null)}
+      className="mt-2 block w-full p-2 rounded bg-red-600 text-white hover:bg-red-500"
+    >
+      Clear Filter
+    </button>
+  )}
+</div>
+
 
         <div className="mt-4">
           <button

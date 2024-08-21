@@ -5,9 +5,10 @@ module.exports = {
   ],
   theme: {
     extend: {},
-      fontFamily: {
-        sans: ['Poppins', 'sans-serif'],
+    fontFamily: {
+      sans: ['Poppins', 'sans-serif'],
+    },
   },
-},
+  darkMode: 'class', // This enables dark mode based on a class
   plugins: [],
 }
