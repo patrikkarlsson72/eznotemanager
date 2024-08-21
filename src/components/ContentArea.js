@@ -163,4 +163,3 @@ const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory
 };
 
 export default ContentArea;
-

@@ -7,21 +7,21 @@ const TagManager = ({ tags, setTags, setShowTagManager }) => {
     if (newTag.trim() !== '' && !tags.includes(newTag)) {
       const updatedTags = [...tags, newTag];
       setTags(updatedTags);
-      localStorage.setItem('tags', JSON.stringify(updatedTags)); // Persist to localStorage
+      localStorage.setItem('tags', JSON.stringify(updatedTags));
       setNewTag('');
     }
   };
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
-      addTag(); // Call addTag when Enter is pressed
+      addTag();
     }
   };
 
   const removeTag = (tagToRemove) => {
     const updatedTags = tags.filter(tag => tag !== tagToRemove);
     setTags(updatedTags);
-    localStorage.setItem('tags', JSON.stringify(updatedTags)); // Persist to localStorage
+    localStorage.setItem('tags', JSON.stringify(updatedTags));
   };
 
   return (
@@ -29,7 +29,6 @@ const TagManager = ({ tags, setTags, setShowTagManager }) => {
       <div className="bg-white p-6 rounded-lg shadow-lg w-1/2">
         <h2 className="text-2xl font-semibold mb-4">Manage Tags</h2>
 
-        {/* Tag List */}
         <div className="mb-4">
           {tags.map((tag, index) => (
             <div key={index} className="flex justify-between items-center bg-gray-200 p-2 rounded mb-2">
@@ -44,13 +43,12 @@ const TagManager = ({ tags, setTags, setShowTagManager }) => {
           ))}
         </div>
 
-        {/* Add New Tag */}
         <div className="mb-4">
           <input
             type="text"
             value={newTag}
             onChange={(e) => setNewTag(e.target.value)}
-            onKeyDown={handleKeyDown}  // Add the keydown event listener here
+            onKeyDown={handleKeyDown}
             className="w-full p-2 border border-gray-300 rounded mb-2"
             placeholder="Add new tag"
           />
@@ -64,7 +62,7 @@ const TagManager = ({ tags, setTags, setShowTagManager }) => {
 
         <div className="flex justify-end mt-4">
           <button
-            onClick={() => setShowTagManager(false)}  // Close the Tag Manager
+            onClick={() => setShowTagManager(false)}
             className="bg-gray-500 text-white py-2 px-4 rounded hover:bg-gray-600"
           >
             Close
