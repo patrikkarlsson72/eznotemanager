@@ -3,11 +3,12 @@ import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import ContentArea from './components/ContentArea';
 import TagManager from './components/TagManager';
+import Footer from './components/Footer';
 import './App.css';
 
 function App() {
   const [searchQuery, setSearchQuery] = useState('');
-  const [searchFilter, setSearchFilter] = useState('title'); // Add this line
+  const [searchFilter, setSearchFilter] = useState('title');
   const [selectedCategory, setSelectedCategory] = useState('All Notes');
   const [selectedTag, setSelectedTag] = useState(null);
   const [createNoteTrigger, setCreateNoteTrigger] = useState(false);
@@ -72,15 +73,19 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-950 via-blue-800 to-gray-900 flex-1">
+    //<div className="min-h-screen bg-gradient-to-br from-blue-950 via-blue-800 to-gray-900 flex flex-col">
+    <div id="top" className="min-h-screen bg-gradient-to-br from-blue-950 via-blue-800 to-gray-900 flex flex-col">
+  
       <Header
         onSearchChange={setSearchQuery}
         searchQuery={searchQuery}
-        searchFilter={searchFilter} // Pass the current search filter
-        setSearchFilter={setSearchFilter} // Pass the function to set search filter
+        searchFilter={searchFilter}
+        setSearchFilter={setSearchFilter}
         triggerNewNote={triggerNewNote}
+        setSelectedTag={setSelectedTag}
+        setSelectedCategory={setSelectedCategory}
       />
-      <div className="flex">
+      <div className="flex flex-1 overflow-hidden">
         <Sidebar 
           categories={categories}
           setCategories={setCategories}
@@ -102,12 +107,8 @@ function App() {
           selectedTag={selectedTag}
         />
       </div>
-      <button
-        className="fixed bottom-4 right-4 bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded-full shadow-lg text-xl"
-        onClick={triggerNewNote}
-      >
-        + Add Note
-      </button>
+      <Footer /> {/* Add the Footer component here */}
+      
 
       {showTagManager && (
         <TagManager
