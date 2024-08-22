@@ -4,6 +4,7 @@ import Sidebar from './components/Sidebar';
 import ContentArea from './components/ContentArea';
 import TagManager from './components/TagManager';
 import Footer from './components/Footer';
+import CookieConsent from './components/CookieConsent'; // Import CookieConsent
 import './App.css';
 
 function App() {
@@ -73,7 +74,6 @@ function App() {
   };
 
   return (
-    //<div className="min-h-screen bg-gradient-to-br from-blue-950 via-blue-800 to-gray-900 flex flex-col">
     <div id="top" className="min-h-screen bg-gradient-to-br from-blue-950 via-blue-800 to-gray-900 flex flex-col">
   
       <Header
@@ -107,8 +107,20 @@ function App() {
           selectedTag={selectedTag}
         />
       </div>
-      <Footer /> {/* Add the Footer component here */}
-      
+      <Footer /> {/* Footer component */}
+
+      {/* Cookie Consent Banner */}
+      <CookieConsent
+        location="bottom"
+        buttonText="I understand"
+        cookieName="myAwesomeCookieName"
+        style={{ background: "#2B373B" }}
+        buttonStyle={{ color: "#4e503b", fontSize: "13px" }}
+        expires={150}
+      >
+        This website uses cookies to enhance the user experience.{" "}
+        <span style={{ fontSize: "10px" }}>Learn more about cookies.</span>
+      </CookieConsent>
 
       {showTagManager && (
         <TagManager
