@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Note from './Note';
 import NoteModal from './NoteModal';
 import './ContentArea.css';
@@ -6,6 +6,73 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory, searchQuery, categories, notes, setNotes, selectedTag }) => {
   const [selectedNote, setSelectedNote] = useState(null);
+  const [contextMenu, setContextMenu] = useState({ visible: false, x: 0, y: 0 });
+  const contextMenuRef = useRef(null); // Ref to keep track of the context menu element
+
+    // Placeholder notes for first-time visitors
+  const placeholderNotes = [
+    {
+      id: `note-1`,
+      title: 'Welcome to EzNoteManager!',
+      content: 'This is a placeholder note. You can edit, delete, or create your own notes.',
+      //color: '#99F6E4',
+      category: 'Personal',
+      tags: [],
+      isArchived: false,
+      pinned: false,
+    },
+    {
+      id: `note-2`,
+      title: 'Getting Started',
+      content: 'Use the right-click menu to create, delete, or duplicate notes. You can also organize them by categories and tags.',
+      //color: '#FEF08A',
+      category: 'Ideas',
+      tags: [],
+      isArchived: false,
+      pinned: false,
+    },
+  ];
+
+  // Check if there are no existing notes and load placeholder notes on first render
+  useEffect(() => {
+    if (notes.length === 0) {
+      setNotes(placeholderNotes);
+    }
+  }, []); // Empty dependency array ensures this runs only once on mount
+
+  // Handle right-click to display custom context menu
+  const handleRightClick = (event) => {
+    event.preventDefault(); // Prevent the default context menu from appearing
+    setContextMenu({
+      visible: true,
+      x: event.clientX,
+      y: event.clientY,
+    });
+  };
+
+  // Function to hide the custom context menu
+  const closeContextMenu = () => {
+    setContextMenu({ visible: false, x: 0, y: 0 });
+  };
+
+  // Close the context menu if clicked outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (contextMenuRef.current && !contextMenuRef.current.contains(event.target)) {
+        closeContextMenu();
+      }
+    };
+    
+    if (contextMenu.visible) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [contextMenu.visible]);
 
   // Handle the create note trigger
   useEffect(() => {
@@ -28,6 +95,7 @@ const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory
   };
 
   const createNote = () => {
+    closeContextMenu(); // Hide the context menu when creating a note
     const newNote = {
       id: `note-${Date.now()}`,
       title: '',
@@ -108,7 +176,9 @@ const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div className="content-area bg-transperant p-6 rounded-lg shadow-lg">
+      <div className="content-area bg-transperant p-6 rounded-lg shadow-lg"
+      onContextMenu={handleRightClick} // Listen for right-click events
+      >
         {filteredNotes.map((note, index) => (
           <Droppable droppableId={`droppable-${index}`} key={note.id}>
             {(provided) => (
@@ -157,6 +227,28 @@ const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory
           selectedCategory={selectedNote.category}
           tags={selectedNote.tags || []}
         />
+      )}
+
+      {/* Custom Context Menu */}
+      {contextMenu.visible && (
+        <ul
+        ref={contextMenuRef} // Attach the ref to the context menu
+        className="custom-context-menu bg-white shadow-lg rounded-md p-2 absolute"
+        style={{ top: `${contextMenu.y}px`, left: `${contextMenu.x}px` }}
+      >
+        <li
+          className="cursor-pointer hover:bg-gray-200 p-2"
+          onClick={createNote}
+        >
+          Create New Note
+        </li>
+        <li
+          className="cursor-pointer hover:bg-gray-200 p-2"
+          onClick={closeContextMenu}
+        >
+          Cancel
+        </li>
+      </ul>
       )}
     </DragDropContext>
   );
