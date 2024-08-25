@@ -1,15 +1,52 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBoxArchive, faTrash, faThumbtack, faImage } from '@fortawesome/free-solid-svg-icons';
+import { faBoxArchive, faTrash, faThumbtack, faClone } from '@fortawesome/free-solid-svg-icons';
 
-const Note = ({ title, color, content, tags = [], onDelete, onArchive, onPin, isArchived, isPinned }) => {
+const Note = ({ title, color, content, tags = [], onDelete, onArchive, onPin, isArchived, isPinned, onDuplicate }) => {
+  const [contextMenu, setContextMenu] = useState({ visible: false, x: 0, y: 0 });
+  const contextMenuRef = useRef(null);
+
+  const handleRightClick = (e) => {
+    e.preventDefault(); // Prevent the default context menu from appearing
+    setContextMenu({
+      visible: true,
+      x: e.clientX,
+      y: e.clientY,
+    });
+  };
+
+  const handleClickOutside = (e) => {
+    if (contextMenuRef.current && !contextMenuRef.current.contains(e.target)) {
+      setContextMenu({ visible: false, x: 0, y: 0 });
+    }
+  };
+
+  useEffect(() => {
+    if (contextMenu.visible) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [contextMenu.visible]);
+
   const handleDeleteClick = (e) => {
-    e.stopPropagation();
+    e.stopPropagation(); // Prevent the event from bubbling up to the parent element
+    setContextMenu({ visible: false, x: 0, y: 0 });
     onDelete();
   };
 
+  const handleDuplicateClick = (e) => {
+    e.stopPropagation(); // Prevent the event from bubbling up to the parent element
+    setContextMenu({ visible: false, x: 0, y: 0 });
+    onDuplicate(); // Call the duplicate function
+  };
+
   const handleArchiveClick = (e) => {
-    e.stopPropagation();
+    e.stopPropagation(); // Prevent the event from bubbling up to the parent element
     onArchive();
   };
 
@@ -18,56 +55,33 @@ const Note = ({ title, color, content, tags = [], onDelete, onArchive, onPin, is
     onPin();
   };
 
-  // Function to render the content and check for images
   const renderContent = (content) => {
     const div = document.createElement('div');
     div.innerHTML = content;
 
-    // Select all images in the content
     const images = div.querySelectorAll('img');
-    const containsImage = images.length > 0;
+    images.forEach((img) => {
+      img.classList.add('w-1/2', 'h-auto', 'max-h-32');
+      img.style.maxWidth = '50%';
+      img.style.objectFit = 'cover';
+    });
 
-    if (containsImage) {
-      images.forEach((img) => {
-        img.classList.add('w-1/2', 'h-auto', 'max-h-32'); // Tailwind classes to constrain image width to 50% of the container while keeping the aspect ratio and limiting height
-        img.style.maxWidth = '50%'; // Ensures the image doesn’t exceed 50% of the container's width
-        img.style.objectFit = 'cover'; // Cover to maintain the aspect ratio
-      });
-    }
-
-    return { 
-      __html: div.innerHTML, 
-      containsImage 
-    };
+    return { __html: div.innerHTML };
   };
-
-  const contentResult = renderContent(content);
 
   return (
     <div
       className={`p-4 rounded shadow-sm border border-gray-300 w-full h-64 relative overflow-hidden ${color} ${isPinned ? 'ring-4 ring-yellow-500' : ''}`}
+      onContextMenu={handleRightClick}
     >
       <h3 className="text-lg font-semibold text-center relative" style={{ left: '0rem' }}>{title}</h3>
       
-      {/* Image Indicator */}
-      {contentResult.containsImage && (
-        <FontAwesomeIcon icon={faImage} className="absolute bottom-0 left-0 p-2 text-gray-500" title="This note contains an image" />
-      )}
-
-      {/* Text and Image Preview */}
       <div
-        className="text-base text-gray-700 overflow-hidden"  // Limit the overall content and ensure no overflow
-        style={{ 
-          display: '-webkit-box', 
-          WebkitLineClamp: '6', // Show up to 6 lines of text
-          WebkitBoxOrient: 'vertical', 
-          lineHeight: '1.2em', 
-          maxHeight: '7.2em'  // 1.2em line height * 6 lines = 7.2em
-        }}
-        dangerouslySetInnerHTML={contentResult}  // Render HTML content with image resizing
+        className="text-base text-gray-700 overflow-hidden"
+        style={{ display: '-webkit-box', WebkitLineClamp: '6', WebkitBoxOrient: 'vertical', lineHeight: '1.2em', maxHeight: '7.2em' }}
+        dangerouslySetInnerHTML={renderContent(content)}
       ></div>
 
-      {/* Display Tags */}
       <div className="mt-2 flex flex-wrap gap-2">
         {tags.map((tag, index) => (
           <span key={index} className="bg-gray-200 text-gray-700 px-2 py-1 rounded-full text-xs">
@@ -78,7 +92,7 @@ const Note = ({ title, color, content, tags = [], onDelete, onArchive, onPin, is
 
       {/* Delete Button */}
       <button
-        onClick={handleDeleteClick}
+        onClick={(e) => { e.stopPropagation(); onDelete(); }} // Prevent propagation here too
         className="absolute top-0 right-0 p-1 text-xl"
         style={{
           backgroundColor: 'transparent',
@@ -117,6 +131,28 @@ const Note = ({ title, color, content, tags = [], onDelete, onArchive, onPin, is
       >
         <FontAwesomeIcon icon={faThumbtack} className={isPinned ? "text-yellow-500" : "text-gray-600"} />
       </button>
+
+      {/* Custom Context Menu */}
+      {contextMenu.visible && (
+        <ul
+          ref={contextMenuRef}
+          className="custom-context-menu bg-white shadow-lg rounded-md p-2 absolute"
+          style={{ top: `${contextMenu.y}px`, left: `${contextMenu.x}px` }}
+        >
+          <li
+            className="cursor-pointer hover:bg-gray-200 p-2"
+            onClick={handleDuplicateClick}
+          >
+            Duplicate Note
+          </li>
+          <li
+            className="cursor-pointer hover:bg-gray-200 p-2"
+            onClick={handleDeleteClick}
+          >
+            Delete Note
+          </li>
+        </ul>
+      )}
     </div>
   );
 };
