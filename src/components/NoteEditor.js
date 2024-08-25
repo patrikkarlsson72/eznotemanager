@@ -1,10 +1,30 @@
 import React, { useState } from 'react';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import './NoteEditor.css'
+import './NoteEditor.css';
+import { saveFile } from './indexedDB'; // Importing the saveFile function
 
 const NoteEditor = ({ initialContent, onChange }) => {
   const [content, setContent] = useState(initialContent || '');
+
+  // Custom Upload Adapter for CKEditor to store images locally using IndexedDB
+  function CustomUploadAdapterPlugin(editor) {
+    editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+      return {
+        upload: () => {
+          return loader.file.then(file => {
+            const fileId = `file-${Date.now()}`;
+            return saveFile(fileId, file).then(() => {
+              return { default: URL.createObjectURL(file) };
+            });
+          });
+        },
+        abort: () => {
+          console.log('Upload aborted');
+        }
+      };
+    };
+  }
 
   const handleEditorChange = (event, editor) => {
     const data = editor.getData();
@@ -16,6 +36,7 @@ const NoteEditor = ({ initialContent, onChange }) => {
     <CKEditor
       editor={ClassicEditor}
       config={{
+        extraPlugins: [CustomUploadAdapterPlugin], // Load the plugin here
         toolbar: [
           'heading', '|',
           'bold', 'italic', 'underline', 'strikethrough', 'code', '|',
@@ -33,15 +54,11 @@ const NoteEditor = ({ initialContent, onChange }) => {
             { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
             { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' }
           ]
-        },
-        ckfinder: {
-          uploadUrl: 'http://localhost:5000/upload',
         }
       }}
       data={content}
       onChange={handleEditorChange}
     />
-
   );
 };
 
