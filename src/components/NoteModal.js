@@ -72,10 +72,10 @@ const NoteModal = ({ isOpen, onRequestClose, title, content, onSave, categories,
       isOpen={isOpen}
       onRequestClose={onRequestClose}
       contentLabel="Edit Note"
-      className="bg-white p-6 rounded-lg shadow-lg w-1/2 h-auto"
+      className="bg-white p-6 rounded-lg shadow-lg w-1/2 h-auto max-h-[90vh] overflow-hidden flex flex-col"  // Limit modal height and make it a flex container
       overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center"
     >
-      <div className="w-full">
+      <div className="w-full flex-1 overflow-y-auto">  {/* Allow the editor area to scroll if it exceeds the height */}
         <h2 className="text-2xl font-semibold mb-4">Edit Note</h2>
         <input
           type="text"
@@ -111,49 +111,48 @@ const NoteModal = ({ isOpen, onRequestClose, title, content, onSave, categories,
         </div>
 
         <div className="mt-4">
-  <label className="block text-gray-700 text-sm font-bold mb-2">
-    Tags
-  </label>
-  <input
-    type="text"
-    value={newTag}
-    onChange={(e) => setNewTag(e.target.value)}
-    onKeyDown={(e) => e.key === 'Enter' && addTag(newTag)}
-    className="w-full p-2 mb-2 border border-gray-300 rounded"
-    placeholder="Add a tag and press Enter"
-  />
-  {tagSuggestions.length > 0 && (
-    <ul className="absolute z-10 w-full bg-white border border-gray-300 rounded-md shadow-md max-h-48 overflow-y-auto mt-1">
-      {tagSuggestions.map((suggestion, index) => (
-        <li 
-          key={index} 
-          onClick={() => addTag(suggestion)}
-          className="cursor-pointer hover:bg-gray-100 p-2"
-        >
-          {suggestion}
-        </li>
-      ))}
-    </ul>
-  )}
-  <div className="flex flex-wrap gap-2 mt-2">
-    {tagList.map((tag, index) => (
-      <span key={index} className="bg-gray-200 text-gray-700 px-2 py-1 rounded-full">
-        {tag}
-        <button onClick={() => removeTag(tag)} className="ml-2 text-red-500">x</button>
-      </span>
-    ))}
-  </div>
-</div>
-
-
-        <div className="flex justify-end mt-4">
-          <button onClick={handleSave} className="btn btn-primary mr-2">
-            Save
-          </button>
-          <button onClick={onRequestClose} className="btn btn-secondary">
-            Cancel
-          </button>
+          <label className="block text-gray-700 text-sm font-bold mb-2">
+            Tags
+          </label>
+          <input
+            type="text"
+            value={newTag}
+            onChange={(e) => setNewTag(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && addTag(newTag)}
+            className="w-full p-2 mb-2 border border-gray-300 rounded"
+            placeholder="Add a tag and press Enter"
+          />
+          {tagSuggestions.length > 0 && (
+            <ul className="absolute z-10 w-full bg-white border border-gray-300 rounded-md shadow-md max-h-48 overflow-y-auto mt-1">
+              {tagSuggestions.map((suggestion, index) => (
+                <li 
+                  key={index} 
+                  onClick={() => addTag(suggestion)}
+                  className="cursor-pointer hover:bg-gray-100 p-2"
+                >
+                  {suggestion}
+                </li>
+              ))}
+            </ul>
+          )}
+          <div className="flex flex-wrap gap-2 mt-2">
+            {tagList.map((tag, index) => (
+              <span key={index} className="bg-gray-200 text-gray-700 px-2 py-1 rounded-full">
+                {tag}
+                <button onClick={() => removeTag(tag)} className="ml-2 text-red-500">x</button>
+              </span>
+            ))}
+          </div>
         </div>
+      </div>
+
+      <div className="flex justify-end mt-4">
+        <button onClick={handleSave} className="btn btn-primary mr-2">
+          Save
+        </button>
+        <button onClick={onRequestClose} className="btn btn-secondary">
+          Cancel
+        </button>
       </div>
     </Modal>
   );
