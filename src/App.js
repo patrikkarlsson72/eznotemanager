@@ -4,7 +4,10 @@ import Sidebar from './components/Sidebar';
 import ContentArea from './components/ContentArea';
 import TagManager from './components/TagManager';
 import Footer from './components/Footer';
-import CookieConsent from './components/CookieConsent'; // Import CookieConsent
+import CookieConsent from './components/CookieConsent';
+import HelpFaqModal from './components/HelpFaqModal';
+import PrivacyPolicyModal from './components/PrivacyPolicyModal';
+import TermsOfServiceModal from './components/TermsOfServiceModal';
 import './App.css';
 
 function App() {
@@ -14,6 +17,7 @@ function App() {
   const [selectedTag, setSelectedTag] = useState(null);
   const [createNoteTrigger, setCreateNoteTrigger] = useState(false);
   const [showTagManager, setShowTagManager] = useState(false);
+  const [isHelpFaqOpen, setIsHelpFaqOpen] = useState(false); // State to control Help/FAQ modal
 
   const [categories, setCategories] = useState([
     { name: 'All Notes', color: 'bg-lime-200' },
@@ -107,7 +111,7 @@ function App() {
           selectedTag={selectedTag}
         />
       </div>
-      <Footer /> {/* Footer component */}
+      <Footer onHelpFaqClick={() => setIsHelpFaqOpen(true)} /> {/* Pass the Help/FAQ click handler */}
 
       {/* Cookie Consent Banner */}
       <CookieConsent
@@ -129,6 +133,12 @@ function App() {
           setShowTagManager={setShowTagManager}
         />
       )}
+
+      {/* Help/FAQ Modal */}
+      <HelpFaqModal 
+        isOpen={isHelpFaqOpen} 
+        onRequestClose={() => setIsHelpFaqOpen(false)} 
+      />
     </div>
   );
 }
