@@ -25,3 +25,13 @@ code {
   -webkit-box-orient: vertical;
 }
 
+/* Global link styling */
+a {
+  @apply text-blue-500 underline;
+}
+
+a:hover {
+  @apply text-orange-500 no-underline;
+}
+
+

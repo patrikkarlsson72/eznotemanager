@@ -2,20 +2,24 @@ import React, { useState } from 'react';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import './NoteEditor.css';
-import { saveFile } from './indexedDB'; // Importing the saveFile function
 
 const NoteEditor = ({ initialContent, onChange }) => {
   const [content, setContent] = useState(initialContent || '');
 
-  // Custom Upload Adapter for CKEditor to store images locally using IndexedDB
   function CustomUploadAdapterPlugin(editor) {
     editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
       return {
         upload: () => {
-          return loader.file.then(file => {
-            const fileId = `file-${Date.now()}`;
-            return saveFile(fileId, file).then(() => {
-              return { default: URL.createObjectURL(file) };
+          return loader.file.then((file) => {
+            return new Promise((resolve, reject) => {
+              const reader = new FileReader();
+              reader.onload = () => {
+                resolve({ default: reader.result });
+              };
+              reader.onerror = (error) => {
+                reject(error);
+              };
+              reader.readAsDataURL(file);
             });
           });
         },
@@ -36,9 +40,10 @@ const NoteEditor = ({ initialContent, onChange }) => {
     <CKEditor
       editor={ClassicEditor}
       config={{
-        extraPlugins: [CustomUploadAdapterPlugin], // Load the plugin here
+        extraPlugins: [CustomUploadAdapterPlugin],
         toolbar: [
           'heading', '|',
+          'markdown', '|',
           'bold', 'italic', 'underline', 'strikethrough', 'code', '|',
           'link', 'bulletedList', 'numberedList', 'blockQuote', '|',
           'insertTable', 'imageUpload', 'mediaEmbed', '|',

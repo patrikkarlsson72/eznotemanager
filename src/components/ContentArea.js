@@ -23,8 +23,17 @@ const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory
     {
       id: `note-2`,
       title: 'Getting Started',
-      content: 'Use the right-click menu to create, delete, or duplicate notes. You can also organize them by categories and tags.',
+      content: 'Use the right-click menu to deleteor duplicate notes. You can also organize them by categories and tags.',
       category: 'Ideas',
+      tags: [],
+      isArchived: false,
+      pinned: false,
+    },
+    {
+      id: `note-3`,
+      title: 'Getting Started',
+      content: 'You can create, edit and delete the categories. Pick the colors you want for the categories. The note you create will get the same color as the category they belong to.',
+      category: 'Work/Projects',
       tags: [],
       isArchived: false,
       pinned: false,

@@ -59,6 +59,27 @@ const Note = ({ title, color, content, tags = [], onDelete, onArchive, onPin, is
     const div = document.createElement('div');
     div.innerHTML = content;
 
+    const links = div.querySelectorAll('a');
+    links.forEach((link) => {
+      // Make the link open in a new tab
+      link.setAttribute('target', '_blank');
+      link.setAttribute('rel', 'noopener noreferrer'); // Security measure
+
+      // Automatically add 'http://' if not present
+      if (!link.href.startsWith('http')) {
+        link.href = `http://${link.href}`;
+      }
+
+      // Stop event propagation when a link is clicked
+      link.addEventListener('click', (event) => {
+        event.stopPropagation(); // Prevent the click from propagating to the note container
+        event.preventDefault(); // Prevent the note opening logic entirely
+        window.open(link.href, '_blank'); // Open the link in a new tab manually
+      });
+
+      link.classList.add('text-blue-500', 'underline', 'hover:text-orange-500', 'hover:no-underline');
+    });
+
     const images = div.querySelectorAll('img');
     images.forEach((img) => {
       img.classList.add('w-1/2', 'h-auto', 'max-h-32');
@@ -73,6 +94,12 @@ const Note = ({ title, color, content, tags = [], onDelete, onArchive, onPin, is
     <div
       className={`p-4 rounded shadow-sm border border-gray-300 w-full h-64 relative overflow-hidden ${color} ${isPinned ? 'ring-4 ring-yellow-500' : ''}`}
       onContextMenu={handleRightClick}
+      onClick={(e) => {
+        // Check if a link was clicked; if not, open the note
+        if (e.target.tagName !== 'A') {
+          // Your logic to open the note
+        }
+      }}
     >
       <h3 className="text-lg font-semibold text-center relative" style={{ left: '0rem' }}>{title}</h3>
       
