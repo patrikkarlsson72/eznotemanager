@@ -1,22 +1,35 @@
 import React from 'react';
 import logo from '../assets/EzNoteManagerlogo2.png'; // Ensure the path to the logo image is correct
+import { useAuthState } from 'react-firebase-hooks/auth'; // Firebase Auth hook
+import { auth } from '../firebase'; // Firebase configuration
+import { signOut } from 'firebase/auth';
+import GoogleSignIn from './GoogleSignIn'; // Google SignIn Component
 
-const Header = ({ 
-  onSearchChange, 
-  searchQuery = '', 
-  searchFilter = 'title', 
-  setSearchFilter, 
-  onClearFilters, 
-  triggerNewNote, 
-  setSelectedTag, 
-  setSelectedCategory 
+const Header = ({
+  onSearchChange,
+  searchQuery = '',
+  searchFilter = 'title',
+  setSearchFilter,
+  onClearFilters,
+  triggerNewNote,
+  setSelectedTag,
+  setSelectedCategory
 }) => {
+  const [user] = useAuthState(auth); // Firebase Auth hook to track user state
 
   const handleClearFilters = () => {
-    onSearchChange('');        // Clear the search query
-    setSearchFilter('title');  // Reset the search filter to default ('title')
-    setSelectedTag(null);      // Clear the selected tag filter
+    onSearchChange(''); // Clear the search query
+    setSearchFilter('title'); // Reset the search filter to default ('title')
+    setSelectedTag(null); // Clear the selected tag filter
     setSelectedCategory('All Notes'); // Reset the selected category to default
+  };
+
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth);
+    } catch (error) {
+      console.error('Error signing out:', error);
+    }
   };
 
   return (
@@ -55,16 +68,31 @@ const Header = ({
           </select>
         </div>
       </div>
-      
-      <button
-        className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded-full shadow-lg text-xl"
-        onClick={triggerNewNote}
-      >
-        + Add Note
-      </button>
+
+      {/* Show different buttons based on whether the user is signed in or not */}
+      <div className="flex items-center">
+        {user ? (
+          <>
+            <span className="mr-4">Welcome, {user.displayName}</span>
+            <button
+              className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
+              onClick={handleSignOut}
+            >
+              Sign Out
+            </button>
+            <button
+              className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 ml-4 rounded-full shadow-lg text-xl"
+              onClick={triggerNewNote}
+            >
+              + Add Note
+            </button>
+          </>
+        ) : (
+          <GoogleSignIn />
+        )}
+      </div>
     </header>
   );
 };
 
 export default Header;
-
