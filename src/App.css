@@ -1,0 +1,25 @@
+/* src/App.css */
+
+.app {
+  /* Remove any background styles */
+}
+
+.main {
+  display: flex;
+  /* Remove any background styles */
+}
+
+/* Fade-out and Fade-in animation */
+.fade-out {
+  opacity: 0;
+  transition: opacity 0.5s ease-out;
+}
+
+.fade-in {
+  opacity: 1;
+  transition: opacity 0.5s ease-in;
+}
+
+
+
+

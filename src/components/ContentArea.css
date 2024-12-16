@@ -1,0 +1,10 @@
+/* src/components/ContentArea.css */
+.content-area {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Four equal columns */
+  grid-gap: 20px; /* Space between notes */
+  padding: 20px;
+  width: 100%;
+  min-height: 100vh; /* Ensure it covers the full viewport height initially */
+  //background-color: #EFF6FF; /* Set a background color */
+}
