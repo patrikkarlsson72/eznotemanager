@@ -1,5 +1,9 @@
 {
   "projects": {
+<<<<<<< HEAD
     "default": "eznotemanager-95745"
+=======
+    "default": "ezprojects-ac732"
+>>>>>>> 69f6ebde574872461cb4c56673ee5d37feb0caac
   }
 }
