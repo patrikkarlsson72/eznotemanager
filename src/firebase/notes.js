@@ -24,11 +24,27 @@ const usersCollection = collection(db, 'users');
 // Add a new note
 export const addNote = async (note) => {
   try {
-    const docRef = await addDoc(notesCollection, {
+    // Get all notes to find the highest order
+    const q = query(
+      notesCollection,
+      where("userId", "==", note.userId)
+    );
+    const querySnapshot = await getDocs(q);
+    let maxOrder = 0;
+    querySnapshot.forEach((doc) => {
+      const noteData = doc.data();
+      maxOrder = Math.max(maxOrder, noteData.order || 0);
+    });
+
+    // Create the new note with order field
+    const noteWithOrder = {
       ...note,
+      order: maxOrder + 1000,
       createdAt: Timestamp.now(),
       updatedAt: Timestamp.now()
-    });
+    };
+
+    const docRef = await addDoc(notesCollection, noteWithOrder);
     console.log("Note added successfully:", docRef.id);
 
     // Update user's tags
@@ -36,7 +52,7 @@ export const addNote = async (note) => {
       await updateUserTags(note.userId, note.tags);
     }
 
-    return { ...note, id: docRef.id };
+    return { ...noteWithOrder, id: docRef.id };
   } catch (error) {
     console.error("Error adding note: ", error);
     throw error;
@@ -88,21 +104,27 @@ export const getNotes = async (userId) => {
     const querySnapshot = await getDocs(q);
     const notes = [];
     querySnapshot.forEach((doc) => {
-      notes.push({ id: doc.id, ...doc.data() });
+      const note = { id: doc.id, ...doc.data() };
+      console.log("Retrieved note:", note); // Add this for debugging
+      notes.push(note);
     });
+    
+    // Sort pinned notes to the top, then by order
+    notes.sort((a, b) => {
+      if (a.pinned && !b.pinned) return -1;
+      if (!a.pinned && b.pinned) return 1;
+      return (a.order || 0) - (b.order || 0);
+    });
+
     console.log("Retrieved notes:", notes.length);
-    return notes.sort((a, b) => {
-      const timeA = a.updatedAt?.seconds || 0;
-      const timeB = b.updatedAt?.seconds || 0;
-      return timeB - timeA;
-    });
+    return notes;
   } catch (error) {
     console.error("Error getting notes:", error);
     throw error;
   }
 };
 
-// Subscribe to notes updates
+// Subscribe to notes updates with ordering
 export const subscribeToNotes = (userId, callback) => {
   console.log("Subscribing to notes for user:", userId);
   
@@ -123,14 +145,17 @@ export const subscribeToNotes = (userId, callback) => {
       const notes = [];
       snapshot.forEach((doc) => {
         const note = { id: doc.id, ...doc.data() };
+        console.log("Note data:", note); // Add this for debugging
         notes.push(note);
       });
-      // Sort notes by updatedAt timestamp
+
+      // Sort pinned notes to the top, then by order
       notes.sort((a, b) => {
-        const timeA = a.updatedAt?.seconds || 0;
-        const timeB = b.updatedAt?.seconds || 0;
-        return timeB - timeA;
+        if (a.pinned && !b.pinned) return -1;
+        if (!a.pinned && b.pinned) return 1;
+        return (a.order || 0) - (b.order || 0);
       });
+
       console.log("Processed notes:", notes.length);
       callback(notes);
     }, 
@@ -203,6 +228,73 @@ export const removeUserTag = async (userId, tag) => {
     });
   } catch (error) {
     console.error("Error removing user tag:", error);
+    throw error;
+  }
+};
+
+// Get user's categories
+export const getUserCategories = async (userId) => {
+  try {
+    const userRef = doc(usersCollection, userId);
+    const userDoc = await getDoc(userRef);
+    if (userDoc.exists()) {
+      return userDoc.data().categories || getDefaultCategories();
+    }
+    return getDefaultCategories();
+  } catch (error) {
+    console.error("Error getting user categories:", error);
+    throw error;
+  }
+};
+
+// Subscribe to user's categories
+export const subscribeToUserCategories = (userId, callback) => {
+  if (!userId) {
+    callback(getDefaultCategories());
+    return () => {};
+  }
+
+  const userRef = doc(usersCollection, userId);
+  return onSnapshot(userRef, (doc) => {
+    if (doc.exists()) {
+      callback(doc.data().categories || getDefaultCategories());
+    } else {
+      callback(getDefaultCategories());
+    }
+  });
+};
+
+// Update user's categories
+export const updateUserCategories = async (userId, categories) => {
+  try {
+    const userRef = doc(usersCollection, userId);
+    await updateDoc(userRef, { categories });
+  } catch (error) {
+    console.error("Error updating user categories:", error);
+    throw error;
+  }
+};
+
+// Helper function to get default categories
+const getDefaultCategories = () => [
+  { name: 'All Notes', color: 'bg-gray-300' },
+  { name: 'Personal', color: 'bg-blue-200' },
+  { name: 'Work/Projects', color: 'bg-green-200' },
+  { name: 'Ideas', color: 'bg-yellow-200' },
+  { name: 'Uncategorized', color: 'bg-gray-300' }
+]; 
+
+// Update note order
+export const updateNoteOrder = async (noteId, newOrder) => {
+  try {
+    const noteRef = doc(db, 'notes', noteId);
+    await updateDoc(noteRef, {
+      order: newOrder,
+      updatedAt: Timestamp.now()
+    });
+    return noteId;
+  } catch (error) {
+    console.error("Error updating note order:", error);
     throw error;
   }
 }; 

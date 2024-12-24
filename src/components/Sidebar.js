@@ -57,8 +57,6 @@ const Sidebar = ({ categories, setCategories, onCategorySelect, notes, setNotes,
         const updatedNotes = notes.filter(note => note.category !== categoryName);
         setCategories(updatedCategories);
         setNotes(updatedNotes);
-        localStorage.setItem('categories', JSON.stringify(updatedCategories));
-        localStorage.setItem('notes', JSON.stringify(updatedNotes));
       } else {
         alert(`Please change the category of the notes in "${categoryName}" before deleting the category.`);
       }
@@ -67,7 +65,6 @@ const Sidebar = ({ categories, setCategories, onCategorySelect, notes, setNotes,
       if (confirmDelete) {
         const updatedCategories = categories.filter((_, i) => i !== index);
         setCategories(updatedCategories);
-        localStorage.setItem('categories', JSON.stringify(updatedCategories));
       }
     }
   };

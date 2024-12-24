@@ -1,12 +1,16 @@
 /* src/components/ContentArea.css */
 .content-area {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Responsive grid with fixed minimum width */
-  grid-auto-rows: auto;
-  grid-gap: 20px; /* Space between notes */
-  padding: 20px;
   width: 100%;
   min-height: 100vh;
+  padding: 20px;
+}
+
+.notes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-gap: 20px;
+  padding: 20px;
+  width: 100%;
 }
 
 .note-wrapper {
@@ -17,4 +21,20 @@
 
 .note-wrapper > div {
   flex: 1;
+}
+
+/* Add styles for the drag placeholder */
+[data-rbd-placeholder-context-id] {
+  width: 100% !important;
+  height: 256px !important; /* Match note height */
+  margin: 0 !important;
+  transform: none !important;
+  opacity: 0.2;
+  background: #666;
+  border-radius: 8px;
+}
+
+/* Ensure dragged item maintains its size */
+[data-rbd-dragging-state-context-id] {
+  width: 300px !important;
 }

@@ -9,8 +9,8 @@
           "order": "ASCENDING"
         },
         {
-          "fieldPath": "updatedAt",
-          "order": "DESCENDING"
+          "fieldPath": "order",
+          "order": "ASCENDING"
         }
       ]
     }

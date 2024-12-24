@@ -9,7 +9,7 @@ import HelpFaqModal from './components/HelpFaqModal';
 import PrivacyPolicyModal from './components/PrivacyPolicyModal';
 import TermsOfServiceModal from './components/TermsOfServiceModal';
 import LandingPage from './components/LandingPage';
-import { subscribeToUserTags } from './firebase/notes';
+import { subscribeToUserTags, subscribeToUserCategories, updateUserCategories } from './firebase/notes';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from './firebase';
 import './App.css';
@@ -19,13 +19,7 @@ function App() {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchFilter, setSearchFilter] = useState('title');
   const [notes, setNotes] = useState([]);
-  const [categories, setCategories] = useState([
-    { name: 'All Notes', color: 'bg-gray-300' },
-    { name: 'Personal', color: 'bg-blue-200' },
-    { name: 'Work/Projects', color: 'bg-green-200' },
-    { name: 'Ideas', color: 'bg-yellow-200' },
-    { name: 'Uncategorized', color: 'bg-gray-300' }
-  ]);
+  const [categories, setCategories] = useState([]);
   const [showTagManager, setShowTagManager] = useState(false);
   const [tags, setTags] = useState([]);
   const [selectedTag, setSelectedTag] = useState(null);
@@ -47,6 +41,32 @@ function App() {
 
     return () => unsubscribe();
   }, [user]);
+
+  // Subscribe to user's categories
+  useEffect(() => {
+    let unsubscribe = () => {};
+
+    if (user) {
+      unsubscribe = subscribeToUserCategories(user.uid, (updatedCategories) => {
+        console.log('Received updated categories:', updatedCategories);
+        setCategories(updatedCategories || []);
+      });
+    } else {
+      setCategories([]);
+    }
+
+    return () => unsubscribe();
+  }, [user]);
+
+  const handleUpdateCategories = async (newCategories) => {
+    if (user) {
+      try {
+        await updateUserCategories(user.uid, newCategories);
+      } catch (error) {
+        console.error('Error updating categories:', error);
+      }
+    }
+  };
 
   const triggerNewNote = () => {
     setCreateNoteTrigger(true);
@@ -94,7 +114,7 @@ function App() {
       <div className="flex flex-1 overflow-hidden">
         <Sidebar 
           categories={categories}
-          setCategories={setCategories}
+          setCategories={handleUpdateCategories}
           onCategorySelect={handleCategorySelect}
           notes={notes}
           setNotes={setNotes}
