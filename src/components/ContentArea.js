@@ -3,49 +3,61 @@ import Note from './Note';
 import NoteModal from './NoteModal';
 import './ContentArea.css';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { addNote, updateNote, deleteNote, subscribeToNotes, getNotes } from '../firebase/notes';
+import { auth } from '../firebase';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory, searchQuery, categories, notes, setNotes, selectedTag }) => {
   const [selectedNote, setSelectedNote] = useState(null);
   const [contextMenu, setContextMenu] = useState({ visible: false, x: 0, y: 0, noteId: null });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const contextMenuRef = useRef(null);
+  const [user, userLoading] = useAuthState(auth);
 
-  // Placeholder notes for first-time visitors
-  const placeholderNotes = [
-    {
-      id: `note-1`,
-      title: 'Welcome to EzNoteManager!',
-      content: 'This is a placeholder note. You can edit, delete, or create your own notes.',
-      category: 'Personal',
-      tags: [],
-      isArchived: false,
-      pinned: false,
-    },
-    {
-      id: `note-2`,
-      title: 'Getting Started',
-      content: 'Use the right-click menu to deleteor duplicate notes. You can also organize them by categories and tags.',
-      category: 'Ideas',
-      tags: [],
-      isArchived: false,
-      pinned: false,
-    },
-    {
-      id: `note-3`,
-      title: 'Getting Started',
-      content: 'You can create, edit and delete the categories. Pick the colors you want for the categories. The note you create will get the same color as the category they belong to.',
-      category: 'Work/Projects',
-      tags: [],
-      isArchived: false,
-      pinned: false,
-    },
-  ];
-
-  // Check if there are no existing notes and load placeholder notes on first render
+  // Subscribe to notes updates
   useEffect(() => {
-    if (notes.length === 0) {
-      setNotes(placeholderNotes);
+    let unsubscribe = () => {};
+    
+    const setupSubscription = async () => {
+      try {
+        if (!user) {
+          console.log("No user logged in");
+          setNotes([]);
+          setLoading(false);
+          return;
+        }
+
+        console.log("Setting up subscription for user:", user.uid);
+        
+        // Initial fetch
+        const initialNotes = await getNotes(user.uid);
+        setNotes(initialNotes);
+        
+        // Set up real-time subscription
+        unsubscribe = subscribeToNotes(user.uid, (updatedNotes) => {
+          console.log("Received notes update:", updatedNotes.length);
+          setNotes(updatedNotes);
+          setLoading(false);
+        });
+      } catch (err) {
+        console.error("Error setting up notes subscription:", err);
+        setError(err.message);
+        setLoading(false);
+      }
+    };
+
+    setupSubscription();
+    return () => unsubscribe();
+  }, [user, setNotes]);
+
+  // Handle errors
+  useEffect(() => {
+    if (error) {
+      console.error('Error:', error);
+      // You might want to show an error notification to the user here
     }
-  }, []); 
+  }, [error]);
 
   // Handle right-click to display custom context menu
   const handleRightClick = (event, noteId) => {
@@ -103,10 +115,16 @@ const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory
     setNotes(reorderedNotes);
   };
 
-  const createNote = () => {
-    closeContextMenu(); // Hide the context menu when creating a note
+  const createNote = async () => {
+    closeContextMenu();
+    const user = auth.currentUser;
+    if (!user) {
+      setError('Please sign in to create notes');
+      return;
+    }
+
     const newNote = {
-      id: `note-${Date.now()}`,
+      userId: user.uid,
       title: '',
       content: '',
       color: '#ADD8E6',
@@ -118,58 +136,96 @@ const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory
     setSelectedNote(newNote);
   };
 
-  const saveNoteContent = (newTitle, newContent, newCategory, newTags) => {
-    const updatedNote = { 
-      ...selectedNote, 
-      title: newTitle || new Date().toLocaleDateString(),
-      content: newContent,
-      category: newCategory,
-      tags: newTags
-    };
-  
-    if (notes.some(note => note.id === selectedNote.id)) {
-      // Update existing note
-      const updatedNotes = notes.map(note =>
-        note.id === selectedNote.id ? updatedNote : note
-      );
-      setNotes(updatedNotes);
-    } else {
-      // Add new note
-      setNotes([...notes, updatedNote]);
+  const saveNoteContent = async (newTitle, newContent, newCategory, newTags) => {
+    try {
+      const user = auth.currentUser;
+      if (!user) {
+        setError('Please sign in to save notes');
+        return;
+      }
+
+      const noteData = {
+        userId: user.uid,
+        title: newTitle || new Date().toLocaleDateString(),
+        content: newContent,
+        category: newCategory,
+        tags: newTags,
+        isArchived: selectedNote.isArchived || false,
+        pinned: selectedNote.pinned || false
+      };
+
+      if (selectedNote.id) {
+        // Update existing note
+        await updateNote(selectedNote.id, noteData);
+      } else {
+        // Add new note
+        await addNote(noteData);
+      }
+      setSelectedNote(null);
+    } catch (err) {
+      setError(err.message);
     }
-    setSelectedNote(null);
   };
 
   const cancelNoteCreation = () => {
     setSelectedNote(null);
   };
 
-  const deleteNote = (id) => {
-    setNotes(notes.filter(note => note.id !== id));
-    closeContextMenu();
-  };
-
-  const duplicateNote = (id) => {
-    const originalNote = notes.find(note => note.id === id);
-    if (originalNote) {
-      const newNote = { ...originalNote, id: `note-${Date.now()}`, title: `${originalNote.title} (Copy)` };
-      setNotes([...notes, newNote]);
+  const deleteNoteHandler = async (id) => {
+    try {
+      await deleteNote(id);
+      closeContextMenu();
+    } catch (err) {
+      setError(err.message);
     }
-    closeContextMenu();
   };
 
-  const archiveNote = (id, archiveStatus) => {
-    const updatedNotes = notes.map(note =>
-      note.id === id ? { ...note, isArchived: archiveStatus } : note
-    );
-    setNotes(updatedNotes);
+  const duplicateNoteHandler = async (id) => {
+    try {
+      const originalNote = notes.find(note => note.id === id);
+      if (originalNote) {
+        const user = auth.currentUser;
+        if (!user) {
+          setError('Please sign in to duplicate notes');
+          return;
+        }
+
+        const duplicateData = {
+          ...originalNote,
+          userId: user.uid,
+          title: `${originalNote.title} (Copy)`,
+          createdAt: new Date(),
+          updatedAt: new Date()
+        };
+        delete duplicateData.id;
+        await addNote(duplicateData);
+      }
+      closeContextMenu();
+    } catch (err) {
+      setError(err.message);
+    }
   };
 
-  const pinNote = (id, pinStatus) => {
-    const updatedNotes = notes.map(note =>
-      note.id === id ? { ...note, pinned: pinStatus } : note
-    );
-    setNotes(updatedNotes);
+  const archiveNoteHandler = async (id, archiveStatus) => {
+    try {
+      const noteToUpdate = notes.find(note => note.id === id);
+      if (noteToUpdate) {
+        await updateNote(id, { ...noteToUpdate, isArchived: archiveStatus });
+      }
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  const pinNoteHandler = async (id, pinStatus) => {
+    try {
+      const noteToUpdate = notes.find(note => note.id === id);
+      if (noteToUpdate) {
+        await updateNote(id, { ...noteToUpdate, pinned: pinStatus });
+      }
+    } catch (err) {
+      setError(err.message);
+    }
   };
 
   const getCategoryColor = (categoryName) => {
@@ -193,53 +249,82 @@ const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory
       return 0;  // Keep the existing order if both are pinned or both are not pinned
     });
 
+  const handleAddTag = async (noteId, newTag) => {
+    try {
+      const noteToUpdate = notes.find(note => note.id === noteId);
+      if (noteToUpdate) {
+        const updatedTags = [...(noteToUpdate.tags || [])];
+        if (!updatedTags.includes(newTag)) {
+          updatedTags.push(newTag);
+          await updateNote(noteId, { ...noteToUpdate, tags: updatedTags });
+        }
+      }
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <div className="content-area bg-transparent p-6 rounded-lg shadow-lg">
-        {filteredNotes.map((note, index) => (
-          <Droppable droppableId={`droppable-${index}`} key={note.id}>
-            {(provided) => (
-              <div
-                {...provided.droppableProps}
-                ref={provided.innerRef}
-                className="w-full"
-              >
-                <Draggable draggableId={note.id} index={index}>
-                  {(provided) => (
-                    <div
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
-                      onContextMenu={(e) => handleRightClick(e, note.id)} // Handle right-click
-                      onClick={(e) => {
-                        // Prevent opening the note editor if the context menu was opened
-                        if (contextMenu.visible && contextMenu.noteId === note.id) {
-                          e.stopPropagation();
-                        } else {
-                          setSelectedNote(note);
-                        }
-                      }}
-                      className="w-full"
-                    >
-                      <Note
-                        title={note.title}
-                        color={getCategoryColor(note.category)}
-                        content={note.content}
-                        tags={note.tags}
-                        isArchived={note.isArchived}
-                        isPinned={note.pinned}
-                        onDelete={() => deleteNote(note.id)}
-                        onArchive={() => archiveNote(note.id, !note.isArchived)}
-                        onPin={() => pinNote(note.id, !note.pinned)}
-                      />
-                    </div>
-                  )}
-                </Draggable>
-                {provided.placeholder}
-              </div>
-            )}
-          </Droppable>
-        ))}
+        {error && (
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
+            <strong className="font-bold">Error!</strong>
+            <span className="block sm:inline"> {error}</span>
+          </div>
+        )}
+        
+        {loading || userLoading ? (
+          <div className="flex justify-center items-center w-full h-32">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+          </div>
+        ) : !user ? (
+          <div className="text-center py-8">
+            <p className="text-lg">Please sign in to view and manage your notes.</p>
+          </div>
+        ) : (
+          filteredNotes.map((note, index) => (
+            <Droppable droppableId={`droppable-${index}`} key={note.id}>
+              {(provided) => (
+                <div {...provided.droppableProps} ref={provided.innerRef} className="note-wrapper">
+                  <Draggable draggableId={note.id} index={index}>
+                    {(provided) => (
+                      <div
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        onContextMenu={(e) => handleRightClick(e, note.id)}
+                        onClick={(e) => {
+                          if (contextMenu.visible && contextMenu.noteId === note.id) {
+                            e.stopPropagation();
+                          } else {
+                            setSelectedNote(note);
+                          }
+                        }}
+                        className="note-wrapper"
+                      >
+                        <Note
+                          title={note.title}
+                          color={getCategoryColor(note.category)}
+                          content={note.content}
+                          tags={note.tags}
+                          isArchived={note.isArchived}
+                          isPinned={note.pinned}
+                          onDelete={() => deleteNoteHandler(note.id)}
+                          onArchive={() => archiveNoteHandler(note.id, !note.isArchived)}
+                          onPin={() => pinNoteHandler(note.id, !note.pinned)}
+                          onDuplicate={() => duplicateNoteHandler(note.id)}
+                          onTagAdd={(tag) => handleAddTag(note.id, tag)}
+                        />
+                      </div>
+                    )}
+                  </Draggable>
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+          ))
+        )}
       </div>
       {selectedNote && (
         <NoteModal
@@ -263,13 +348,13 @@ const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory
         >
           <li
             className="cursor-pointer hover:bg-gray-200 p-2"
-            onClick={() => deleteNote(contextMenu.noteId)}
+            onClick={() => deleteNoteHandler(contextMenu.noteId)}
           >
             Delete Note
           </li>
           <li
             className="cursor-pointer hover:bg-gray-200 p-2"
-            onClick={() => duplicateNote(contextMenu.noteId)}
+            onClick={() => duplicateNoteHandler(contextMenu.noteId)}
           >
             Duplicate Note
           </li>

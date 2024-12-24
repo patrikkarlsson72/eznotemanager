@@ -9,7 +9,7 @@ const availableColors = [
   'bg-lime-200'
 ];
 
-const Sidebar = ({ categories, setCategories, onCategorySelect, notes, setNotes, tags, setShowTagManager, onTagSelect }) => {
+const Sidebar = ({ categories, setCategories, onCategorySelect, notes, setNotes, tags, setShowTagManager, onTagSelect, selectedCategory }) => {
   const [newCategoryName, setNewCategoryName] = useState('');
   const [selectedColor, setSelectedColor] = useState(availableColors[0]);
   const [isEditing, setIsEditing] = useState(false);
@@ -79,13 +79,19 @@ const Sidebar = ({ categories, setCategories, onCategorySelect, notes, setNotes,
     setSelectedColor(category.color);
   };
 
+  const handleDragStart = (e, tag) => {
+    e.stopPropagation();
+    e.dataTransfer.setData('text/plain', tag);
+    e.dataTransfer.effectAllowed = 'copy';
+  };
+
   return (
     <aside className="bg-transperant text-gray-300 w-64 p-4 border-r border-blue-950 flex flex-col h-full">
       <nav className="space-y-2 bg-blue-900 rounded-xl flex-grow">
         {categories.map((category, index) => (
           <div
             key={index}
-            className="flex items-center justify-between p-2 rounded hover:bg-gray-600 text-gray-300 group relative cursor-pointer"
+            className={`flex items-center justify-between p-2 rounded hover:bg-gray-600 text-gray-300 group relative cursor-pointer ${selectedCategory === category.name ? 'bg-gray-600 ring-2 ring-yellow-500' : ''}`}
             onClick={() => onCategorySelect(category.name)}
           >
             <div className="flex items-center">
@@ -135,29 +141,30 @@ const Sidebar = ({ categories, setCategories, onCategorySelect, notes, setNotes,
         </div>
 
         <div className="mt-8">
-  <h3 className="text-lg font-semibold text-white mb-2">Filter by Tag</h3>
-  <div className="flex flex-wrap max-h-40 overflow-y-auto">
-    {tags.map((tag, index) => (
-      <span
-        key={index}
-        className="bg-gray-200 text-gray-700 px-2 py-1 rounded-full text-xs mr-2 mb-2 cursor-pointer"
-        onClick={() => onTagSelect(tag)}
-      >
-        <FontAwesomeIcon icon={faTag} className="mr-1" />
-        {tag}
-      </span>
-    ))}
-  </div>
-  {tags.length > 0 && (
-    <button
-      onClick={() => onTagSelect(null)}
-      className="mt-2 block w-full p-2 rounded bg-red-600 text-white hover:bg-red-500"
-    >
-      Clear Filter
-    </button>
-  )}
-</div>
-
+          <h3 className="text-lg font-semibold text-white mb-2">Filter by Tag</h3>
+          <div className="flex flex-wrap max-h-40 overflow-y-auto">
+            {tags.map((tag, index) => (
+              <span
+                key={index}
+                draggable
+                onDragStart={(e) => handleDragStart(e, tag)}
+                className="bg-gray-200 text-gray-700 px-2 py-1 rounded-full text-xs mr-2 mb-2 cursor-move hover:bg-gray-300"
+                onClick={() => onTagSelect(tag)}
+              >
+                <FontAwesomeIcon icon={faTag} className="mr-1" />
+                {tag}
+              </span>
+            ))}
+          </div>
+          {tags.length > 0 && (
+            <button
+              onClick={() => onTagSelect(null)}
+              className="mt-2 block w-full p-2 rounded bg-red-600 text-white hover:bg-red-500"
+            >
+              Clear Filter
+            </button>
+          )}
+        </div>
 
         <div className="mt-4">
           <button

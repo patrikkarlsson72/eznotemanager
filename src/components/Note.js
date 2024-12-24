@@ -1,9 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBoxArchive, faTrash, faThumbtack, faClone } from '@fortawesome/free-solid-svg-icons';
+import { faBoxArchive, faTrash, faThumbtack, faClone, faTag } from '@fortawesome/free-solid-svg-icons';
 
-const Note = ({ title, color, content, tags = [], onDelete, onArchive, onPin, isArchived, isPinned, onDuplicate }) => {
+const Note = ({ title, color, content, tags = [], onDelete, onArchive, onPin, isArchived, isPinned, onDuplicate, onTagAdd }) => {
   const [contextMenu, setContextMenu] = useState({ visible: false, x: 0, y: 0 });
+  const [isDragOver, setIsDragOver] = useState(false);
   const contextMenuRef = useRef(null);
 
   const handleRightClick = (e) => {
@@ -55,6 +56,25 @@ const Note = ({ title, color, content, tags = [], onDelete, onArchive, onPin, is
     onPin();
   };
 
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'copy';
+    setIsDragOver(true);
+  };
+
+  const handleDragLeave = () => {
+    setIsDragOver(false);
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setIsDragOver(false);
+    const tag = e.dataTransfer.getData('text/plain');
+    if (tag && !tags.includes(tag) && onTagAdd) {
+      onTagAdd(tag);
+    }
+  };
+
   const renderContent = (content) => {
     const div = document.createElement('div');
     div.innerHTML = content;
@@ -92,10 +112,12 @@ const Note = ({ title, color, content, tags = [], onDelete, onArchive, onPin, is
 
   return (
     <div
-      className={`p-4 rounded shadow-sm border border-gray-300 w-full h-64 relative overflow-hidden ${color} ${isPinned ? 'ring-4 ring-yellow-500' : ''}`}
+      className={`p-4 rounded shadow-sm border border-gray-300 w-full h-64 relative overflow-hidden ${color} ${isPinned ? 'ring-4 ring-yellow-500' : ''} ${isDragOver ? 'ring-2 ring-blue-500' : ''}`}
       onContextMenu={handleRightClick}
+      onDragOver={handleDragOver}
+      onDragLeave={handleDragLeave}
+      onDrop={handleDrop}
       onClick={(e) => {
-        // Check if a link was clicked; if not, open the note
         if (e.target.tagName !== 'A') {
           // Your logic to open the note
         }
@@ -112,6 +134,7 @@ const Note = ({ title, color, content, tags = [], onDelete, onArchive, onPin, is
       <div className="mt-2 flex flex-wrap gap-2">
         {tags.map((tag, index) => (
           <span key={index} className="bg-gray-200 text-gray-700 px-2 py-1 rounded-full text-xs">
+            <FontAwesomeIcon icon={faTag} className="mr-1" />
             {tag}
           </span>
         ))}
@@ -119,7 +142,7 @@ const Note = ({ title, color, content, tags = [], onDelete, onArchive, onPin, is
 
       {/* Delete Button */}
       <button
-        onClick={(e) => { e.stopPropagation(); onDelete(); }} // Prevent propagation here too
+        onClick={(e) => { e.stopPropagation(); onDelete(); }}
         className="absolute top-0 right-0 p-1 text-xl"
         style={{
           backgroundColor: 'transparent',

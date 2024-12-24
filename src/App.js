@@ -8,62 +8,45 @@ import CookieConsent from './components/CookieConsent';
 import HelpFaqModal from './components/HelpFaqModal';
 import PrivacyPolicyModal from './components/PrivacyPolicyModal';
 import TermsOfServiceModal from './components/TermsOfServiceModal';
+import LandingPage from './components/LandingPage';
+import { subscribeToUserTags } from './firebase/notes';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from './firebase';
 import './App.css';
 
 function App() {
+  const [selectedCategory, setSelectedCategory] = useState('All Notes');
   const [searchQuery, setSearchQuery] = useState('');
   const [searchFilter, setSearchFilter] = useState('title');
-  const [selectedCategory, setSelectedCategory] = useState('All Notes');
-  const [selectedTag, setSelectedTag] = useState(null);
-  const [createNoteTrigger, setCreateNoteTrigger] = useState(false);
-  const [showTagManager, setShowTagManager] = useState(false);
-  const [isHelpFaqOpen, setIsHelpFaqOpen] = useState(false); // State to control Help/FAQ modal
-
+  const [notes, setNotes] = useState([]);
   const [categories, setCategories] = useState([
-    { name: 'All Notes', color: 'bg-lime-200' },
-    { name: 'Work/Projects', color: 'bg-teal-200' },
+    { name: 'All Notes', color: 'bg-gray-300' },
     { name: 'Personal', color: 'bg-blue-200' },
-    { name: 'Urgent', color: 'bg-red-500' },
+    { name: 'Work/Projects', color: 'bg-green-200' },
     { name: 'Ideas', color: 'bg-yellow-200' },
-    { name: 'Meetings', color: 'bg-blue-500' },
     { name: 'Uncategorized', color: 'bg-gray-300' }
   ]);
-
-  const [notes, setNotes] = useState([]);
+  const [showTagManager, setShowTagManager] = useState(false);
   const [tags, setTags] = useState([]);
+  const [selectedTag, setSelectedTag] = useState(null);
+  const [createNoteTrigger, setCreateNoteTrigger] = useState(false);
+  const [user, loading] = useAuthState(auth);
 
+  // Subscribe to user's tags
   useEffect(() => {
-    const storedCategories = JSON.parse(localStorage.getItem('categories'));
-    if (storedCategories) {
-      setCategories(storedCategories);
+    let unsubscribe = () => {};
+
+    if (user) {
+      unsubscribe = subscribeToUserTags(user.uid, (updatedTags) => {
+        console.log('Received updated tags:', updatedTags);
+        setTags(updatedTags || []);
+      });
+    } else {
+      setTags([]);
     }
-  }, []);
 
-  useEffect(() => {
-    localStorage.setItem('categories', JSON.stringify(categories));
-  }, [categories]);
-
-  useEffect(() => {
-    const storedNotes = JSON.parse(localStorage.getItem('notes'));
-    if (storedNotes) {
-      setNotes(storedNotes);
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem('notes', JSON.stringify(notes));
-  }, [notes]);
-
-  useEffect(() => {
-    const storedTags = JSON.parse(localStorage.getItem('tags'));
-    if (storedTags) {
-      setTags(storedTags);
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem('tags', JSON.stringify(tags));
-  }, [tags]);
+    return () => unsubscribe();
+  }, [user]);
 
   const triggerNewNote = () => {
     setCreateNoteTrigger(true);
@@ -77,9 +60,28 @@ function App() {
     }
   };
 
+  const handleCategorySelect = (categoryName) => {
+    if (selectedCategory === categoryName) {
+      setSelectedCategory('All Notes');
+    } else {
+      setSelectedCategory(categoryName);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-950 via-blue-800 to-gray-900 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-white"></div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return <LandingPage />;
+  }
+
   return (
     <div id="top" className="min-h-screen bg-gradient-to-br from-blue-950 via-blue-800 to-gray-900 flex flex-col">
-  
       <Header
         onSearchChange={setSearchQuery}
         searchQuery={searchQuery}
@@ -93,12 +95,13 @@ function App() {
         <Sidebar 
           categories={categories}
           setCategories={setCategories}
-          onCategorySelect={setSelectedCategory}
+          onCategorySelect={handleCategorySelect}
           notes={notes}
           setNotes={setNotes}
           tags={tags}
           setShowTagManager={setShowTagManager}
           onTagSelect={handleTagSelect}
+          selectedCategory={selectedCategory}
         />
         <ContentArea
           createNoteTrigger={createNoteTrigger}
@@ -111,34 +114,16 @@ function App() {
           selectedTag={selectedTag}
         />
       </div>
-      <Footer onHelpFaqClick={() => setIsHelpFaqOpen(true)} /> {/* Pass the Help/FAQ click handler */}
-
-      {/* Cookie Consent Banner */}
-      <CookieConsent
-        location="bottom"
-        buttonText="I understand"
-        cookieName="myAwesomeCookieName"
-        style={{ background: "#2B373B" }}
-        buttonStyle={{ color: "#4e503b", fontSize: "13px" }}
-        expires={150}
-      >
-        This website uses cookies to enhance the user experience.{" "}
-        <span style={{ fontSize: "10px" }}>Learn more about cookies.</span>
-      </CookieConsent>
-
+      <Footer />
+      <CookieConsent />
       {showTagManager && (
         <TagManager
           tags={tags}
           setTags={setTags}
           setShowTagManager={setShowTagManager}
+          userId={user?.uid}
         />
       )}
-
-      {/* Help/FAQ Modal */}
-      <HelpFaqModal 
-        isOpen={isHelpFaqOpen} 
-        onRequestClose={() => setIsHelpFaqOpen(false)} 
-      />
     </div>
   );
 }

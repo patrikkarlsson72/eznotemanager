@@ -1,27 +1,34 @@
 import React, { useState } from 'react';
+import { updateUserTags, removeUserTag } from '../firebase/notes';
 
-const TagManager = ({ tags, setTags, setShowTagManager }) => {
+const TagManager = ({ tags, setTags, setShowTagManager, userId }) => {
   const [newTag, setNewTag] = useState('');
 
-  const addTag = () => {
-    if (newTag.trim() !== '' && !tags.includes(newTag)) {
-      const updatedTags = [...tags, newTag];
-      setTags(updatedTags);
-      localStorage.setItem('tags', JSON.stringify(updatedTags)); // Persist to localStorage
-      setNewTag('');
+  const addTag = async () => {
+    if (newTag.trim() !== '' && !tags.includes(newTag) && userId) {
+      try {
+        await updateUserTags(userId, [...tags, newTag]);
+        setNewTag('');
+      } catch (error) {
+        console.error('Error adding tag:', error);
+      }
     }
   };
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
-      addTag(); // Call addTag when Enter is pressed
+      addTag();
     }
   };
 
-  const removeTag = (tagToRemove) => {
-    const updatedTags = tags.filter(tag => tag !== tagToRemove);
-    setTags(updatedTags);
-    localStorage.setItem('tags', JSON.stringify(updatedTags)); // Persist to localStorage
+  const removeTagHandler = async (tagToRemove) => {
+    if (userId) {
+      try {
+        await removeUserTag(userId, tagToRemove);
+      } catch (error) {
+        console.error('Error removing tag:', error);
+      }
+    }
   };
 
   return (
@@ -35,7 +42,7 @@ const TagManager = ({ tags, setTags, setShowTagManager }) => {
             <div key={index} className="flex justify-between items-center bg-gray-200 p-2 rounded mb-2">
               <span>{tag}</span>
               <button
-                onClick={() => removeTag(tag)}
+                onClick={() => removeTagHandler(tag)}
                 className="text-red-500 hover:text-red-700"
               >
                 Remove
@@ -50,7 +57,7 @@ const TagManager = ({ tags, setTags, setShowTagManager }) => {
             type="text"
             value={newTag}
             onChange={(e) => setNewTag(e.target.value)}
-            onKeyDown={handleKeyDown}  // Add the keydown event listener here
+            onKeyDown={handleKeyDown}
             className="w-full p-2 border border-gray-300 rounded mb-2"
             placeholder="Add new tag"
           />
@@ -64,7 +71,7 @@ const TagManager = ({ tags, setTags, setShowTagManager }) => {
 
         <div className="flex justify-end mt-4">
           <button
-            onClick={() => setShowTagManager(false)}  // Close the Tag Manager
+            onClick={() => setShowTagManager(false)}
             className="bg-gray-500 text-white py-2 px-4 rounded hover:bg-gray-600"
           >
             Close
