@@ -4,13 +4,12 @@ import NoteEditor from './NoteEditor';
 
 Modal.setAppElement('#root');
 
-const NoteModal = ({ isOpen, onRequestClose, title, content, onSave, categories, selectedCategory, tags }) => {
+const NoteModal = ({ isOpen, onRequestClose, title, content, onSave, categories, selectedCategory, tags, availableTags = [] }) => {
   const [editedTitle, setEditedTitle] = useState('');
   const [editedContent, setEditedContent] = useState(content);
   const [selectedCat, setSelectedCat] = useState(selectedCategory || 'Uncategorized');
   const [tagList, setTagList] = useState(tags || []);
   const [newTag, setNewTag] = useState('');
-  const [availableTags, setAvailableTags] = useState([]); // All tags available
   const [tagSuggestions, setTagSuggestions] = useState([]); // Filtered tag suggestions
 
   useEffect(() => {
@@ -18,10 +17,6 @@ const NoteModal = ({ isOpen, onRequestClose, title, content, onSave, categories,
     setEditedContent(content);
     setSelectedCat(selectedCategory || 'Uncategorized');
     setTagList(tags || []);
-
-    // Load all tags from localStorage or backend
-    const storedTags = JSON.parse(localStorage.getItem('tags')) || [];
-    setAvailableTags(storedTags);
   }, [title, content, selectedCategory, tags]);
 
   useEffect(() => {
@@ -53,13 +48,6 @@ const NoteModal = ({ isOpen, onRequestClose, title, content, onSave, categories,
       setTagList(updatedTags);
       setNewTag('');
       setTagSuggestions([]);
-
-      // Add new tag to localStorage if it doesn't exist
-      if (!availableTags.includes(tag)) {
-        const updatedAvailableTags = [...availableTags, tag];
-        setAvailableTags(updatedAvailableTags);
-        localStorage.setItem('tags', JSON.stringify(updatedAvailableTags));
-      }
     }
   };
 
@@ -122,19 +110,21 @@ const NoteModal = ({ isOpen, onRequestClose, title, content, onSave, categories,
             className="w-full p-2 mb-2 border border-gray-300 rounded"
             placeholder="Add a tag and press Enter"
           />
-          {tagSuggestions.length > 0 && (
-            <ul className="absolute z-10 w-full bg-white border border-gray-300 rounded-md shadow-md max-h-48 overflow-y-auto mt-1">
-              {tagSuggestions.map((suggestion, index) => (
-                <li 
-                  key={index} 
-                  onClick={() => addTag(suggestion)}
-                  className="cursor-pointer hover:bg-gray-100 p-2"
-                >
-                  {suggestion}
-                </li>
-              ))}
-            </ul>
-          )}
+          <div className="relative">
+            {tagSuggestions.length > 0 && (
+              <ul className="absolute z-10 bg-white border border-gray-300 rounded-md shadow-md max-h-48 overflow-y-auto mt-1 w-64">
+                {tagSuggestions.map((suggestion, index) => (
+                  <li 
+                    key={index} 
+                    onClick={() => addTag(suggestion)}
+                    className="cursor-pointer hover:bg-gray-100 p-2"
+                  >
+                    {suggestion}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
           <div className="flex flex-wrap gap-2 mt-2">
             {tagList.map((tag, index) => (
               <span key={index} className="bg-gray-200 text-gray-700 px-2 py-1 rounded-full">

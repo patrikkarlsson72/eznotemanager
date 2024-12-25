@@ -4,6 +4,8 @@ import { useAuthState } from 'react-firebase-hooks/auth'; // Firebase Auth hook
 import { auth } from '../firebase'; // Firebase configuration
 import { signOut } from 'firebase/auth';
 import GoogleSignIn from './GoogleSignIn'; // Google SignIn Component
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 const Header = ({
   onSearchChange,
@@ -81,10 +83,11 @@ const Header = ({
               Sign Out
             </button>
             <button
-              className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 ml-4 rounded-full shadow-lg text-xl"
               onClick={triggerNewNote}
+              className="create-note-button bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 ml-4 rounded-full shadow-lg text-xl"
             >
-              + Add Note
+              <FontAwesomeIcon icon={faPlus} className="mr-2" />
+              Create Note
             </button>
           </>
         ) : (

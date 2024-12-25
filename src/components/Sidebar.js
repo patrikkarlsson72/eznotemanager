@@ -9,7 +9,7 @@ const availableColors = [
   'bg-lime-200'
 ];
 
-const Sidebar = ({ categories, setCategories, onCategorySelect, notes, setNotes, tags, setShowTagManager, onTagSelect, selectedCategory }) => {
+const Sidebar = ({ categories, setCategories, onCategorySelect, notes, setNotes, tags, setShowTagManager, onTagSelect, selectedCategory, selectedTag }) => {
   const [newCategoryName, setNewCategoryName] = useState('');
   const [selectedColor, setSelectedColor] = useState(availableColors[0]);
   const [isEditing, setIsEditing] = useState(false);
@@ -83,61 +83,65 @@ const Sidebar = ({ categories, setCategories, onCategorySelect, notes, setNotes,
   };
 
   return (
-    <aside className="bg-transperant text-gray-300 w-64 p-4 border-r border-blue-950 flex flex-col h-full">
+    <aside className="bg-transparent text-gray-300 w-64 p-4 border-r border-blue-950 flex flex-col h-full">
       <nav className="space-y-2 bg-blue-900 rounded-xl flex-grow">
-        {categories.map((category, index) => (
-          <div
-            key={index}
-            className={`flex items-center justify-between p-2 rounded hover:bg-gray-600 text-gray-300 group relative cursor-pointer ${selectedCategory === category.name ? 'bg-gray-600 ring-2 ring-yellow-500' : ''}`}
-            onClick={() => onCategorySelect(category.name)}
-          >
-            <div className="flex items-center">
-              <div className={`w-3 h-3 rounded-full ${category.color} mr-3`}></div>
-              <span>{category.name}</span>
-            </div>
-            {category.name !== 'Uncategorized' && category.name !== 'All Notes' && (
-              <div className="absolute right-2 opacity-0 group-hover:opacity-100 flex space-x-2">
-                <FontAwesomeIcon
-                  icon={faEdit}
-                  className="text-gray-400 hover:text-white cursor-pointer"
-                  onClick={(e) => {e.stopPropagation(); startEditing(category, index);}}
-                />
-                <FontAwesomeIcon
-                  icon={faTrash}
-                  className="text-gray-400 hover:text-red-500 cursor-pointer"
-                  onClick={(e) => {e.stopPropagation(); handleDeleteCategory(index);}}
-                />
+        {/* Categories Section */}
+        <div className="category-section">
+          {categories.map((category, index) => (
+            <div
+              key={index}
+              className={`flex items-center justify-between p-2 rounded hover:bg-gray-600 text-gray-300 group relative cursor-pointer ${selectedCategory === category.name ? 'bg-gray-600 ring-2 ring-yellow-500' : ''}`}
+              onClick={() => onCategorySelect(category.name)}
+            >
+              <div className="flex items-center">
+                <div className={`w-3 h-3 rounded-full ${category.color} mr-3`}></div>
+                <span>{category.name}</span>
               </div>
-            )}
-          </div>
-        ))}
+              {category.name !== 'Uncategorized' && category.name !== 'All Notes' && (
+                <div className="absolute right-2 opacity-0 group-hover:opacity-100 flex space-x-2">
+                  <FontAwesomeIcon
+                    icon={faEdit}
+                    className="text-gray-400 hover:text-white cursor-pointer"
+                    onClick={(e) => {e.stopPropagation(); startEditing(category, index);}}
+                  />
+                  <FontAwesomeIcon
+                    icon={faTrash}
+                    className="text-gray-400 hover:text-red-500 cursor-pointer"
+                    onClick={(e) => {e.stopPropagation(); handleDeleteCategory(index);}}
+                  />
+                </div>
+              )}
+            </div>
+          ))}
 
-        <div className="mt-4">
-          <input
-            type="text"
-            value={newCategoryName}
-            onChange={(e) => setNewCategoryName(e.target.value)}
-            placeholder={isEditing ? "Edit Category" : "New Category"}
-            className="bg-gray-700 text-white p-2 mb-2 rounded border border-gray-300 w-full"
-          />
-          <div className="flex space-x-2 mb-2">
-            {availableColors.map((color, index) => (
-              <div
-                key={index}
-                className={`w-6 h-6 rounded-full ${color} cursor-pointer ${selectedColor === color ? 'ring-2 ring-white' : ''}`}
-                onClick={() => setSelectedColor(color)}
-              ></div>
-            ))}
+          <div className="mt-4">
+            <input
+              type="text"
+              value={newCategoryName}
+              onChange={(e) => setNewCategoryName(e.target.value)}
+              placeholder={isEditing ? "Edit Category" : "New Category"}
+              className="bg-gray-700 text-white p-2 mb-2 rounded border border-gray-300 w-full"
+            />
+            <div className="flex space-x-2 mb-2">
+              {availableColors.map((color, index) => (
+                <div
+                  key={index}
+                  className={`w-6 h-6 rounded-full ${color} cursor-pointer ${selectedColor === color ? 'ring-2 ring-white' : ''}`}
+                  onClick={() => setSelectedColor(color)}
+                ></div>
+              ))}
+            </div>
+            <button
+              onClick={isEditing ? () => handleEditCategory(categoryToEdit) : handleAddCategory}
+              className="mt-2 block w-full p-2 rounded bg-blue-700 text-white hover:bg-blue-600"
+            >
+              <FontAwesomeIcon icon={faPlus} /> {isEditing ? "Save Changes" : "Create Category"}
+            </button>
           </div>
-          <button
-            onClick={isEditing ? () => handleEditCategory(categoryToEdit) : handleAddCategory}
-            className="mt-2 block w-full p-2 rounded bg-blue-700 text-white hover:bg-blue-600"
-          >
-            <FontAwesomeIcon icon={faPlus} /> {isEditing ? "Save Changes" : "Create Category"}
-          </button>
         </div>
 
-        <div className="mt-8">
+        {/* Tags Section */}
+        <div className="tag-section mt-8">
           <h3 className="text-lg font-semibold text-white mb-2">Filter by Tag</h3>
           <div className="flex flex-wrap max-h-40 overflow-y-auto">
             {tags.map((tag, index) => (
@@ -145,7 +149,9 @@ const Sidebar = ({ categories, setCategories, onCategorySelect, notes, setNotes,
                 key={index}
                 draggable
                 onDragStart={(e) => handleDragStart(e, tag)}
-                className="bg-gray-200 text-gray-700 px-2 py-1 rounded-full text-xs mr-2 mb-2 cursor-move hover:bg-gray-300"
+                className={`bg-gray-200 text-gray-700 px-2 py-1 rounded-full text-xs mr-2 mb-2 cursor-pointer hover:bg-gray-300 ${
+                  selectedTag?.includes(tag) ? 'ring-2 ring-yellow-500 bg-gray-300' : ''
+                }`}
                 onClick={() => onTagSelect(tag)}
               >
                 <FontAwesomeIcon icon={faTag} className="mr-1" />
@@ -153,7 +159,7 @@ const Sidebar = ({ categories, setCategories, onCategorySelect, notes, setNotes,
               </span>
             ))}
           </div>
-          {tags.length > 0 && (
+          {selectedTag?.length > 0 && (
             <button
               onClick={() => onTagSelect(null)}
               className="mt-2 block w-full p-2 rounded bg-red-600 text-white hover:bg-red-500"

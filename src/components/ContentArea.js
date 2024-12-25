@@ -7,7 +7,9 @@ import { addNote, updateNote, deleteNote, subscribeToNotes, getNotes, updateNote
 import { auth } from '../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
-const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory, searchQuery, categories, notes, setNotes, selectedTag }) => {
+const ITEMS_PER_ROW = 4; // Or calculate based on screen width
+
+const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory, searchQuery, categories, notes, setNotes, selectedTag, tags }) => {
   const [selectedNote, setSelectedNote] = useState(null);
   const [contextMenu, setContextMenu] = useState({ visible: false, x: 0, y: 0, noteId: null });
   const [loading, setLoading] = useState(true);
@@ -103,52 +105,90 @@ const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory
     }
   }, [createNoteTrigger, setCreateNoteTrigger]);
 
-  const onDragEnd = async (result) => {
-    const { destination, source } = result;
+  // Split notes into rows
+  const getNotesInRows = (notes) => {
+    const rows = [];
+    for (let i = 0; i < notes.length; i += ITEMS_PER_ROW) {
+      rows.push(notes.slice(i, i + ITEMS_PER_ROW));
+    }
+    return rows;
+  };
 
-    if (!destination || destination.index === source.index) return;
+  const onDragEnd = async (result) => {
+    const { source, destination } = result;
+    
+    if (!destination) return;
 
     try {
-      const reorderedNotes = Array.from(filteredNotes);
-      const [movedNote] = reorderedNotes.splice(source.index, 1);
-      reorderedNotes.splice(destination.index, 0, movedNote);
-
-      // Update local state immediately for better UX
       const allNotes = Array.from(notes);
-      const sourceIndex = allNotes.findIndex(n => n.id === movedNote.id);
-      allNotes.splice(sourceIndex, 1);
-      const destIndex = allNotes.findIndex(n => n.id === reorderedNotes[destination.index].id);
-      allNotes.splice(destIndex, 0, movedNote);
-      setNotes(allNotes);
-
-      // Calculate new order value
-      let newOrder;
-      if (destination.index === 0) {
-        // Moving to the start
-        const nextNote = reorderedNotes[1];
-        newOrder = nextNote ? nextNote.order / 2 : 1000;
-      } else if (destination.index === reorderedNotes.length - 1) {
-        // Moving to the end
-        const prevNote = reorderedNotes[destination.index - 1];
-        newOrder = prevNote ? prevNote.order + 1000 : 1000;
-      } else {
-        // Moving between two notes
-        const prevNote = reorderedNotes[destination.index - 1];
-        const nextNote = reorderedNotes[destination.index + 1];
-        newOrder = prevNote.order + (nextNote.order - prevNote.order) / 2;
+      const filteredNotesArray = Array.from(filteredNotes);
+      
+      // Find the actual note being moved
+      const sourceRowIndex = parseInt(source.droppableId.split('-')[1]);
+      const destRowIndex = parseInt(destination.droppableId.split('-')[1]);
+      
+      const sourceIndex = (sourceRowIndex * ITEMS_PER_ROW) + source.index;
+      const destIndex = (destRowIndex * ITEMS_PER_ROW) + destination.index;
+      
+      // Find the actual note in the original notes array
+      const movedNote = filteredNotesArray[sourceIndex];
+      const originalIndex = allNotes.findIndex(note => note.id === movedNote.id);
+      
+      if (originalIndex === -1) {
+        console.error('Could not find note in original array');
+        return;
       }
-
-      // Update the note with new order in Firebase
-      await updateNote(movedNote.id, { 
-        ...movedNote, 
-        order: newOrder,
-        updatedAt: new Date() 
+      
+      // Remove from original position and insert at new position
+      allNotes.splice(originalIndex, 1);
+      const insertIndex = allNotes.findIndex((note, idx) => {
+        if (idx >= destIndex) {
+          return true;
+        }
+        return false;
       });
-
-      console.log(`Moved note ${movedNote.id} to order ${newOrder}`);
+      
+      allNotes.splice(insertIndex === -1 ? allNotes.length : insertIndex, 0, movedNote);
+      
+      // Calculate new order
+      const newOrder = calculateNewOrder(insertIndex === -1 ? allNotes.length - 1 : insertIndex, allNotes);
+      
+      // Update the note in Firebase
+      await updateNote(movedNote.id, {
+        ...movedNote,
+        order: newOrder,
+        updatedAt: new Date()
+      });
+      
+      setNotes(allNotes);
     } catch (error) {
       console.error('Error reordering notes:', error);
       setError('Failed to reorder notes. Please try again.');
+    }
+  };
+
+  const calculateNewOrder = (index, notes) => {
+    try {
+      // Handle edge cases
+      if (!notes || notes.length === 0) return 1000;
+      if (index === 0) return (notes[1]?.order ?? 2000) - 1000;
+      if (index === notes.length - 1) return (notes[notes.length - 2]?.order ?? 0) + 1000;
+
+      const prevNote = notes[index - 1];
+      const nextNote = notes[index + 1];
+
+      // If either note is missing, provide fallback values
+      if (!prevNote || !nextNote) return index * 1000;
+
+      // If orders are missing, generate new ones
+      const prevOrder = prevNote.order ?? (index - 1) * 1000;
+      const nextOrder = nextNote.order ?? (index + 1) * 1000;
+
+      return prevOrder + (nextOrder - prevOrder) / 2;
+    } catch (error) {
+      console.error('Error calculating order:', error);
+      // Fallback to a safe value based on index
+      return index * 1000;
     }
   };
 
@@ -278,12 +318,13 @@ const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory
   const filteredNotes = notes
     .filter(note => {
       const matchesCategory = selectedCategory === 'All Notes' && !note.isArchived ||
-                              selectedCategory === 'Archived' && note.isArchived ||
-                              selectedCategory !== 'Archived' && note.category === selectedCategory && !note.isArchived;
+                            selectedCategory === 'Archived' && note.isArchived ||
+                            selectedCategory !== 'Archived' && note.category === selectedCategory && !note.isArchived;
       const matchesSearch = note.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                            note.content.toLowerCase().includes(searchQuery.toLowerCase());
-      const matchesTag = !selectedTag || (note.tags && note.tags.includes(selectedTag));
-      return matchesCategory && matchesSearch && matchesTag;
+                          note.content.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesTags = !selectedTag?.length || 
+                         (note.tags && selectedTag.every(tag => note.tags.includes(tag)));
+      return matchesCategory && matchesSearch && matchesTags;
     })
     .sort((a, b) => {
       if (a.pinned && !b.pinned) return -1;
@@ -325,64 +366,68 @@ const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory
             <p className="text-lg">Please sign in to view and manage your notes.</p>
           </div>
         ) : (
-          <Droppable
-            droppableId="notes-grid"
-            type="NOTE"
-            direction="horizontal"
-            ignoreContainerClipping={true}
-          >
-            {(provided) => (
-              <div 
-                {...provided.droppableProps} 
-                ref={provided.innerRef}
-                className="notes-grid"
+          <div className="notes-container">
+            {getNotesInRows(filteredNotes).map((rowNotes, rowIndex) => (
+              <Droppable
+                key={`row-${rowIndex}`}
+                droppableId={`row-${rowIndex}`}
+                direction="horizontal"
+                type="NOTE"
               >
-                {filteredNotes.map((note, index) => (
-                  <Draggable 
-                    key={note.id} 
-                    draggableId={note.id} 
-                    index={index}
+                {(provided, snapshot) => (
+                  <div
+                    ref={provided.innerRef}
+                    {...provided.droppableProps}
+                    className="notes-row"
                   >
-                    {(provided, snapshot) => (
-                      <div
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        onContextMenu={(e) => handleRightClick(e, note.id)}
-                        onClick={(e) => {
-                          if (contextMenu.visible && contextMenu.noteId === note.id) {
-                            e.stopPropagation();
-                          } else {
-                            setSelectedNote(note);
-                          }
-                        }}
-                        className="note-wrapper"
-                        style={{
-                          ...provided.draggableProps.style,
-                          opacity: snapshot.isDragging ? 0.5 : 1
-                        }}
+                    {rowNotes.map((note, index) => (
+                      <Draggable
+                        key={note.id}
+                        draggableId={note.id}
+                        index={index}
                       >
-                        <Note
-                          title={note.title}
-                          color={getCategoryColor(note.category)}
-                          content={note.content}
-                          tags={note.tags}
-                          isArchived={note.isArchived}
-                          isPinned={note.pinned}
-                          onDelete={() => deleteNoteHandler(note.id)}
-                          onArchive={() => archiveNoteHandler(note.id, !note.isArchived)}
-                          onPin={() => pinNoteHandler(note.id, !note.pinned)}
-                          onDuplicate={() => duplicateNoteHandler(note.id)}
-                          onTagAdd={(tag) => handleAddTag(note.id, tag)}
-                        />
-                      </div>
-                    )}
-                  </Draggable>
-                ))}
-                {provided.placeholder}
-              </div>
-            )}
-          </Droppable>
+                        {(provided, snapshot) => (
+                          <div
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                            onContextMenu={(e) => handleRightClick(e, note.id)}
+                            onClick={(e) => {
+                              if (contextMenu.visible && contextMenu.noteId === note.id) {
+                                e.stopPropagation();
+                              } else {
+                                setSelectedNote(note);
+                              }
+                            }}
+                            className="note-wrapper"
+                            style={{
+                              ...provided.draggableProps.style,
+                              opacity: snapshot.isDragging ? 0.5 : 1
+                            }}
+                          >
+                            <Note
+                              title={note.title}
+                              color={getCategoryColor(note.category)}
+                              content={note.content}
+                              tags={note.tags}
+                              isArchived={note.isArchived}
+                              isPinned={note.pinned}
+                              onDelete={() => deleteNoteHandler(note.id)}
+                              onArchive={() => archiveNoteHandler(note.id, !note.isArchived)}
+                              onPin={() => pinNoteHandler(note.id, !note.pinned)}
+                              onDuplicate={() => duplicateNoteHandler(note.id)}
+                              onTagAdd={(tag) => handleAddTag(note.id, tag)}
+                            />
+                          </div>
+                        )}
+                      </Draggable>
+                    ))}
+                    {provided.placeholder}
+                  </div>
+                )}
+              </Droppable>
+            ))}
+          </div>
         )}
       </div>
       {selectedNote && (
@@ -395,6 +440,7 @@ const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory
           categories={categories}
           selectedCategory={selectedNote.category}
           tags={selectedNote.tags || []}
+          availableTags={tags}
         />
       )}
 

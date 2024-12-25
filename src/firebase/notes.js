@@ -99,23 +99,18 @@ export const getNotes = async (userId) => {
   try {
     const q = query(
       notesCollection,
-      where("userId", "==", userId)
+      where("userId", "==", userId),
+      orderBy("pinned", "desc"),
+      orderBy("order", "asc")
     );
     const querySnapshot = await getDocs(q);
     const notes = [];
     querySnapshot.forEach((doc) => {
       const note = { id: doc.id, ...doc.data() };
-      console.log("Retrieved note:", note); // Add this for debugging
+      console.log("Retrieved note:", note);
       notes.push(note);
     });
     
-    // Sort pinned notes to the top, then by order
-    notes.sort((a, b) => {
-      if (a.pinned && !b.pinned) return -1;
-      if (!a.pinned && b.pinned) return 1;
-      return (a.order || 0) - (b.order || 0);
-    });
-
     console.log("Retrieved notes:", notes.length);
     return notes;
   } catch (error) {
@@ -136,7 +131,9 @@ export const subscribeToNotes = (userId, callback) => {
 
   const q = query(
     notesCollection,
-    where("userId", "==", userId)
+    where("userId", "==", userId),
+    orderBy("pinned", "desc"),
+    orderBy("order", "asc")
   );
 
   const unsubscribe = onSnapshot(q, 
@@ -145,17 +142,11 @@ export const subscribeToNotes = (userId, callback) => {
       const notes = [];
       snapshot.forEach((doc) => {
         const note = { id: doc.id, ...doc.data() };
-        console.log("Note data:", note); // Add this for debugging
+        console.log("Note data:", note);
         notes.push(note);
       });
 
-      // Sort pinned notes to the top, then by order
-      notes.sort((a, b) => {
-        if (a.pinned && !b.pinned) return -1;
-        if (!a.pinned && b.pinned) return 1;
-        return (a.order || 0) - (b.order || 0);
-      });
-
+      // Notes are already sorted by Firestore, no need to sort again
       console.log("Processed notes:", notes.length);
       callback(notes);
     }, 

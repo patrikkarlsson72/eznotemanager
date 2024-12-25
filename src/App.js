@@ -12,6 +12,7 @@ import LandingPage from './components/LandingPage';
 import { subscribeToUserTags, subscribeToUserCategories, updateUserCategories } from './firebase/notes';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from './firebase';
+import WelcomeTour from './components/WelcomeTour';
 import './App.css';
 
 function App() {
@@ -22,7 +23,7 @@ function App() {
   const [categories, setCategories] = useState([]);
   const [showTagManager, setShowTagManager] = useState(false);
   const [tags, setTags] = useState([]);
-  const [selectedTag, setSelectedTag] = useState(null);
+  const [selectedTag, setSelectedTag] = useState([]);
   const [createNoteTrigger, setCreateNoteTrigger] = useState(false);
   const [user, loading] = useAuthState(auth);
 
@@ -73,10 +74,16 @@ function App() {
   };
 
   const handleTagSelect = (tag) => {
-    if (selectedTag === tag) {
-      setSelectedTag(null);
+    if (tag === null) {
+      setSelectedTag([]);
     } else {
-      setSelectedTag(tag);
+      setSelectedTag(prev => {
+        if (prev.includes(tag)) {
+          return prev.filter(t => t !== tag);
+        } else {
+          return [...prev, tag];
+        }
+      });
     }
   };
 
@@ -102,6 +109,7 @@ function App() {
 
   return (
     <div id="top" className="min-h-screen bg-gradient-to-br from-blue-950 via-blue-800 to-gray-900 flex flex-col">
+      <WelcomeTour />
       <Header
         onSearchChange={setSearchQuery}
         searchQuery={searchQuery}
@@ -122,6 +130,7 @@ function App() {
           setShowTagManager={setShowTagManager}
           onTagSelect={handleTagSelect}
           selectedCategory={selectedCategory}
+          selectedTag={selectedTag}
         />
         <ContentArea
           createNoteTrigger={createNoteTrigger}
@@ -132,6 +141,7 @@ function App() {
           notes={notes}
           setNotes={setNotes}
           selectedTag={selectedTag}
+          tags={tags}
         />
       </div>
       <Footer />
