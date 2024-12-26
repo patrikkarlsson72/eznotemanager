@@ -12,21 +12,27 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  max-width: 1600px; /* (380px * 4 notes) + (26px * 3 gaps) */
+  max-width: 1600px;
   width: 100%;
+  padding: 0 10px;
 }
 
 .notes-row {
   display: flex;
   gap: 26px;
   min-height: 340px;
+  max-height: 340px;
   width: 100%;
   justify-content: flex-start;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
 }
 
 .note-wrapper {
-  width: 380px;
-  flex: 0 0 380px; /* Don't grow, don't shrink, stay at 380px */
+  width: calc(25% - 20px);
+  min-width: 300px;
+  max-width: 380px;
+  flex: 1 1 300px;
   display: flex;
   height: 340px;
 }
@@ -37,17 +43,23 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Add styles for the drag placeholder */
+/* Improve placeholder behavior */
 [data-rbd-placeholder-context-id] {
-  width: 380px !important;
+  width: calc(25% - 20px) !important;
+  min-width: 300px !important;
+  max-width: 380px !important;
   height: 340px !important;
   margin: 0 !important;
   opacity: 0.2;
   background: #666;
   border-radius: 12px;
+  transform: none !important;
 }
 
 /* Ensure dragged item maintains its size */
 [data-rbd-dragging-state-context-id] {
-  width: 380px !important;
+  width: calc(25% - 20px) !important;
+  min-width: 300px !important;
+  max-width: 380px !important;
+  transform: rotate(2deg) !important;
 }

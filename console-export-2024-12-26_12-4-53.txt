@@ -1,0 +1,133 @@
+Removing unpermitted intrinsics lockdown-install.js:1:52832
+Varningar om kakor 3
+Download the React DevTools for a better development experience: https://reactjs.org/link/react-devtools react-dom.development.js:29895
+Removing unpermitted intrinsics lockdown-install.js:1:52832
+Setting up subscription for user: zb7GtRJ7zqSCArBgeZY0hDK9BxF3 ContentArea.js:33
+Final filtered notes: 0 ContentArea.js:360
+Attempting to initialize user: zb7GtRJ7zqSCArBgeZY0hDK9BxF3 App.js:109
+Final filtered notes: 0 ContentArea.js:360
+InstallTrigger är föråldrad och kommer att tas bort i framtiden. helpers.tsx:58
+Subscribing to notes for user: zb7GtRJ7zqSCArBgeZY0hDK9BxF3 notes.js:121
+Current selected category: All Notes ContentArea.js:322
+All notes: 3 ContentArea.js:323
+Note 👋 Welcome to EzNoteManager!: checking All Notes condition: 
+Object { isArchived: undefined, matchesCategory: true }
+ContentArea.js:330
+Current selected category: All Notes ContentArea.js:322
+All notes: 3 ContentArea.js:323
+Note 🎨 Categories and Tags Demo: checking All Notes condition: 
+Object { isArchived: undefined, matchesCategory: true }
+ContentArea.js:330
+Current selected category: All Notes ContentArea.js:322
+All notes: 3 ContentArea.js:323
+Note 💡 Pro Tips: checking All Notes condition: 
+Object { isArchived: undefined, matchesCategory: true }
+ContentArea.js:330
+Received updated tags: 
+Array(6) [ "welcome", "tutorial", "organization", "demo", "features", "tips" ]
+App.js:42
+Received updated categories: 
+Array(5) [ {…}, {…}, {…}, {…}, {…} ]
+App.js:58
+Final filtered notes: 3 ContentArea.js:360
+- Note: 
+Object { id: "q102HHJtwq1kMMML5jO4", title: "👋 Welcome to EzNoteManager!", category: "Personal", isArchived: false, order: 1000 }
+ContentArea.js:362
+- Note: 
+Object { id: "TeCUNQUXUAx9tlIfdBN2", title: "🎨 Categories and Tags Demo", category: "Work/Projects", isArchived: false, order: 2000 }
+ContentArea.js:362
+- Note: 
+Object { id: "AHtENM3YiVEHtcsgBFbV", title: "💡 Pro Tips", category: "Ideas", isArchived: false, order: 3000 }
+ContentArea.js:362
+Current selected category: All Notes ContentArea.js:322
+All notes: 3 ContentArea.js:323
+Note 👋 Welcome to EzNoteManager!: checking All Notes condition: 
+Object { isArchived: undefined, matchesCategory: true }
+ContentArea.js:330
+Current selected category: All Notes ContentArea.js:322
+All notes: 3 ContentArea.js:323
+Note 🎨 Categories and Tags Demo: checking All Notes condition: 
+Object { isArchived: undefined, matchesCategory: true }
+ContentArea.js:330
+Current selected category: All Notes ContentArea.js:322
+All notes: 3 ContentArea.js:323
+Note 💡 Pro Tips: checking All Notes condition: 
+Object { isArchived: undefined, matchesCategory: true }
+ContentArea.js:330
+Final filtered notes: 3 ContentArea.js:360
+- Note: 
+Object { id: "q102HHJtwq1kMMML5jO4", title: "👋 Welcome to EzNoteManager!", category: "Personal", isArchived: false, order: 1000 }
+ContentArea.js:362
+- Note: 
+Object { id: "TeCUNQUXUAx9tlIfdBN2", title: "🎨 Categories and Tags Demo", category: "Work/Projects", isArchived: false, order: 2000 }
+ContentArea.js:362
+- Note: 
+Object { id: "AHtENM3YiVEHtcsgBFbV", title: "💡 Pro Tips", category: "Ideas", isArchived: false, order: 3000 }
+ContentArea.js:362
+Received snapshot with changes notes.js:137
+Processed notes: 3 notes.js:143
+Received notes update: 3 ContentArea.js:41
+Current selected category: All Notes ContentArea.js:322
+All notes: 3 ContentArea.js:323
+Note 👋 Welcome to EzNoteManager!: checking All Notes condition: 
+Object { isArchived: undefined, matchesCategory: true }
+ContentArea.js:330
+Current selected category: All Notes ContentArea.js:322
+All notes: 3 ContentArea.js:323
+Note 🎨 Categories and Tags Demo: checking All Notes condition: 
+Object { isArchived: undefined, matchesCategory: true }
+ContentArea.js:330
+Current selected category: All Notes ContentArea.js:322
+All notes: 3 ContentArea.js:323
+Note 💡 Pro Tips: checking All Notes condition: 
+Object { isArchived: undefined, matchesCategory: true }
+ContentArea.js:330
+Warning: Connect(Droppable): Support for defaultProps will be removed from memo components in a future major release. Use JavaScript default parameters instead.
+div
+div
+Provider@http://localhost:3000/static/js/bundle.js:125218:15
+App@http://localhost:3000/static/js/bundle.js:92719:19
+ErrorBoundary@http://localhost:3000/static/js/bundle.js:86932:35
+DragDropContext@http://localhost:3000/static/js/bundle.js:92843:19
+ContentArea@http://localhost:3000/static/js/bundle.js:325:21
+div
+div
+App@http://localhost:3000/static/js/bundle.js:53:98 react-dom.development.js:86
+Final filtered notes: 3 ContentArea.js:360
+- Note: 
+Object { id: "q102HHJtwq1kMMML5jO4", title: "👋 Welcome to EzNoteManager!", category: "Personal", isArchived: false, order: 1000 }
+ContentArea.js:362
+- Note: 
+Object { id: "TeCUNQUXUAx9tlIfdBN2", title: "🎨 Categories and Tags Demo", category: "Work/Projects", isArchived: false, order: 2000 }
+ContentArea.js:362
+- Note: 
+Object { id: "AHtENM3YiVEHtcsgBFbV", title: "💡 Pro Tips", category: "Ideas", isArchived: false, order: 3000 }
+ContentArea.js:362
+Checking if user needs initialization: zb7GtRJ7zqSCArBgeZY0hDK9BxF3 notes.js:373
+User document already exists, checking for notes notes.js:400
+User already has notes, skipping initialization notes.js:411
+Current selected category: All Notes ContentArea.js:322
+All notes: 3 ContentArea.js:323
+Note 👋 Welcome to EzNoteManager!: checking All Notes condition: 
+Object { isArchived: undefined, matchesCategory: true }
+ContentArea.js:330
+Current selected category: All Notes ContentArea.js:322
+All notes: 3 ContentArea.js:323
+Note 🎨 Categories and Tags Demo: checking All Notes condition: 
+Object { isArchived: undefined, matchesCategory: true }
+ContentArea.js:330
+Current selected category: All Notes ContentArea.js:322
+All notes: 3 ContentArea.js:323
+Note 💡 Pro Tips: checking All Notes condition: 
+Object { isArchived: undefined, matchesCategory: true }
+ContentArea.js:330
+Final filtered notes: 3 ContentArea.js:360
+- Note: 
+Object { id: "q102HHJtwq1kMMML5jO4", title: "👋 Welcome to EzNoteManager!", category: "Personal", isArchived: false, order: 1000 }
+ContentArea.js:362
+- Note: 
+Object { id: "TeCUNQUXUAx9tlIfdBN2", title: "🎨 Categories and Tags Demo", category: "Work/Projects", isArchived: false, order: 2000 }
+ContentArea.js:362
+- Note: 
+Object { id: "AHtENM3YiVEHtcsgBFbV", title: "💡 Pro Tips", category: "Ideas", isArchived: false, order: 3000 }
+ContentArea.js:362

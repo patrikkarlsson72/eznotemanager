@@ -1,18 +1,24 @@
 import React, { useState, useEffect } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from './firebase';
+import { 
+  subscribeToUserTags, 
+  subscribeToUserCategories, 
+  updateUserCategories,
+  initializeNewUser,
+  getNotes
+} from './firebase/notes';
+
+// Components
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import ContentArea from './components/ContentArea';
 import TagManager from './components/TagManager';
 import Footer from './components/Footer';
 import CookieConsent from './components/CookieConsent';
-import HelpFaqModal from './components/HelpFaqModal';
-import PrivacyPolicyModal from './components/PrivacyPolicyModal';
-import TermsOfServiceModal from './components/TermsOfServiceModal';
 import LandingPage from './components/LandingPage';
-import { subscribeToUserTags, subscribeToUserCategories, updateUserCategories } from './firebase/notes';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from './firebase';
-import WelcomeTour from './components/WelcomeTour';
+import WelcomeGuide from './components/WelcomeGuide';
+
 import './App.css';
 
 function App() {
@@ -25,6 +31,7 @@ function App() {
   const [tags, setTags] = useState([]);
   const [selectedTag, setSelectedTag] = useState([]);
   const [createNoteTrigger, setCreateNoteTrigger] = useState(false);
+  const [showWelcomeGuide, setShowWelcomeGuide] = useState(false);
   const [user, loading] = useAuthState(auth);
 
   // Subscribe to user's tags
@@ -95,6 +102,54 @@ function App() {
     }
   };
 
+  // Handle new user setup and welcome guide
+  useEffect(() => {
+    const setupNewUser = async () => {
+      if (user) {
+        try {
+          console.log('Attempting to initialize user:', user.uid);
+          // Wait for categories and tags subscriptions to be set up
+          await new Promise(resolve => setTimeout(resolve, 1000));
+          const isNewUser = await initializeNewUser(user.uid);
+          
+          // Show welcome guide for new users
+          if (isNewUser) {
+            setShowWelcomeGuide(true);
+          }
+          
+          // Force a refresh of notes after initialization
+          const updatedNotes = await getNotes(user.uid);
+          setNotes(updatedNotes);
+        } catch (error) {
+          console.error('Error setting up new user:', error);
+        }
+      }
+    };
+
+    if (user && !loading) {
+      setupNewUser();
+    }
+  }, [user, loading]);
+
+  // Check if user is new and show welcome guide
+  useEffect(() => {
+    const checkNewUser = async () => {
+      if (user) {
+        const isNewUser = await initializeNewUser(user.uid);
+        if (isNewUser) {
+          setShowWelcomeGuide(true);
+        } else {
+          setShowWelcomeGuide(false);
+        }
+      }
+    };
+    checkNewUser();
+  }, [user]);
+
+  const handleCloseWelcomeGuide = () => {
+    setShowWelcomeGuide(false);
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-950 via-blue-800 to-gray-900 flex items-center justify-center">
@@ -109,7 +164,6 @@ function App() {
 
   return (
     <div id="top" className="min-h-screen bg-gradient-to-br from-blue-950 via-blue-800 to-gray-900 flex flex-col">
-      <WelcomeTour />
       <Header
         onSearchChange={setSearchQuery}
         searchQuery={searchQuery}
@@ -120,7 +174,7 @@ function App() {
         setSelectedCategory={setSelectedCategory}
       />
       <div className="flex flex-1 overflow-hidden">
-        <Sidebar 
+        <Sidebar
           categories={categories}
           setCategories={handleUpdateCategories}
           onCategorySelect={handleCategorySelect}
@@ -153,6 +207,9 @@ function App() {
           setShowTagManager={setShowTagManager}
           userId={user?.uid}
         />
+      )}
+      {showWelcomeGuide && (
+        <WelcomeGuide onClose={handleCloseWelcomeGuide} />
       )}
     </div>
   );

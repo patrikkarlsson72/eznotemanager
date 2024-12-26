@@ -138,29 +138,32 @@ const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory
         console.error('Could not find note in original array');
         return;
       }
+
+      // Create a new array without the moved note
+      const notesWithoutMoved = allNotes.filter(note => note.id !== movedNote.id);
       
-      // Remove from original position and insert at new position
-      allNotes.splice(originalIndex, 1);
-      const insertIndex = allNotes.findIndex((note, idx) => {
-        if (idx >= destIndex) {
-          return true;
-        }
-        return false;
-      });
+      // Calculate the insert position
+      let insertIndex = destIndex;
+      if (originalIndex < destIndex) {
+        insertIndex--;
+      }
       
-      allNotes.splice(insertIndex === -1 ? allNotes.length : insertIndex, 0, movedNote);
+      // Insert the note at the new position
+      notesWithoutMoved.splice(insertIndex, 0, movedNote);
       
-      // Calculate new order
-      const newOrder = calculateNewOrder(insertIndex === -1 ? allNotes.length - 1 : insertIndex, allNotes);
+      // Calculate new order based on surrounding notes
+      const newOrder = calculateNewOrder(insertIndex, notesWithoutMoved);
       
-      // Update the note in Firebase
-      await updateNote(movedNote.id, {
-        ...movedNote,
-        order: newOrder,
-        updatedAt: new Date()
-      });
+      // Update the note order in Firebase
+      await updateNoteOrder(movedNote.id, newOrder);
       
-      setNotes(allNotes);
+      // Create the final updated notes array
+      const updatedNotes = notesWithoutMoved.map(note => 
+        note.id === movedNote.id ? { ...note, order: newOrder } : note
+      );
+      
+      // Update local state
+      setNotes(updatedNotes);
     } catch (error) {
       console.error('Error reordering notes:', error);
       setError('Failed to reorder notes. Please try again.');
@@ -171,8 +174,8 @@ const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory
     try {
       // Handle edge cases
       if (!notes || notes.length === 0) return 1000;
-      if (index === 0) return (notes[1]?.order ?? 2000) - 1000;
-      if (index === notes.length - 1) return (notes[notes.length - 2]?.order ?? 0) + 1000;
+      if (index === 0) return Math.max(0, (notes[0]?.order ?? 1000) - 1000);
+      if (index === notes.length - 1) return (notes[notes.length - 1]?.order ?? 0) + 1000;
 
       const prevNote = notes[index - 1];
       const nextNote = notes[index + 1];
@@ -180,11 +183,11 @@ const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory
       // If either note is missing, provide fallback values
       if (!prevNote || !nextNote) return index * 1000;
 
-      // If orders are missing, generate new ones
+      // Calculate the midpoint between the previous and next notes
       const prevOrder = prevNote.order ?? (index - 1) * 1000;
       const nextOrder = nextNote.order ?? (index + 1) * 1000;
 
-      return prevOrder + (nextOrder - prevOrder) / 2;
+      return Math.floor(prevOrder + (nextOrder - prevOrder) / 2);
     } catch (error) {
       console.error('Error calculating order:', error);
       // Fallback to a safe value based on index
@@ -315,22 +318,59 @@ const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory
     return category ? category.color : 'bg-gray-300';
   };
 
+  // Filter notes
   const filteredNotes = notes
     .filter(note => {
-      const matchesCategory = selectedCategory === 'All Notes' && !note.isArchived ||
-                            selectedCategory === 'Archived' && note.isArchived ||
-                            selectedCategory !== 'Archived' && note.category === selectedCategory && !note.isArchived;
-      const matchesSearch = note.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          note.content.toLowerCase().includes(searchQuery.toLowerCase());
+      // Debug selected category first
+      console.log('Current selected category:', selectedCategory);
+      console.log('All notes:', notes.length);
+      
+      // More explicit category matching logic
+      let matchesCategory = false;
+      
+      if (selectedCategory === 'All Notes') {
+        matchesCategory = !note.isArchived;
+        console.log(`Note ${note.title}: checking All Notes condition:`, { isArchived: note.isArchived, matchesCategory });
+      } else if (selectedCategory === 'Archived') {
+        matchesCategory = note.isArchived;
+        console.log(`Note ${note.title}: checking Archived condition:`, { isArchived: note.isArchived, matchesCategory });
+      } else {
+        matchesCategory = note.category === selectedCategory && !note.isArchived;
+        console.log(`Note ${note.title}: checking specific category condition:`, { 
+          noteCategory: note.category, 
+          selectedCategory, 
+          isArchived: note.isArchived, 
+          matchesCategory 
+        });
+      }
+
+      const matchesSearch = !searchQuery || 
+                          note.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                          note.content?.toLowerCase().includes(searchQuery.toLowerCase());
       const matchesTags = !selectedTag?.length || 
                          (note.tags && selectedTag.every(tag => note.tags.includes(tag)));
+
       return matchesCategory && matchesSearch && matchesTags;
     })
     .sort((a, b) => {
       if (a.pinned && !b.pinned) return -1;
       if (!a.pinned && b.pinned) return 1;
-      return 0;  // Keep the existing order if both are pinned or both are not pinned
+      return (a.order || 0) - (b.order || 0);
     });
+
+  // Log filtered results
+  React.useEffect(() => {
+    console.log("Final filtered notes:", filteredNotes.length);
+    filteredNotes.forEach(note => {
+      console.log("- Note:", {
+        id: note.id,
+        title: note.title,
+        category: note.category || 'No category',
+        isArchived: !!note.isArchived,
+        order: note.order
+      });
+    });
+  }, [filteredNotes]);
 
   const handleAddTag = async (noteId, newTag) => {
     try {

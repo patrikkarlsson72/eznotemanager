@@ -14,7 +14,8 @@ import {
   arrayUnion,
   arrayRemove,
   getDoc,
-  setDoc
+  setDoc,
+  writeBatch
 } from 'firebase/firestore';
 
 // Collection references
@@ -101,17 +102,15 @@ export const getNotes = async (userId) => {
       notesCollection,
       where("userId", "==", userId),
       orderBy("pinned", "desc"),
-      orderBy("order", "asc")
+      orderBy("order", "asc"),
+      orderBy("__name__", "asc")
     );
     const querySnapshot = await getDocs(q);
     const notes = [];
     querySnapshot.forEach((doc) => {
       const note = { id: doc.id, ...doc.data() };
-      console.log("Retrieved note:", note);
       notes.push(note);
     });
-    
-    console.log("Retrieved notes:", notes.length);
     return notes;
   } catch (error) {
     console.error("Error getting notes:", error);
@@ -133,7 +132,8 @@ export const subscribeToNotes = (userId, callback) => {
     notesCollection,
     where("userId", "==", userId),
     orderBy("pinned", "desc"),
-    orderBy("order", "asc")
+    orderBy("order", "asc"),
+    orderBy("__name__", "asc")
   );
 
   const unsubscribe = onSnapshot(q, 
@@ -142,11 +142,8 @@ export const subscribeToNotes = (userId, callback) => {
       const notes = [];
       snapshot.forEach((doc) => {
         const note = { id: doc.id, ...doc.data() };
-        console.log("Note data:", note);
         notes.push(note);
       });
-
-      // Notes are already sorted by Firestore, no need to sort again
       console.log("Processed notes:", notes.length);
       callback(notes);
     }, 
@@ -266,6 +263,121 @@ export const updateUserCategories = async (userId, categories) => {
   }
 };
 
+// Create example notes for new users
+export const createExampleNotes = async (userId) => {
+  try {
+    console.log('Starting to create example notes for user:', userId);
+    
+    const exampleNotes = [
+      {
+        userId,
+        title: "📝 Project Ideas",
+        content: "Here are some project ideas for 2024:\n\n" +
+                "• Mobile app for fitness tracking\n" +
+                "• E-commerce website redesign\n" +
+                "• Smart home automation system\n" +
+                "• AI-powered task manager\n\n" +
+                "Remember to prioritize based on market research!",
+        category: "Work/Projects",
+        tags: ["projects", "ideas", "planning"],
+        pinned: true,
+        createdAt: Timestamp.now(),
+        updatedAt: Timestamp.now()
+      },
+      {
+        userId,
+        title: "🎯 Weekly Goals",
+        content: "Goals for this week:\n\n" +
+                "✅ Complete project documentation\n" +
+                "✅ Team meeting on Wednesday\n" +
+                "⬜ Review pull requests\n" +
+                "⬜ Update client presentation\n\n" +
+                "Don't forget to update progress daily!",
+        category: "Personal",
+        tags: ["goals", "tasks", "weekly"],
+        createdAt: Timestamp.now(),
+        updatedAt: Timestamp.now()
+      },
+      {
+        userId,
+        title: "💡 Meeting Notes",
+        content: "Client Meeting - Website Redesign\n\n" +
+                "Key Points:\n" +
+                "• Modern, minimalist design\n" +
+                "• Mobile-first approach\n" +
+                "• Improved user navigation\n" +
+                "• Performance optimization\n\n" +
+                "Next Steps:\n" +
+                "1. Create wireframes\n" +
+                "2. Design mockups\n" +
+                "3. Client review",
+        category: "Work/Projects",
+        tags: ["meeting", "client", "design"],
+        createdAt: Timestamp.now(),
+        updatedAt: Timestamp.now()
+      }
+    ];
+
+    // Add each example note individually with retry logic
+    for (const note of exampleNotes) {
+      // Wait 2 seconds between each note creation
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      let retries = 3;
+      while (retries > 0) {
+        try {
+          console.log('Adding note:', note.title);
+          // Use addNote instead of addDoc to ensure proper order handling
+          const newNote = await addNote(note);
+          console.log('Note added successfully:', newNote.id);
+          break; // Success, exit retry loop
+        } catch (error) {
+          console.error(`Error adding note (${retries} retries left):`, error);
+          retries--;
+          if (retries === 0) throw error;
+          // Wait 2 seconds before retry
+          await new Promise(resolve => setTimeout(resolve, 2000));
+        }
+      }
+    }
+
+    console.log("All example notes created successfully");
+
+    // Update user's tags
+    const allTags = [...new Set(exampleNotes.flatMap(note => note.tags))];
+    await updateUserTags(userId, allTags);
+    console.log("User tags updated with example tags");
+
+  } catch (error) {
+    console.error("Error creating example notes:", error);
+    throw error;
+  }
+};
+
+// Initialize new user
+export const initializeNewUser = async (userId) => {
+  try {
+    const userRef = doc(db, 'users', userId);
+    const userDoc = await getDoc(userRef);
+    
+    // Only return true if this is actually a new user
+    if (!userDoc.exists()) {
+      await setDoc(userRef, {
+        categories: getDefaultCategories(),
+        tags: [],
+        createdAt: Timestamp.now()
+      });
+      return true;
+    }
+    
+    // Existing user, don't show welcome guide
+    return false;
+  } catch (error) {
+    console.error('Error initializing user:', error);
+    return false;
+  }
+};
+
 // Helper function to get default categories
 const getDefaultCategories = () => [
   { name: 'All Notes', color: 'bg-gray-300' },
@@ -273,7 +385,7 @@ const getDefaultCategories = () => [
   { name: 'Work/Projects', color: 'bg-green-200' },
   { name: 'Ideas', color: 'bg-yellow-200' },
   { name: 'Uncategorized', color: 'bg-gray-300' }
-]; 
+];
 
 // Update note order
 export const updateNoteOrder = async (noteId, newOrder) => {
