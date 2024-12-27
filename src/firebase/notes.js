@@ -208,14 +208,37 @@ export const updateUserTags = async (userId, newTags) => {
 };
 
 // Remove a tag from user's tags
-export const removeUserTag = async (userId, tag) => {
+export const removeUserTag = async (userId, tagToRemove) => {
   try {
-    const userRef = doc(usersCollection, userId);
-    await updateDoc(userRef, {
-      tags: arrayRemove(tag)
+    const userRef = doc(db, 'users', userId);
+    const userDoc = await getDoc(userRef);
+    const currentTags = userDoc.data()?.tags || [];
+    const updatedTags = currentTags.filter(tag => tag !== tagToRemove);
+
+    // Update user's tags
+    await updateDoc(userRef, { tags: updatedTags });
+
+    // Get all notes for the user - using the correct collection path
+    const q = query(notesCollection, where("userId", "==", userId));
+    const notesSnapshot = await getDocs(q);
+
+    // Update each note that contains the tag
+    const batch = writeBatch(db);
+    notesSnapshot.forEach((noteDoc) => {
+      const noteTags = noteDoc.data().tags || [];
+      if (noteTags.includes(tagToRemove)) {
+        const updatedNoteTags = noteTags.filter(tag => tag !== tagToRemove);
+        batch.update(noteDoc.ref, { tags: updatedNoteTags });
+      }
     });
+
+    // Commit all updates
+    await batch.commit();
+
+    console.log('Tag removed successfully from user and notes');
+    return true; // Return success to help with UI updates
   } catch (error) {
-    console.error("Error removing user tag:", error);
+    console.error('Error removing tag:', error);
     throw error;
   }
 };

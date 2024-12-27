@@ -114,6 +114,14 @@ const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory
     return rows;
   };
 
+  const getActualRowIndex = (rowIndex, index, notesArray) => {
+    let actualIndex = 0;
+    for (let i = 0; i < rowIndex; i++) {
+      actualIndex += Math.min(ITEMS_PER_ROW, notesArray.length - (i * ITEMS_PER_ROW));
+    }
+    return actualIndex + index;
+  };
+
   const onDragEnd = async (result) => {
     const { source, destination } = result;
     
@@ -127,42 +135,64 @@ const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory
       const sourceRowIndex = parseInt(source.droppableId.split('-')[1]);
       const destRowIndex = parseInt(destination.droppableId.split('-')[1]);
       
-      const sourceIndex = (sourceRowIndex * ITEMS_PER_ROW) + source.index;
-      const destIndex = (destRowIndex * ITEMS_PER_ROW) + destination.index;
+      console.log('Drag operation:', {
+        sourceRow: sourceRowIndex,
+        destRow: destRowIndex,
+        sourceIndex: source.index,
+        destIndex: destination.index
+      });
+
+      // Get the actual indices
+      const sourceIndex = sourceRowIndex * ITEMS_PER_ROW + source.index;
+      const destIndex = destRowIndex * ITEMS_PER_ROW + destination.index;
       
-      // Find the actual note in the original notes array
-      const movedNote = filteredNotesArray[sourceIndex];
-      const originalIndex = allNotes.findIndex(note => note.id === movedNote.id);
+      // Get the actual note being moved
+      const sourceNote = filteredNotesArray[sourceIndex];
       
-      if (originalIndex === -1) {
-        console.error('Could not find note in original array');
-        return;
+      // Sort notes by order for accurate positioning
+      const sortedNotes = [...filteredNotesArray].sort((a, b) => a.order - b.order);
+      
+      // Find the notes before and after the destination position
+      let prevNote = null;
+      let nextNote = null;
+      let newOrder;
+      
+      if (destIndex === 0) {
+        nextNote = sortedNotes[0];
+        newOrder = nextNote.order - 1000;
+      } else if (destIndex >= filteredNotesArray.length) {
+        prevNote = sortedNotes[sortedNotes.length - 1];
+        newOrder = prevNote.order + 1000;
+      } else {
+        // Find the actual notes that will be before and after the moved note
+        const notesWithoutSource = sortedNotes.filter(note => note.id !== sourceNote.id);
+        prevNote = notesWithoutSource[destIndex - 1];
+        nextNote = notesWithoutSource[destIndex];
+        
+        if (prevNote && nextNote) {
+          newOrder = (prevNote.order + nextNote.order) / 2;
+        } else if (prevNote) {
+          newOrder = prevNote.order + 1000;
+        } else if (nextNote) {
+          newOrder = nextNote.order - 1000;
+        }
       }
 
-      // Create a new array without the moved note
-      const notesWithoutMoved = allNotes.filter(note => note.id !== movedNote.id);
-      
-      // Calculate the insert position
-      let insertIndex = destIndex;
-      if (originalIndex < destIndex) {
-        insertIndex--;
-      }
-      
-      // Insert the note at the new position
-      notesWithoutMoved.splice(insertIndex, 0, movedNote);
-      
-      // Calculate new order based on surrounding notes
-      const newOrder = calculateNewOrder(insertIndex, notesWithoutMoved);
-      
+      console.log('Order calculation:', {
+        oldOrder: sourceNote?.order,
+        newOrder: newOrder,
+        prevNoteOrder: prevNote?.order,
+        nextNoteOrder: nextNote?.order
+      });
+
       // Update the note order in Firebase
-      await updateNoteOrder(movedNote.id, newOrder);
-      
-      // Create the final updated notes array
-      const updatedNotes = notesWithoutMoved.map(note => 
-        note.id === movedNote.id ? { ...note, order: newOrder } : note
-      );
+      await updateNoteOrder(sourceNote.id, newOrder);
       
       // Update local state
+      const updatedNotes = allNotes.map(note => 
+        note.id === sourceNote.id ? { ...note, order: newOrder } : note
+      );
+      
       setNotes(updatedNotes);
     } catch (error) {
       console.error('Error reordering notes:', error);
@@ -418,7 +448,8 @@ const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory
                   <div
                     ref={provided.innerRef}
                     {...provided.droppableProps}
-                    className="notes-row"
+                    className={`notes-row ${snapshot.isDraggingOver ? 'drop-target' : ''}`}
+                    data-row-index={rowIndex}
                   >
                     {rowNotes.map((note, index) => (
                       <Draggable
@@ -442,7 +473,10 @@ const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory
                             className="note-wrapper"
                             style={{
                               ...provided.draggableProps.style,
-                              opacity: snapshot.isDragging ? 0.5 : 1
+                              opacity: snapshot.isDragging ? 0.5 : 1,
+                              transform: snapshot.isDragging 
+                                ? `${provided.draggableProps.style.transform} rotate(2deg)`
+                                : provided.draggableProps.style.transform
                             }}
                           >
                             <Note
@@ -484,7 +518,6 @@ const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory
         />
       )}
 
-      {/* Custom Context Menu */}
       {contextMenu.visible && (
         <ul
           ref={contextMenuRef}

@@ -13,108 +13,85 @@ const HelpFaqModal = ({ isOpen, onRequestClose }) => {
     >
       <h2 className="text-2xl font-semibold mb-4">Help / FAQ</h2>
       <div className="faq-content text-gray-700 overflow-y-auto" style={{ maxHeight: '60vh' }}>
-        {/* Insert the Help/FAQ content here */}
         <h3 className="text-xl font-bold mb-2">General Questions</h3>
         <p><strong>What is EzNoteManager?</strong></p>
         <p>EzNoteManager is a powerful note-taking application that helps you organize, manage, and customize your notes with ease. Whether you're brainstorming ideas, planning your day, or storing important information, EzNoteManager provides a user-friendly interface and robust features to support your needs.</p>
+        
         <p><strong>How do I create a new note?</strong></p>
-        <p>To create a new note, click on the "Add Note" button available in the header. This will open the note editor, where you can start writing your note immediately. </p>
+        <p>To create a new note, click on the "Add Note" button in the header. This will open the note editor where you can write your note, add tags, select a category, and more.</p>
+
         <p><strong>How do I delete a note?</strong></p>
+        <p>To delete a note, right-click on the note and select "Delete Note" from the context menu. You can also click the trash icon directly on the note to delete it instantly.</p>
 
-<p>To delete a note, right-click on the note you wish to delete and select "Delete Note" from the context menu. You can also click the trash icon directly on the note to delete it instantly.</p>
+        <p><strong>How do I duplicate a note?</strong></p>
+        <p>To duplicate a note, right-click on the note and select "Duplicate Note" from the context menu. This will create an exact copy of the selected note with all its content, tags, and category.</p>
 
-<p><strong>How do I duplicate a note?</strong></p>
+        <h3 className="text-xl font-bold mb-2 mt-4">Working with Notes</h3>
+        <p><strong>How do I edit a note?</strong></p>
+        <p>To edit a note, simply click on the note you wish to edit. This will open the note editor where you can modify the content, add or remove tags, change the category, and more.</p>
 
-<p>If you want to duplicate a note, right-click on the note and select "Duplicate Note" from the context menu. This will create a copy of the selected note.</p>
+        <p><strong>How do I organize my notes?</strong></p>
+        <p>You can organize your notes in several ways:</p>
+        <ul className="list-disc ml-6 mb-4">
+          <li>Drag and drop notes to reorder them</li>
+          <li>Pin important notes to keep them at the top</li>
+          <li>Categorize notes using custom categories</li>
+          <li>Add tags for easy filtering and searching</li>
+          <li>Archive notes you don't need right now</li>
+        </ul>
 
-<h3 className="text-xl font-bold mb-2">Working with Notes</h3>
+        <p><strong>How do I archive a note?</strong></p>
+        <p>To archive a note, click the archive icon on the note or right-click and select "Archive" from the context menu. Archived notes can be accessed by clicking "View Archived Notes" in the sidebar.</p>
 
-<p><strong>How do I edit a note?</strong></p>
+        <p><strong>How do I pin a note?</strong></p>
+        <p>To pin a note, click the pin icon on the note or right-click and select "Pin Note" from the context menu. Pinned notes will always appear at the top of your notes list. Click the pin icon again to unpin.</p>
 
-<p>To edit a note, simply click on the note you wish to edit. This will open the note in the editor, where you can modify the content, add images, change the category, and more.</p>
+        <h3 className="text-xl font-bold mb-2 mt-4">Categories and Tags</h3>
+        <p><strong>How do I manage categories?</strong></p>
+        <p>In the sidebar, you can:</p>
+        <ul className="list-disc ml-6 mb-4">
+          <li>Create new categories by entering a name and selecting a color</li>
+          <li>Edit categories by clicking the edit icon next to the category name</li>
+          <li>Delete categories by clicking the trash icon (note: this will also delete or move associated notes)</li>
+          <li>Click on any category to filter notes by that category</li>
+        </ul>
 
-<p><strong>Can I add images to my notes?</strong></p>
+        <p><strong>How do I work with tags?</strong></p>
+        <p>Tags are a flexible way to organize your notes:</p>
+        <ul className="list-disc ml-6 mb-4">
+          <li>Add tags when creating or editing a note</li>
+          <li>Click on tags in the sidebar to filter notes</li>
+          <li>Right-click on a tag in the sidebar to delete it</li>
+          <li>Drag tags from the sidebar onto notes to quickly apply them</li>
+          <li>Use the "Manage Tags" button to organize all your tags</li>
+        </ul>
 
-<p>Yes, you can add images to your notes using the built-in editor. When you are editing a note, click on the image icon in the toolbar to upload and insert an image into your note.</p>
+        <p><strong>How do I delete a tag?</strong></p>
+        <p>There are two ways to delete a tag:</p>
+        <ul className="list-disc ml-6 mb-4">
+          <li>Right-click on the tag in the sidebar and select "Delete Tag"</li>
+          <li>Use the "Manage Tags" interface to delete multiple tags at once</li>
+        </ul>
 
-<p><strong>How do I resize images within a note?</strong></p>
+        <h3 className="text-xl font-bold mb-2 mt-4">Search and Filter</h3>
+        <p><strong>How do I find specific notes?</strong></p>
+        <p>You can find notes using several methods:</p>
+        <ul className="list-disc ml-6 mb-4">
+          <li>Use the search bar to search by title or content</li>
+          <li>Filter by category from the sidebar</li>
+          <li>Filter by one or multiple tags</li>
+          <li>Combine search and filters for more precise results</li>
+        </ul>
 
-<p>You can resize images directly in the editor by clicking on the image and dragging the corners to your desired size. Images in the note previews are automatically adjusted to fit within the content area while maintaining their aspect ratio.</p>
+        <h3 className="text-xl font-bold mb-2 mt-4">Data Management</h3>
+        <p><strong>How is my data stored?</strong></p>
+        <p>EzNoteManager uses Firebase to securely store your notes in the cloud. Your notes are automatically synchronized across devices when you're signed in to your account.</p>
 
-<p><strong>How do I archive a note?</strong></p>
+        <p><strong>Is my data backed up?</strong></p>
+        <p>Yes, your notes are automatically backed up to Firebase's secure cloud storage. You can access your notes from any device by signing in to your account.</p>
 
-<p>To archive a note, click the archive icon on the note. Archived notes can be accessed later by selecting the "Archived" category from the sidebar.</p>
-
-<p><strong>How do I pin a note?</strong></p>
-
-<p>Pinning a note will keep it at the top of your list for easy access. To pin a note, click the pin icon on the note. You can unpin it at any time by clicking the pin icon again.</p>
-
-<h3 className="text-xl font-bold mb-2">Categories and Tags</h3>
-
-<p><strong>How do I categorize my notes?</strong></p>
-
-<p>When creating or editing a note, you can select a category from the dropdown menu. Categories help you organize your notes and quickly find them later.</p>
-
-<p><strong>How do I create a new category?</strong></p>
-
-<p>In the sidebar, you can create a new category by entering a name for the category and selecting a color. Then, click the "Create Category" button to add it to your list.</p>
-
-<p><strong>How do I edit a category?</strong></p>
-
-<p>To edit an existing category, click the edit icon next to the category name in the sidebar. You can change the name and color of the category, then save your changes.</p>
-
-<p><strong>How do I delete a category?</strong></p>
-
-<p>To delete a category, click the trash icon next to the category name in the sidebar. Please note that if a category contains notes, you will be asked to confirm whether you want to delete the notes along with the category.</p>
-
-<p><strong>How do I add tags to my notes?</strong></p>
-
-<p>Tags can be added when creating or editing a note. Simply type the tag name and press Enter. Tags are a great way to group related notes together.</p>
-
-<p><strong>How do I manage tags?</strong></p>
-
-<p>You can manage your tags by clicking the "Manage Tags" button in the sidebar. From there, you can add, rename, or delete tags as needed.</p>
-
-<p><strong>How do I filter notes by tags or categories?</strong></p>
-
-<p>You can filter notes by selecting a tag or category in the sidebar. The selected filter will apply to all notes, showing only those that match the chosen tag or category. You can also clear the filters using the "Clear Filters" button in the header.</p>
-
-<p><strong>Can I search for notes?</strong></p>
-
-<p>Yes, you can search for notes using the search bar in the header. You can filter your search by title, content, tags, or category to find the exact note you're looking for.</p>
-
-<h3 className="text-xl font-bold mb-2">Advanced Features</h3>
-
-<p><strong>Can I drag and drop notes?</strong></p>
-
-<p>Yes! You can drag and drop notes to reorder them within the content area. This makes it easy to prioritize your notes as needed.</p>
-
-<p><strong>How is my data stored?</strong></p>
-
-<p>EzNoteManager stores your notes locally on your device. If you clear your browser’s storage, your notes will be deleted. We recommend backing up your important notes regularly.</p>
-
-<p><strong>Is there a way to back up my notes?</strong></p>
-
-<p>Currently, EzNoteManager does not support cloud backups directly. However, you can export your notes manually by copying the content and storing it in a secure location. We are working on introducing more advanced backup options in future updates.</p>
-
-<h3 className="text-xl font-bold mb-2">Troubleshooting</h3>
-
-<p><strong>My images are not appearing in the note previews, what should I do?</strong></p>
-
-<p>Ensure that the images were uploaded correctly when creating or editing your note. If the problem persists, try clearing your browser cache and reloading the page.</p>
-
-<p><strong>My notes disappeared after I refreshed the page. What happened?</strong></p>
-
-<p>EzNoteManager stores notes locally in your browser. If you clear your browser's storage or use a different browser, your notes might be lost. Always back up your important notes manually.</p>
-
-<p><strong>I accidentally deleted a category. Can I recover the notes?</strong></p>
-
-<p>If you delete a category, the notes associated with that category will also be deleted if you confirmed the deletion. Unfortunately, once deleted, the notes cannot be recovered.</p>
-
-<h3 className="text-xl font-bold mb-2">Getting Support</h3>
-
-<p>If you encounter issues or have further questions, please don't hesitate to reach out to me at <a href="https://www.linkedin.com/in/patrik-karlsson-808b5855/" target="_blank" rel="noopener noreferrer" className="text-blue-800 hover:text-yellow-400">LinkedIn</a>. I'm here to help!</p>
-        {/* Continue with the rest of the FAQ content... */}
+        <h3 className="text-xl font-bold mb-2 mt-4">Getting Support</h3>
+        <p>If you encounter issues or have questions not covered here, please reach out to me at <a href="https://www.linkedin.com/in/patrik-karlsson-808b5855/" target="_blank" rel="noopener noreferrer" className="text-blue-800 hover:text-yellow-400">LinkedIn</a>. I'm here to help!</p>
       </div>
       <button
         onClick={onRequestClose}

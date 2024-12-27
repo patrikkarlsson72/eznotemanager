@@ -26,6 +26,12 @@
   justify-content: flex-start;
   flex-wrap: wrap;
   margin-bottom: 10px;
+  position: relative;
+}
+
+.notes-row.drop-target {
+  background: rgba(59, 130, 246, 0.1);
+  border-radius: 8px;
 }
 
 .note-wrapper {
@@ -51,15 +57,14 @@
   height: 340px !important;
   margin: 0 !important;
   opacity: 0.2;
-  background: #666;
+  background: rgba(59, 130, 246, 0.2);
   border-radius: 12px;
-  transform: none !important;
+  border: 2px dashed #3b82f6;
 }
 
 /* Ensure dragged item maintains its size */
 [data-rbd-dragging-state-context-id] {
-  width: calc(25% - 20px) !important;
-  min-width: 300px !important;
-  max-width: 380px !important;
+  width: 100% !important;
+  height: 340px !important;
   transform: rotate(2deg) !important;
 }

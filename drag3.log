@@ -1,0 +1,65 @@
+ContentArea.js:138 Drag operation: {sourceRow: 0, destRow: 0, sourceIndex: 1, destIndex: 2}
+ContentArea.js:178 Order calculation: {oldOrder: 25, newOrder: 25, sourceIndex: 1, destIndex: 2}
+notes.js:141 Received snapshot with changes
+notes.js:147 Processed notes: 8
+ContentArea.js:41 Received notes update: 8
+ContentArea.js:352 Current selected category: All Notes
+ContentArea.js:353 All notes: 8
+ContentArea.js:360 Note Firebase command: checking All Notes condition: {isArchived: false, matchesCategory: true}
+ContentArea.js:352 Current selected category: All Notes
+ContentArea.js:353 All notes: 8
+ContentArea.js:360 Note Project Ideas 2024: checking All Notes condition: {isArchived: true, matchesCategory: false}
+ContentArea.js:352 Current selected category: All Notes
+ContentArea.js:353 All notes: 8
+ContentArea.js:360 Note note3: checking All Notes condition: {isArchived: false, matchesCategory: true}
+ContentArea.js:352 Current selected category: All Notes
+ContentArea.js:353 All notes: 8
+ContentArea.js:360 Note note4: checking All Notes condition: {isArchived: false, matchesCategory: true}
+ContentArea.js:352 Current selected category: All Notes
+ContentArea.js:353 All notes: 8
+ContentArea.js:360 Note note2: checking All Notes condition: {isArchived: false, matchesCategory: true}
+ContentArea.js:352 Current selected category: All Notes
+ContentArea.js:353 All notes: 8
+ContentArea.js:360 Note test: checking All Notes condition: {isArchived: false, matchesCategory: true}
+ContentArea.js:352 Current selected category: All Notes
+ContentArea.js:353 All notes: 8
+ContentArea.js:360 Note Weekly Goals: checking All Notes condition: {isArchived: true, matchesCategory: false}
+ContentArea.js:352 Current selected category: All Notes
+ContentArea.js:353 All notes: 8
+ContentArea.js:360 Note Meeting Notes - Client Discussion: checking All Notes condition: {isArchived: true, matchesCategory: false}
+ContentArea.js:390 Final filtered notes: 5
+ContentArea.js:392 - Note: {id: 'uZvPm8BfpgKJEMOsNSun', title: 'Firebase command', category: 'Work/Projects', isArchived: false, order: 69}
+ContentArea.js:392 - Note: {id: '1tMw678f7UgU1uaUzj03', title: 'note3', category: 'Uncategorized', isArchived: false, order: 25}
+ContentArea.js:392 - Note: {id: 'sJXRvbXnpVGWvpFsgdXe', title: 'note4', category: 'Uncategorized', isArchived: false, order: 30}
+ContentArea.js:392 - Note: {id: 'JjzBGFCElnu8EEx0wXJG', title: 'note2', category: 'Uncategorized', isArchived: false, order: 74}
+ContentArea.js:392 - Note: {id: 'jf54HppbrOpSg2ZFLTAM', title: 'test', category: 'Uncategorized', isArchived: false, order: 111}
+ContentArea.js:352 Current selected category: All Notes
+ContentArea.js:353 All notes: 8
+ContentArea.js:360 Note Firebase command: checking All Notes condition: {isArchived: false, matchesCategory: true}
+ContentArea.js:352 Current selected category: All Notes
+ContentArea.js:353 All notes: 8
+ContentArea.js:360 Note Project Ideas 2024: checking All Notes condition: {isArchived: true, matchesCategory: false}
+ContentArea.js:352 Current selected category: All Notes
+ContentArea.js:353 All notes: 8
+ContentArea.js:360 Note note3: checking All Notes condition: {isArchived: false, matchesCategory: true}
+ContentArea.js:352 Current selected category: All Notes
+ContentArea.js:353 All notes: 8
+ContentArea.js:360 Note note4: checking All Notes condition: {isArchived: false, matchesCategory: true}
+ContentArea.js:352 Current selected category: All Notes
+ContentArea.js:353 All notes: 8
+ContentArea.js:360 Note note2: checking All Notes condition: {isArchived: false, matchesCategory: true}
+ContentArea.js:352 Current selected category: All Notes
+ContentArea.js:353 All notes: 8
+ContentArea.js:360 Note test: checking All Notes condition: {isArchived: false, matchesCategory: true}
+ContentArea.js:352 Current selected category: All Notes
+ContentArea.js:353 All notes: 8
+ContentArea.js:360 Note Weekly Goals: checking All Notes condition: {isArchived: true, matchesCategory: false}
+ContentArea.js:352 Current selected category: All Notes
+ContentArea.js:353 All notes: 8
+ContentArea.js:360 Note Meeting Notes - Client Discussion: checking All Notes condition: {isArchived: true, matchesCategory: false}
+ContentArea.js:390 Final filtered notes: 5
+ContentArea.js:392 - Note: {id: 'uZvPm8BfpgKJEMOsNSun', title: 'Firebase command', category: 'Work/Projects', isArchived: false, order: 69}
+ContentArea.js:392 - Note: {id: '1tMw678f7UgU1uaUzj03', title: 'note3', category: 'Uncategorized', isArchived: false, order: 25}
+ContentArea.js:392 - Note: {id: 'sJXRvbXnpVGWvpFsgdXe', title: 'note4', category: 'Uncategorized', isArchived: false, order: 30}
+ContentArea.js:392 - Note: {id: 'JjzBGFCElnu8EEx0wXJG', title: 'note2', category: 'Uncategorized', isArchived: false, order: 74}
+ContentArea.js:392 - Note: {id: 'jf54HppbrOpSg2ZFLTAM', title: 'test', category: 'Uncategorized', isArchived: false, order: 111}
