@@ -9,8 +9,19 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 
 const ITEMS_PER_ROW = 4; // Or calculate based on screen width
 
-const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory, searchQuery, categories, notes, setNotes, selectedTag, tags }) => {
-  const [selectedNote, setSelectedNote] = useState(null);
+const ContentArea = ({ 
+  createNoteTrigger, 
+  setCreateNoteTrigger, 
+  selectedCategory, 
+  searchQuery, 
+  categories, 
+  notes, 
+  setNotes, 
+  selectedTag, 
+  tags,
+  selectedNote,
+  setSelectedNote
+}) => {
   const [contextMenu, setContextMenu] = useState({ visible: false, x: 0, y: 0, noteId: null });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -252,6 +263,7 @@ const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory
 
   const saveNoteContent = async (newTitle, newContent, newCategory, newTags) => {
     try {
+      console.log('Saving note content:', { newTitle, newContent, newCategory, newTags });
       const user = auth.currentUser;
       if (!user) {
         setError('Please sign in to save notes');
@@ -269,6 +281,8 @@ const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory
         order: selectedNote.order || (notes.length > 0 ? Math.max(...notes.map(n => n.order || 0)) + 1000 : 1000)
       };
 
+      console.log('Note data to save:', noteData);
+
       if (selectedNote.id) {
         // Update existing note
         await updateNote(selectedNote.id, noteData);
@@ -278,6 +292,7 @@ const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory
       }
       setSelectedNote(null);
     } catch (err) {
+      console.error('Error saving note:', err);
       setError(err.message);
     }
   };
@@ -507,7 +522,7 @@ const ContentArea = ({ createNoteTrigger, setCreateNoteTrigger, selectedCategory
       {selectedNote && (
         <NoteModal
           isOpen={!!selectedNote}
-          onRequestClose={cancelNoteCreation}
+          onRequestClose={() => setSelectedNote(null)}
           title={selectedNote.title}
           content={selectedNote.content}
           onSave={saveNoteContent}

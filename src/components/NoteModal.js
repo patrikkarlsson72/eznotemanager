@@ -1,23 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import Modal from 'react-modal';
-import NoteEditor from './NoteEditor';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import TipTapEditor from './TipTapEditor';
+import { useTheme } from '../context/ThemeContext';
 
-Modal.setAppElement('#root');
-
-const NoteModal = ({ isOpen, onRequestClose, title, content, onSave, categories, selectedCategory, tags, availableTags = [] }) => {
+const NoteModal = ({ isOpen, onRequestClose, title: initialTitle, content: initialContent, onSave, categories, selectedCategory, tags: initialTags = [], availableTags = [] }) => {
   const [editedTitle, setEditedTitle] = useState('');
-  const [editedContent, setEditedContent] = useState(content);
+  const [editedContent, setEditedContent] = useState('');
   const [selectedCat, setSelectedCat] = useState(selectedCategory || 'Uncategorized');
-  const [tagList, setTagList] = useState(tags || []);
+  const [tagList, setTagList] = useState([]);
   const [newTag, setNewTag] = useState('');
-  const [tagSuggestions, setTagSuggestions] = useState([]); // Filtered tag suggestions
+  const [tagSuggestions, setTagSuggestions] = useState([]);
+  const { theme } = useTheme();
 
   useEffect(() => {
-    setEditedTitle(title || '');
-    setEditedContent(content);
+    console.log('NoteModal content updated:', { initialTitle, initialContent });
+    setEditedTitle(initialTitle || '');
+    setEditedContent(initialContent || '');
     setSelectedCat(selectedCategory || 'Uncategorized');
-    setTagList(tags || []);
-  }, [title, content, selectedCategory, tags]);
+    setTagList(initialTags || []);
+  }, [initialTitle, initialContent, selectedCategory, initialTags]);
 
   useEffect(() => {
     if (newTag) {
@@ -38,8 +40,14 @@ const NoteModal = ({ isOpen, onRequestClose, title, content, onSave, categories,
 
   const handleSave = () => {
     const finalTitle = editedTitle.trim() === '' ? new Date().toLocaleDateString() : editedTitle;
+    console.log('Saving note:', { finalTitle, editedContent, selectedCat, tagList });
     onSave(finalTitle, editedContent, selectedCat, tagList);
     onRequestClose();
+  };
+
+  const handleContentChange = (newContent) => {
+    console.log('Content changed:', newContent);
+    setEditedContent(newContent);
   };
 
   const addTag = (tag) => {
@@ -55,96 +63,131 @@ const NoteModal = ({ isOpen, onRequestClose, title, content, onSave, categories,
     setTagList(tagList.filter(tag => tag !== tagToRemove));
   };
 
+  if (!isOpen) return null;
+
   return (
-    <Modal
-      isOpen={isOpen}
-      onRequestClose={onRequestClose}
-      contentLabel="Edit Note"
-      className="bg-white p-6 rounded-lg shadow-lg w-1/2 h-auto max-h-[90vh] overflow-hidden flex flex-col"  // Limit modal height and make it a flex container
-      overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center"
-    >
-      <div className="w-full flex-1 overflow-y-auto">  {/* Allow the editor area to scroll if it exceeds the height */}
-        <h2 className="text-2xl font-semibold mb-4">Edit Note</h2>
-        <input
-          type="text"
-          value={editedTitle}
-          onChange={(e) => setEditedTitle(e.target.value)}
-          onFocus={handleTitleFocus}
-          className="w-full p-2 mb-4 border border-gray-300 rounded"
-          placeholder={new Date().toLocaleDateString()}
-        />
-        <NoteEditor
-          initialContent={editedContent}
-          onChange={(content) => setEditedContent(content)}
-        />
-
-        <div className="mt-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            Category
-          </label>
-          <select
-            value={selectedCat}
-            onChange={(e) => setSelectedCat(e.target.value)}
-            className="w-full p-2 mb-4 border border-gray-300 rounded"
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+      <div className={`w-full max-w-4xl ${
+        theme === 'light'
+          ? 'bg-white'
+          : 'bg-gray-800'
+      } rounded-lg shadow-xl max-h-[90vh] flex flex-col`}>
+        <div className="p-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+          <h2 className={`text-xl font-bold ${
+            theme === 'light' ? 'text-gray-800' : 'text-white'
+          }`}>
+            {initialTitle ? 'Edit Note' : 'Create Note'}
+          </h2>
+          <button
+            onClick={onRequestClose}
+            className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
           >
-            {categories
-              .filter(category => category.name !== 'All Notes')
-              .map((category, index) => (
-                <option key={index} value={category.name}>
-                  {category.name}
-                </option>
-              ))}
-            <option value="Uncategorized">Uncategorized</option>
-          </select>
+            <FontAwesomeIcon icon={faTimes} />
+          </button>
         </div>
 
-        <div className="mt-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            Tags
-          </label>
-          <input
-            type="text"
-            value={newTag}
-            onChange={(e) => setNewTag(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && addTag(newTag)}
-            className="w-full p-2 mb-2 border border-gray-300 rounded"
-            placeholder="Add a tag and press Enter"
-          />
-          <div className="relative">
-            {tagSuggestions.length > 0 && (
-              <ul className="absolute z-10 bg-white border border-gray-300 rounded-md shadow-md max-h-48 overflow-y-auto mt-1 w-64">
-                {tagSuggestions.map((suggestion, index) => (
-                  <li 
-                    key={index} 
-                    onClick={() => addTag(suggestion)}
-                    className="cursor-pointer hover:bg-gray-100 p-2"
-                  >
-                    {suggestion}
-                  </li>
+        <div className="flex-1 overflow-y-auto p-4">
+          <div className="space-y-4">
+            <div>
+              <input
+                type="text"
+                value={editedTitle}
+                onChange={(e) => setEditedTitle(e.target.value)}
+                onFocus={handleTitleFocus}
+                placeholder="Note Title"
+                className={`w-full p-2 border rounded ${
+                  theme === 'light'
+                    ? 'bg-white border-gray-300 text-gray-800'
+                    : 'bg-gray-700 border-gray-600 text-white'
+                }`}
+              />
+            </div>
+
+            <div>
+              <TipTapEditor
+                content={editedContent}
+                onChange={handleContentChange}
+              />
+            </div>
+
+            <div>
+              <select
+                value={selectedCat}
+                onChange={(e) => setSelectedCat(e.target.value)}
+                className={`w-full p-2 border rounded ${
+                  theme === 'light'
+                    ? 'bg-white border-gray-300 text-gray-800'
+                    : 'bg-gray-700 border-gray-600 text-white'
+                }`}
+              >
+                {categories
+                  .filter(category => category.name !== 'All Notes')
+                  .map((category, index) => (
+                    <option key={index} value={category.name}>
+                      {category.name}
+                    </option>
+                  ))}
+                <option value="Uncategorized">Uncategorized</option>
+              </select>
+            </div>
+
+            <div>
+              <input
+                type="text"
+                value={newTag}
+                onChange={(e) => setNewTag(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && addTag(newTag)}
+                placeholder="Add a tag and press Enter"
+                className={`w-full p-2 border rounded ${
+                  theme === 'light'
+                    ? 'bg-white border-gray-300 text-gray-800'
+                    : 'bg-gray-700 border-gray-600 text-white'
+                }`}
+              />
+              <div className="relative">
+                {tagSuggestions.length > 0 && (
+                  <ul className="absolute z-10 bg-white border border-gray-300 rounded-md shadow-md max-h-48 overflow-y-auto mt-1 w-64">
+                    {tagSuggestions.map((suggestion, index) => (
+                      <li 
+                        key={index} 
+                        onClick={() => addTag(suggestion)}
+                        className="cursor-pointer hover:bg-gray-100 p-2"
+                      >
+                        {suggestion}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+              <div className="flex flex-wrap gap-2 mt-2">
+                {tagList.map((tag, index) => (
+                  <span key={index} className="bg-gray-200 text-gray-700 px-2 py-1 rounded-full">
+                    {tag}
+                    <button onClick={() => removeTag(tag)} className="ml-2 text-red-500">×</button>
+                  </span>
                 ))}
-              </ul>
-            )}
-          </div>
-          <div className="flex flex-wrap gap-2 mt-2">
-            {tagList.map((tag, index) => (
-              <span key={index} className="bg-gray-200 text-gray-700 px-2 py-1 rounded-full">
-                {tag}
-                <button onClick={() => removeTag(tag)} className="ml-2 text-red-500">x</button>
-              </span>
-            ))}
+              </div>
+            </div>
+
+            <div className="flex justify-end space-x-2">
+              <button
+                onClick={onRequestClose}
+                className="px-4 py-2 border border-gray-300 rounded hover:bg-gray-100
+                  dark:border-gray-600 dark:hover:bg-gray-700 dark:text-white"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleSave}
+                className="note-save-button px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+              >
+                Save
+              </button>
+            </div>
           </div>
         </div>
       </div>
-
-      <div className="flex justify-end mt-4">
-        <button onClick={handleSave} className="btn btn-primary mr-2">
-          Save
-        </button>
-        <button onClick={onRequestClose} className="btn btn-secondary">
-          Cancel
-        </button>
-      </div>
-    </Modal>
+    </div>
   );
 };
 

@@ -7,21 +7,21 @@
   - Auto-generate these when a new user signs up
 
 ## User Interface Improvements
-- [ ] Implement keyboard shortcuts
-  - `Ctrl/Cmd + N` - Create new note
-  - `Ctrl/Cmd + F` - Focus search
-  - `Ctrl/Cmd + S` - Save current note
+- [x] Implement keyboard shortcuts
+  - `Ctrl/Cmd + Alt + N` - Create new note
+  - `Ctrl/Cmd + Alt + F` - Focus search
+  - `Ctrl/Cmd + Alt + S` - Save current note
   - `Esc` - Close modals
-  - Add keyboard shortcut guide/cheatsheet
+  - [x] Add keyboard shortcut guide/cheatsheet
 
-- [ ] Add dark/light theme toggle
+- [x] Add dark/light theme toggle
   - Create alternate color schemes
   - Persist user preference
   - Add smooth transition animations
   - Auto-detect system preference
 
 ## User Onboarding
-- [ ] Create tutorial walkthrough
+- [x] Create tutorial walkthrough
   - First-time user guide
   - Interactive tooltips showing key features
   - Step-by-step guide for:

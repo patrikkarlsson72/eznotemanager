@@ -4,6 +4,7 @@ import { faPlus, faEdit, faTrash, faTag, faBoxArchive } from '@fortawesome/free-
 import { removeUserTag } from '../firebase/notes';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../firebase';
+import { useTheme } from '../context/ThemeContext';
 
 const availableColors = [
   'bg-gray-800', 'bg-blue-200', 'bg-red-500', 'bg-yellow-200', 'bg-blue-500', 
@@ -20,6 +21,7 @@ const Sidebar = ({ categories, setCategories, onCategorySelect, notes, setNotes,
   const [contextMenu, setContextMenu] = useState({ visible: false, x: 0, y: 0, tag: null });
   const contextMenuRef = useRef(null);
   const [user] = useAuthState(auth);
+  const { theme } = useTheme();
 
   const handleAddCategory = () => {
     if (newCategoryName.trim() === '') return;
@@ -138,14 +140,26 @@ const Sidebar = ({ categories, setCategories, onCategorySelect, notes, setNotes,
   }, [contextMenu.visible]);
 
   return (
-    <aside className="bg-transparent text-gray-300 w-64 p-4 border-r border-blue-950 flex flex-col h-full">
-      <nav className="space-y-2 bg-blue-900 rounded-xl flex-grow">
+    <aside className={`w-64 p-4 flex flex-col h-full ${
+      theme === 'light' 
+        ? 'bg-white bg-opacity-75 border-r border-gray-200' 
+        : 'bg-transparent border-r border-blue-950'
+    } ${theme === 'light' ? 'text-gray-700' : 'text-gray-300'}`}>
+      <nav className={`space-y-2 ${theme === 'light' ? 'bg-gray-100' : 'bg-blue-900'} rounded-xl flex-grow`}>
         {/* Categories Section */}
         <div className="category-section">
           {categories.map((category, index) => (
             <div
               key={index}
-              className={`flex items-center justify-between p-2 rounded hover:bg-gray-600 text-gray-300 group relative cursor-pointer ${selectedCategory === category.name ? 'bg-gray-600 ring-2 ring-yellow-500' : ''}`}
+              className={`flex items-center justify-between p-2 rounded group relative cursor-pointer ${
+                selectedCategory === category.name 
+                  ? theme === 'light'
+                    ? 'bg-blue-100 ring-2 ring-blue-400 text-blue-800'
+                    : 'bg-gray-600 ring-2 ring-yellow-500 text-white'
+                  : theme === 'light'
+                    ? 'text-gray-700 hover:bg-blue-50 hover:text-blue-800'
+                    : 'text-gray-300 hover:bg-gray-600 hover:text-white'
+              }`}
               onClick={() => onCategorySelect(category.name)}
             >
               <div className="flex items-center">
@@ -156,12 +170,12 @@ const Sidebar = ({ categories, setCategories, onCategorySelect, notes, setNotes,
                 <div className="absolute right-2 opacity-0 group-hover:opacity-100 flex space-x-2">
                   <FontAwesomeIcon
                     icon={faEdit}
-                    className="text-gray-400 hover:text-white cursor-pointer"
+                    className={`${theme === 'light' ? 'text-gray-500' : 'text-gray-400'} hover:text-white cursor-pointer`}
                     onClick={(e) => {e.stopPropagation(); startEditing(category, index);}}
                   />
                   <FontAwesomeIcon
                     icon={faTrash}
-                    className="text-gray-400 hover:text-red-500 cursor-pointer"
+                    className={`${theme === 'light' ? 'text-gray-500' : 'text-gray-400'} hover:text-red-500 cursor-pointer`}
                     onClick={(e) => {e.stopPropagation(); handleDeleteCategory(index);}}
                   />
                 </div>
@@ -175,7 +189,11 @@ const Sidebar = ({ categories, setCategories, onCategorySelect, notes, setNotes,
               value={newCategoryName}
               onChange={(e) => setNewCategoryName(e.target.value)}
               placeholder={isEditing ? "Edit Category" : "New Category"}
-              className="bg-gray-700 text-white p-2 mb-2 rounded border border-gray-300 w-full"
+              className={`p-2 mb-2 rounded border w-full ${
+                theme === 'light' 
+                  ? 'bg-white text-gray-700 border-gray-300' 
+                  : 'bg-gray-700 text-white border-gray-300'
+              }`}
             />
             <div className="flex space-x-2 mb-2">
               {availableColors.map((color, index) => (
@@ -188,7 +206,11 @@ const Sidebar = ({ categories, setCategories, onCategorySelect, notes, setNotes,
             </div>
             <button
               onClick={isEditing ? () => handleEditCategory(categoryToEdit) : handleAddCategory}
-              className="mt-2 block w-full p-2 rounded bg-blue-700 text-white hover:bg-blue-600"
+              className={`mt-2 block w-full p-2 rounded text-white ${
+                theme === 'light'
+                  ? 'bg-blue-500 hover:bg-blue-400'
+                  : 'bg-blue-700 hover:bg-blue-600'
+              }`}
             >
               <FontAwesomeIcon icon={faPlus} /> {isEditing ? "Save Changes" : "Create Category"}
             </button>
@@ -197,7 +219,9 @@ const Sidebar = ({ categories, setCategories, onCategorySelect, notes, setNotes,
 
         {/* Tags Section */}
         <div className="tag-section mt-8">
-          <h3 className="text-lg font-semibold text-white mb-2">Filter by Tag</h3>
+          <h3 className={`text-lg font-semibold mb-2 ${theme === 'light' ? 'text-gray-700' : 'text-white'}`}>
+            Filter by Tag
+          </h3>
           <div className="flex flex-wrap max-h-40 overflow-y-auto">
             {tags.map((tag, index) => (
               <span
@@ -205,9 +229,9 @@ const Sidebar = ({ categories, setCategories, onCategorySelect, notes, setNotes,
                 draggable
                 onDragStart={(e) => handleDragStart(e, tag)}
                 onContextMenu={(e) => handleTagRightClick(e, tag)}
-                className={`bg-gray-200 text-gray-700 px-2 py-1 rounded-full text-xs mr-2 mb-2 cursor-pointer hover:bg-gray-300 ${
+                className={`bg-gray-200 px-2 py-1 rounded-full text-xs mr-2 mb-2 cursor-pointer hover:bg-gray-300 ${
                   selectedTag?.includes(tag) ? 'ring-2 ring-yellow-500 bg-gray-300' : ''
-                }`}
+                } ${theme === 'light' ? 'text-gray-700' : 'text-gray-700'}`}
                 onClick={() => onTagSelect(tag)}
               >
                 <FontAwesomeIcon icon={faTag} className="mr-1" />
@@ -245,7 +269,11 @@ const Sidebar = ({ categories, setCategories, onCategorySelect, notes, setNotes,
         <div className="mt-4">
           <button
             onClick={() => setShowTagManager(true)}
-            className="mt-2 block w-full p-2 rounded bg-blue-700 text-white hover:bg-blue-600"
+            className={`mt-2 block w-full p-2 rounded text-white ${
+              theme === 'light'
+                ? 'bg-blue-500 hover:bg-blue-400'
+                : 'bg-blue-700 hover:bg-blue-600'
+            }`}
           >
             Manage Tags
           </button>
@@ -254,12 +282,14 @@ const Sidebar = ({ categories, setCategories, onCategorySelect, notes, setNotes,
 
       {/* Archived Notes Section */}
       <div className="mt-auto"> 
-        <h3 className="text-lg font-semibold text-white mb-2 flex items-center">
+        <h3 className={`text-lg font-semibold mb-2 flex items-center ${theme === 'light' ? 'text-gray-700' : 'text-white'}`}>
           <FontAwesomeIcon icon={faBoxArchive} className="mr-2" />
           Archived Notes
         </h3>
         <div
-          className="p-2 rounded hover:bg-gray-600 text-gray-300 cursor-pointer"
+          className={`p-2 rounded hover:bg-gray-600 hover:text-white cursor-pointer ${
+            theme === 'light' ? 'text-gray-700' : 'text-gray-300'
+          }`}
           onClick={() => onCategorySelect('Archived')}
         >
           View Archived Notes
