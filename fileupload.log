@@ -1,0 +1,400 @@
+ContentArea.js:370 Current selected category: All Notes
+ContentArea.js:371 All notes: 10
+ContentArea.js:378 Note Firebase command: checking All Notes condition: {isArchived: false, matchesCategory: true}
+ContentArea.js:370 Current selected category: All Notes
+ContentArea.js:371 All notes: 10
+ContentArea.js:378 Note Project Ideas 2024: checking All Notes condition: {isArchived: true, matchesCategory: false}
+ContentArea.js:370 Current selected category: All Notes
+ContentArea.js:371 All notes: 10
+ContentArea.js:378 Note Weekly Goals: checking All Notes condition: {isArchived: true, matchesCategory: false}
+ContentArea.js:370 Current selected category: All Notes
+ContentArea.js:371 All notes: 10
+ContentArea.js:378 Note Meeting Notes - Client Discussion: checking All Notes condition: {isArchived: true, matchesCategory: false}
+ContentArea.js:370 Current selected category: All Notes
+ContentArea.js:371 All notes: 10
+ContentArea.js:378 Note test2: checking All Notes condition: {isArchived: false, matchesCategory: true}
+ContentArea.js:370 Current selected category: All Notes
+ContentArea.js:371 All notes: 10
+ContentArea.js:378 Note Test: checking All Notes condition: {isArchived: false, matchesCategory: true}
+ContentArea.js:370 Current selected category: All Notes
+ContentArea.js:371 All notes: 10
+ContentArea.js:378 Note test123: checking All Notes condition: {isArchived: false, matchesCategory: true}
+ContentArea.js:370 Current selected category: All Notes
+ContentArea.js:371 All notes: 10
+ContentArea.js:378 Note 2024-12-28: checking All Notes condition: {isArchived: false, matchesCategory: true}
+ContentArea.js:370 Current selected category: All Notes
+ContentArea.js:371 All notes: 10
+ContentArea.js:378 Note 2024-12-28: checking All Notes condition: {isArchived: false, matchesCategory: true}
+ContentArea.js:370 Current selected category: All Notes
+ContentArea.js:371 All notes: 10
+ContentArea.js:378 Note 2024-12-28: checking All Notes condition: {isArchived: false, matchesCategory: true}
+ContentArea.js:370 Current selected category: All Notes
+ContentArea.js:371 All notes: 10
+ContentArea.js:378 Note Firebase command: checking All Notes condition: {isArchived: false, matchesCategory: true}
+ContentArea.js:370 Current selected category: All Notes
+ContentArea.js:371 All notes: 10
+ContentArea.js:378 Note Project Ideas 2024: checking All Notes condition: {isArchived: true, matchesCategory: false}
+ContentArea.js:370 Current selected category: All Notes
+ContentArea.js:371 All notes: 10
+ContentArea.js:378 Note Weekly Goals: checking All Notes condition: {isArchived: true, matchesCategory: false}
+ContentArea.js:370 Current selected category: All Notes
+ContentArea.js:371 All notes: 10
+ContentArea.js:378 Note Meeting Notes - Client Discussion: checking All Notes condition: {isArchived: true, matchesCategory: false}
+ContentArea.js:370 Current selected category: All Notes
+ContentArea.js:371 All notes: 10
+ContentArea.js:378 Note test2: checking All Notes condition: {isArchived: false, matchesCategory: true}
+ContentArea.js:370 Current selected category: All Notes
+ContentArea.js:371 All notes: 10
+ContentArea.js:378 Note Test: checking All Notes condition: {isArchived: false, matchesCategory: true}
+ContentArea.js:370 Current selected category: All Notes
+ContentArea.js:371 All notes: 10
+ContentArea.js:378 Note test123: checking All Notes condition: {isArchived: false, matchesCategory: true}
+ContentArea.js:370 Current selected category: All Notes
+ContentArea.js:371 All notes: 10
+ContentArea.js:378 Note 2024-12-28: checking All Notes condition: {isArchived: false, matchesCategory: true}
+ContentArea.js:370 Current selected category: All Notes
+ContentArea.js:371 All notes: 10
+ContentArea.js:378 Note 2024-12-28: checking All Notes condition: {isArchived: false, matchesCategory: true}
+ContentArea.js:370 Current selected category: All Notes
+ContentArea.js:371 All notes: 10
+ContentArea.js:378 Note 2024-12-28: checking All Notes condition: {isArchived: false, matchesCategory: true}
+TipTapEditor.js:409 [tiptap warn]: Duplicate extension names found: ['codeBlock']. This can lead to issues.
+resolve @ ExtensionManager.ts:50
+ExtensionManager @ ExtensionManager.ts:34
+createExtensionManager @ Editor.ts:299
+Editor @ Editor.ts:99
+createEditor @ useEditor.ts:155
+getInitialEditor @ useEditor.ts:119
+EditorInstanceManager @ useEditor.ts:80
+(anonymous) @ useEditor.ts:313
+mountState @ react-dom.development.js:16167
+useState @ react-dom.development.js:16880
+useState @ react.development.js:1622
+useEditor @ useEditor.ts:313
+TipTapEditor @ TipTapEditor.js:409
+renderWithHooks @ react-dom.development.js:15486
+mountIndeterminateComponent @ react-dom.development.js:20103
+beginWork @ react-dom.development.js:21626
+beginWork$1 @ react-dom.development.js:27465
+performUnitOfWork @ react-dom.development.js:26596
+workLoopSync @ react-dom.development.js:26505
+renderRootSync @ react-dom.development.js:26473
+performSyncWorkOnRoot @ react-dom.development.js:26124
+flushSyncCallbacks @ react-dom.development.js:12042
+(anonymous) @ react-dom.development.js:25690
+TipTapEditor.js:409 [tiptap warn]: Duplicate extension names found: ['codeBlock']. This can lead to issues.
+resolve @ ExtensionManager.ts:50
+ExtensionManager @ ExtensionManager.ts:34
+createExtensionManager @ Editor.ts:299
+Editor @ Editor.ts:99
+createEditor @ useEditor.ts:155
+getInitialEditor @ useEditor.ts:119
+EditorInstanceManager @ useEditor.ts:80
+(anonymous) @ useEditor.ts:313
+mountState @ react-dom.development.js:16167
+useState @ react-dom.development.js:16880
+useState @ react.development.js:1622
+useEditor @ useEditor.ts:313
+TipTapEditor @ TipTapEditor.js:409
+renderWithHooks @ react-dom.development.js:15486
+mountIndeterminateComponent @ react-dom.development.js:20174
+beginWork @ react-dom.development.js:21626
+beginWork$1 @ react-dom.development.js:27465
+performUnitOfWork @ react-dom.development.js:26596
+workLoopSync @ react-dom.development.js:26505
+renderRootSync @ react-dom.development.js:26473
+performSyncWorkOnRoot @ react-dom.development.js:26124
+flushSyncCallbacks @ react-dom.development.js:12042
+(anonymous) @ react-dom.development.js:25690
+TipTapEditor.js:613 Content prop changed: 
+NoteModal.js:17 NoteModal content updated: {initialTitle: '2024-12-28', initialContent: '<div data-type="file-attachment" class="flex items…ark:hover:text-blue-300">Download</a></div></div>'}
+ContentArea.js:408 Final filtered notes: 7
+ContentArea.js:410 - Note: {id: 'uZvPm8BfpgKJEMOsNSun', title: 'Firebase command', category: 'Work/Projects', isArchived: false, order: 69}
+ContentArea.js:410 - Note: {id: 'e2KNa16XGqElqtkYaecK', title: 'test2', category: 'Ideas', isArchived: false, order: 1131.8125}
+ContentArea.js:410 - Note: {id: 'uHieyztHKTg544GGjwVp', title: 'Test', category: 'Meeting', isArchived: false, order: 1256.8125}
+ContentArea.js:410 - Note: {id: 'UXvHIodxJ7kCtayKtUbH', title: 'test123', category: 'Urgent', isArchived: false, order: 2256.8125}
+ContentArea.js:410 - Note: {id: 'MQH27Cl9gGe6YoAm6oA0', title: '2024-12-28', category: 'Uncategorized', isArchived: false, order: 3256.8125}
+ContentArea.js:410 - Note: {id: 'dwgMJ4mWmIbUGNoZGTSf', title: '2024-12-28', category: 'Personal', isArchived: false, order: 4256.8125}
+ContentArea.js:410 - Note: {id: '7KlaxU9z1etXQfjon56x', title: '2024-12-28', category: 'Uncategorized', isArchived: false, order: 5256.8125}
+TipTapEditor.js:613 Content prop changed: 
+NoteModal.js:17 NoteModal content updated: {initialTitle: '2024-12-28', initialContent: '<div data-type="file-attachment" class="flex items…ark:hover:text-blue-300">Download</a></div></div>'}
+TipTapEditor.js:613 Content prop changed: <div data-type="file-attachment" class="flex items-center gap-2 p-2 rounded-lg border border-gray-200 dark:border-gray-700 my-2"><span class="text-lg">📎</span><div class="flex flex-col"><span class="text-sm font-medium">test if its working.txt</span><a href="https://firebasestorage.googleapis.com/v0/b/eznotemanager-95745.firebasestorage.app/o/GLNz0QZAbfefAUFkbcOJL8N1T513%2Ffiles%2F1735400243285_test%20if%20its%20working.txt?alt=media&amp;token=19eaf7df-311e-4b39-95ff-0f5f7bdb3fe3" target="_blank" rel="noopener noreferrer" class="text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300">Download</a></div></div>
+index.js:3413 Uncaught TypeError: Cannot read properties of null (reading 'nodeType')
+    at renderSpec (index.js:3413:1)
+    at renderSpec (index.js:3450:1)
+    at renderSpec (index.js:3450:1)
+    at renderSpec (index.js:3450:1)
+    at DOMSerializer.renderSpec (index.js:3340:1)
+    at NodeViewDesc.create (index.js:1286:1)
+    at ViewTreeUpdater.addNode (index.js:1919:1)
+    at index.js:1374:1
+    at iterDeco (index.js:2035:1)
+    at NodeViewDesc.updateChildren (index.js:1353:1)
+renderSpec @ index.js:3413
+renderSpec @ index.js:3450
+renderSpec @ index.js:3450
+renderSpec @ index.js:3450
+renderSpec @ index.js:3340
+create @ index.js:1286
+addNode @ index.js:1919
+(anonymous) @ index.js:1374
+iterDeco @ index.js:2035
+updateChildren @ index.js:1353
+updateInner @ index.js:1448
+update @ index.js:1441
+updateStateInner @ index.js:5394
+updateState @ index.js:5345
+dispatchTransaction @ Editor.ts:462
+dispatch @ index.js:5699
+method @ CommandManager.ts:42
+(anonymous) @ TipTapEditor.js:614
+commitHookEffectListMount @ react-dom.development.js:23189
+commitPassiveMountOnFiber @ react-dom.development.js:24965
+commitPassiveMountEffects_complete @ react-dom.development.js:24930
+commitPassiveMountEffects_begin @ react-dom.development.js:24917
+commitPassiveMountEffects @ react-dom.development.js:24905
+flushPassiveEffectsImpl @ react-dom.development.js:27078
+flushPassiveEffects @ react-dom.development.js:27023
+(anonymous) @ react-dom.development.js:26808
+workLoop @ scheduler.development.js:266
+flushWork @ scheduler.development.js:239
+performWorkUntilDeadline @ scheduler.development.js:533
+index.js:3413 Uncaught TypeError: Cannot read properties of null (reading 'nodeType')
+    at renderSpec (index.js:3413:1)
+    at renderSpec (index.js:3450:1)
+    at renderSpec (index.js:3450:1)
+    at renderSpec (index.js:3450:1)
+    at DOMSerializer.renderSpec (index.js:3340:1)
+    at NodeViewDesc.create (index.js:1286:1)
+    at ViewTreeUpdater.addNode (index.js:1919:1)
+    at index.js:1374:1
+    at iterDeco (index.js:2035:1)
+    at NodeViewDesc.updateChildren (index.js:1353:1)
+renderSpec @ index.js:3413
+renderSpec @ index.js:3450
+renderSpec @ index.js:3450
+renderSpec @ index.js:3450
+renderSpec @ index.js:3340
+create @ index.js:1286
+addNode @ index.js:1919
+(anonymous) @ index.js:1374
+iterDeco @ index.js:2035
+updateChildren @ index.js:1353
+docViewDesc @ index.js:1486
+updateStateInner @ index.js:5397
+update @ index.js:5324
+setProps @ index.js:5338
+componentWillUnmount @ EditorContent.tsx:177
+callComponentWillUnmountWithTimer @ react-dom.development.js:22891
+safelyCallComponentWillUnmount @ react-dom.development.js:22912
+commitDeletionEffectsOnFiber @ react-dom.development.js:24168
+recursivelyTraverseDeletionEffects @ react-dom.development.js:24028
+commitDeletionEffectsOnFiber @ react-dom.development.js:24157
+recursivelyTraverseDeletionEffects @ react-dom.development.js:24028
+commitDeletionEffectsOnFiber @ react-dom.development.js:24157
+recursivelyTraverseDeletionEffects @ react-dom.development.js:24028
+commitDeletionEffectsOnFiber @ react-dom.development.js:24057
+recursivelyTraverseDeletionEffects @ react-dom.development.js:24028
+commitDeletionEffectsOnFiber @ react-dom.development.js:24057
+recursivelyTraverseDeletionEffects @ react-dom.development.js:24028
+commitDeletionEffectsOnFiber @ react-dom.development.js:24157
+recursivelyTraverseDeletionEffects @ react-dom.development.js:24028
+commitDeletionEffectsOnFiber @ react-dom.development.js:24057
+recursivelyTraverseDeletionEffects @ react-dom.development.js:24028
+commitDeletionEffectsOnFiber @ react-dom.development.js:24057
+recursivelyTraverseDeletionEffects @ react-dom.development.js:24028
+commitDeletionEffectsOnFiber @ react-dom.development.js:24057
+recursivelyTraverseDeletionEffects @ react-dom.development.js:24028
+commitDeletionEffectsOnFiber @ react-dom.development.js:24057
+recursivelyTraverseDeletionEffects @ react-dom.development.js:24028
+commitDeletionEffectsOnFiber @ react-dom.development.js:24057
+recursivelyTraverseDeletionEffects @ react-dom.development.js:24028
+commitDeletionEffectsOnFiber @ react-dom.development.js:24157
+recursivelyTraverseDeletionEffects @ react-dom.development.js:24028
+commitDeletionEffectsOnFiber @ react-dom.development.js:24209
+recursivelyTraverseDeletionEffects @ react-dom.development.js:24028
+commitDeletionEffectsOnFiber @ react-dom.development.js:24157
+recursivelyTraverseDeletionEffects @ react-dom.development.js:24028
+commitDeletionEffectsOnFiber @ react-dom.development.js:24209
+recursivelyTraverseDeletionEffects @ react-dom.development.js:24028
+commitDeletionEffectsOnFiber @ react-dom.development.js:24157
+commitDeletionEffects @ react-dom.development.js:24015
+recursivelyTraverseMutationEffects @ react-dom.development.js:24298
+commitMutationEffectsOnFiber @ react-dom.development.js:24371
+recursivelyTraverseMutationEffects @ react-dom.development.js:24312
+commitMutationEffectsOnFiber @ react-dom.development.js:24332
+recursivelyTraverseMutationEffects @ react-dom.development.js:24312
+commitMutationEffectsOnFiber @ react-dom.development.js:24332
+recursivelyTraverseMutationEffects @ react-dom.development.js:24312
+commitMutationEffectsOnFiber @ react-dom.development.js:24385
+recursivelyTraverseMutationEffects @ react-dom.development.js:24312
+commitMutationEffectsOnFiber @ react-dom.development.js:24385
+recursivelyTraverseMutationEffects @ react-dom.development.js:24312
+commitMutationEffectsOnFiber @ react-dom.development.js:24332
+recursivelyTraverseMutationEffects @ react-dom.development.js:24312
+commitMutationEffectsOnFiber @ react-dom.development.js:24615
+recursivelyTraverseMutationEffects @ react-dom.development.js:24312
+commitMutationEffectsOnFiber @ react-dom.development.js:24332
+recursivelyTraverseMutationEffects @ react-dom.development.js:24312
+commitMutationEffectsOnFiber @ react-dom.development.js:24615
+recursivelyTraverseMutationEffects @ react-dom.development.js:24312
+commitMutationEffectsOnFiber @ react-dom.development.js:24471
+commitMutationEffects @ react-dom.development.js:24282
+commitRootImpl @ react-dom.development.js:26849
+commitRoot @ react-dom.development.js:26721
+performSyncWorkOnRoot @ react-dom.development.js:26156
+flushSyncCallbacks @ react-dom.development.js:12042
+flushPassiveEffectsImpl @ react-dom.development.js:27099
+flushPassiveEffects @ react-dom.development.js:27023
+(anonymous) @ react-dom.development.js:26808
+workLoop @ scheduler.development.js:266
+flushWork @ scheduler.development.js:239
+performWorkUntilDeadline @ scheduler.development.js:533
+react-dom.development.js:18704 The above error occurred in the <TipTapEditor> component:
+
+    at TipTapEditor (http://localhost:3000/static/js/bundle.js:5376:3)
+    at div
+    at div
+    at div
+    at div
+    at div
+    at NoteModal (http://localhost:3000/static/js/bundle.js:3528:3)
+    at Provider (http://localhost:3000/static/js/bundle.js:93068:20)
+    at App (http://localhost:3000/static/js/bundle.js:62779:25)
+    at ErrorBoundary (http://localhost:3000/static/js/bundle.js:56992:35)
+    at DragDropContext (http://localhost:3000/static/js/bundle.js:62903:19)
+    at ContentArea (http://localhost:3000/static/js/bundle.js:426:3)
+    at div
+    at div
+    at App (http://localhost:3000/static/js/bundle.js:61:70)
+    at ThemeProvider (http://localhost:3000/static/js/bundle.js:5931:3)
+
+React will try to recreate this component tree from scratch using the error boundary you provided, ErrorBoundary.
+logCapturedError @ react-dom.development.js:18704
+callback @ react-dom.development.js:18772
+callCallback @ react-dom.development.js:15036
+commitUpdateQueue @ react-dom.development.js:15057
+commitLayoutEffectOnFiber @ react-dom.development.js:23403
+commitLayoutMountEffects_complete @ react-dom.development.js:24727
+commitLayoutEffects_begin @ react-dom.development.js:24713
+commitLayoutEffects @ react-dom.development.js:24651
+commitRootImpl @ react-dom.development.js:26862
+commitRoot @ react-dom.development.js:26721
+performSyncWorkOnRoot @ react-dom.development.js:26156
+flushSyncCallbacks @ react-dom.development.js:12042
+flushPassiveEffectsImpl @ react-dom.development.js:27099
+flushPassiveEffects @ react-dom.development.js:27023
+(anonymous) @ react-dom.development.js:26808
+workLoop @ scheduler.development.js:266
+flushWork @ scheduler.development.js:239
+performWorkUntilDeadline @ scheduler.development.js:533
+index.js:3413 Uncaught TypeError: Cannot read properties of null (reading 'nodeType')
+    at renderSpec (index.js:3413:1)
+    at renderSpec (index.js:3450:1)
+    at renderSpec (index.js:3450:1)
+    at renderSpec (index.js:3450:1)
+    at DOMSerializer.renderSpec (index.js:3340:1)
+    at NodeViewDesc.create (index.js:1286:1)
+    at ViewTreeUpdater.addNode (index.js:1919:1)
+    at index.js:1374:1
+    at iterDeco (index.js:2035:1)
+    at NodeViewDesc.updateChildren (index.js:1353:1)
+renderSpec @ index.js:3413
+renderSpec @ index.js:3450
+renderSpec @ index.js:3450
+renderSpec @ index.js:3450
+renderSpec @ index.js:3340
+create @ index.js:1286
+addNode @ index.js:1919
+(anonymous) @ index.js:1374
+iterDeco @ index.js:2035
+updateChildren @ index.js:1353
+updateInner @ index.js:1448
+update @ index.js:1441
+updateStateInner @ index.js:5394
+updateState @ index.js:5345
+dispatchTransaction @ Editor.ts:462
+dispatch @ index.js:5699
+method @ CommandManager.ts:42
+(anonymous) @ TipTapEditor.js:614
+commitHookEffectListMount @ react-dom.development.js:23189
+commitPassiveMountOnFiber @ react-dom.development.js:24965
+commitPassiveMountEffects_complete @ react-dom.development.js:24930
+commitPassiveMountEffects_begin @ react-dom.development.js:24917
+commitPassiveMountEffects @ react-dom.development.js:24905
+flushPassiveEffectsImpl @ react-dom.development.js:27078
+flushPassiveEffects @ react-dom.development.js:27023
+(anonymous) @ react-dom.development.js:26808
+workLoop @ scheduler.development.js:266
+flushWork @ scheduler.development.js:239
+performWorkUntilDeadline @ scheduler.development.js:533
+react-dom.development.js:18704 The above error occurred in the <ErrorBoundary> component:
+
+    at ErrorBoundary (http://localhost:3000/static/js/bundle.js:56992:35)
+    at DragDropContext (http://localhost:3000/static/js/bundle.js:62903:19)
+    at ContentArea (http://localhost:3000/static/js/bundle.js:426:3)
+    at div
+    at div
+    at App (http://localhost:3000/static/js/bundle.js:61:70)
+    at ThemeProvider (http://localhost:3000/static/js/bundle.js:5931:3)
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+logCapturedError @ react-dom.development.js:18704
+update.callback @ react-dom.development.js:18737
+callCallback @ react-dom.development.js:15036
+commitUpdateQueue @ react-dom.development.js:15057
+commitLayoutEffectOnFiber @ react-dom.development.js:23430
+commitLayoutMountEffects_complete @ react-dom.development.js:24727
+commitLayoutEffects_begin @ react-dom.development.js:24713
+commitLayoutEffects @ react-dom.development.js:24651
+commitRootImpl @ react-dom.development.js:26862
+commitRoot @ react-dom.development.js:26721
+performSyncWorkOnRoot @ react-dom.development.js:26156
+flushSyncCallbacks @ react-dom.development.js:12042
+flushPassiveEffectsImpl @ react-dom.development.js:27099
+flushPassiveEffects @ react-dom.development.js:27023
+(anonymous) @ react-dom.development.js:26808
+workLoop @ scheduler.development.js:266
+flushWork @ scheduler.development.js:239
+performWorkUntilDeadline @ scheduler.development.js:533
+index.js:3413 Uncaught TypeError: Cannot read properties of null (reading 'nodeType')
+    at renderSpec (index.js:3413:1)
+    at renderSpec (index.js:3450:1)
+    at renderSpec (index.js:3450:1)
+    at renderSpec (index.js:3450:1)
+    at DOMSerializer.renderSpec (index.js:3340:1)
+    at NodeViewDesc.create (index.js:1286:1)
+    at ViewTreeUpdater.addNode (index.js:1919:1)
+    at index.js:1374:1
+    at iterDeco (index.js:2035:1)
+    at NodeViewDesc.updateChildren (index.js:1353:1)
+renderSpec @ index.js:3413
+renderSpec @ index.js:3450
+renderSpec @ index.js:3450
+renderSpec @ index.js:3450
+renderSpec @ index.js:3340
+create @ index.js:1286
+addNode @ index.js:1919
+(anonymous) @ index.js:1374
+iterDeco @ index.js:2035
+updateChildren @ index.js:1353
+updateInner @ index.js:1448
+update @ index.js:1441
+updateStateInner @ index.js:5394
+updateState @ index.js:5345
+dispatchTransaction @ Editor.ts:462
+dispatch @ index.js:5699
+method @ CommandManager.ts:42
+(anonymous) @ TipTapEditor.js:614
+commitHookEffectListMount @ react-dom.development.js:23189
+commitPassiveMountOnFiber @ react-dom.development.js:24965
+commitPassiveMountEffects_complete @ react-dom.development.js:24930
+commitPassiveMountEffects_begin @ react-dom.development.js:24917
+commitPassiveMountEffects @ react-dom.development.js:24905
+flushPassiveEffectsImpl @ react-dom.development.js:27078
+flushPassiveEffects @ react-dom.development.js:27023
+(anonymous) @ react-dom.development.js:26808
+workLoop @ scheduler.development.js:266
+flushWork @ scheduler.development.js:239
+performWorkUntilDeadline @ scheduler.development.js:533

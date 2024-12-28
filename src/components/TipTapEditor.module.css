@@ -35,4 +35,108 @@
 :global(.light) .editor h2,
 :global(.light) .editor h3 {
   color: #1f2937 !important; /* text-gray-800 */
+}
+
+/* Image resizer styles */
+.editor :global(.image-resizer) {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+}
+
+.editor :global(.resize-handle) {
+  position: absolute;
+  right: -6px;
+  bottom: -6px;
+  width: 12px;
+  height: 12px;
+  background-color: #0ea5e9;
+  border: 2px solid white;
+  border-radius: 50%;
+  cursor: se-resize;
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.editor :global(.resize-image) {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.editor :global(.image-resizer:hover .resize-handle) {
+  opacity: 1;
+}
+
+/* Dark theme styles for resize handle */
+:global(.dark) .editor :global(.resize-handle) {
+  border-color: #1f2937;
+}
+
+/* Task List styles */
+.editor :global(.task-list) {
+  list-style: none !important;
+  padding: 0 !important;
+}
+
+.editor :global(.task-list-item) {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 0.5rem !important;
+  margin: 0.25rem 0 !important;
+  padding-left: 0 !important;
+}
+
+.editor :global(.task-list-item::before) {
+  display: none !important;
+}
+
+.editor :global(.task-list-item input[type="checkbox"]) {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  width: 1.25rem !important;
+  height: 1.25rem !important;
+  border: 2px solid #cbd5e1 !important;
+  border-radius: 0.25rem !important;
+  margin: 0.25rem 0 0 0 !important;
+  cursor: pointer !important;
+  position: relative !important;
+  flex-shrink: 0 !important;
+  transition: all 0.2s ease !important;
+}
+
+.editor :global(.task-list-item input[type="checkbox"]:checked) {
+  background-color: #3b82f6 !important;
+  border-color: #3b82f6 !important;
+}
+
+.editor :global(.task-list-item input[type="checkbox"]:checked::after) {
+  content: '✓' !important;
+  color: white !important;
+  position: absolute !important;
+  top: -2px !important;
+  left: 2px !important;
+  font-size: 0.875rem !important;
+}
+
+/* Dark theme styles for task lists */
+:global(.dark) .editor :global(.task-list-item input[type="checkbox"]) {
+  border-color: #4b5563 !important;
+}
+
+:global(.dark) .editor :global(.task-list-item input[type="checkbox"]:checked) {
+  background-color: #60a5fa !important;
+  border-color: #60a5fa !important;
+}
+
+/* Task list content styles */
+.editor :global(.task-list-item > div) {
+  flex: 1 !important;
+  margin-top: 0.25rem !important;
+}
+
+/* Nested task lists */
+.editor :global(.task-list .task-list) {
+  padding-left: 1.5rem !important;
 } 

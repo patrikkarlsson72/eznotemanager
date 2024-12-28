@@ -32,7 +32,7 @@
     - Archive functionality
 
 ## Note Enhancements
-- [ ] Add more note formatting options
+- [x] Add more note formatting options
   - Rich text editor improvements
   - Code block support with syntax highlighting
   - Markdown support

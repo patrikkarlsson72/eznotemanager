@@ -79,6 +79,12 @@ const Note = ({ title, color, content, tags = [], onDelete, onArchive, onPin, is
     const div = document.createElement('div');
     div.innerHTML = content;
 
+    // Add text color class to all text elements
+    const textElements = div.querySelectorAll('p, h1, h2, h3, h4, h5, h6, li, blockquote');
+    textElements.forEach((element) => {
+      element.classList.add('text-gray-700');
+    });
+
     const links = div.querySelectorAll('a');
     links.forEach((link) => {
       // Make the link open in a new tab
