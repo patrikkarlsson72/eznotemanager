@@ -7,8 +7,13 @@ import {
   subscribeToUserCategories, 
   updateUserCategories,
   initializeNewUser,
-  getNotes
+  getNotes,
+  addNote,
+  subscribeToNotes
 } from './firebase/notes';
+import { saveAs } from 'file-saver';
+import jsPDF from 'jspdf';
+import Modal from 'react-modal';
 
 // Components
 import Header from './components/Header';
@@ -20,8 +25,12 @@ import CookieConsent from './components/CookieConsent';
 import LandingPage from './components/LandingPage';
 import WelcomeGuide from './components/WelcomeGuide';
 import KeyboardShortcuts from './components/KeyboardShortcuts';
+import ImportModal from './components/ImportModal';
 
 import './App.css';
+
+// Set up Modal
+Modal.setAppElement('#root');
 
 function App() {
   const { theme, toggleTheme, themes } = useTheme();
@@ -38,7 +47,23 @@ function App() {
   const [selectedNote, setSelectedNote] = useState(null);
   const [user, loading] = useAuthState(auth);
   const searchInputRef = useRef(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showImportModal, setShowImportModal] = useState(false);
+
+  // Subscribe to user's notes
+  useEffect(() => {
+    let unsubscribe = () => {};
+
+    if (user) {
+      unsubscribe = subscribeToNotes(user.uid, (updatedNotes) => {
+        console.log('Received updated notes:', updatedNotes);
+        setNotes(updatedNotes || []);
+      });
+    } else {
+      setNotes([]);
+    }
+
+    return () => unsubscribe();
+  }, [user]);
 
   // Subscribe to user's tags
   useEffect(() => {
@@ -80,10 +105,6 @@ function App() {
         console.error('Error updating categories:', error);
       }
     }
-  };
-
-  const triggerNewNote = () => {
-    setCreateNoteTrigger(true);
   };
 
   const handleTagSelect = (tag) => {
@@ -211,6 +232,90 @@ function App() {
     }
   };
 
+  const handleExport = async (format, selectedNotes) => {
+    const notesToExport = selectedNotes || notes;
+    
+    if (!notesToExport || notesToExport.length === 0) {
+      console.log('No notes to export');
+      return;
+    }
+
+    const sortedNotes = [...notesToExport].sort((a, b) => {
+      if (a.pinned && !b.pinned) return -1;
+      if (!a.pinned && b.pinned) return 1;
+      return (a.order || 0) - (b.order || 0);
+    });
+
+    if (format === 'markdown') {
+      let markdownContent = '# My Notes\n\n';
+      
+      sortedNotes.forEach(note => {
+        markdownContent += `## ${note.title}\n\n`;
+        if (note.category) markdownContent += `Category: ${note.category}\n\n`;
+        if (note.tags && note.tags.length > 0) markdownContent += `Tags: ${note.tags.join(', ')}\n\n`;
+        markdownContent += `${note.content}\n\n---\n\n`;
+      });
+
+      const blob = new Blob([markdownContent], { type: 'text/markdown;charset=utf-8' });
+      saveAs(blob, 'my_notes.md');
+    } 
+    else if (format === 'pdf') {
+      const doc = new jsPDF();
+      let yOffset = 10;
+
+      sortedNotes.forEach((note, index) => {
+        if (index > 0) {
+          doc.addPage();
+          yOffset = 10;
+        }
+
+        // Add title
+        doc.setFontSize(16);
+        doc.text(note.title, 10, yOffset);
+        yOffset += 10;
+
+        // Add category and tags
+        doc.setFontSize(10);
+        if (note.category) {
+          doc.text(`Category: ${note.category}`, 10, yOffset);
+          yOffset += 5;
+        }
+        if (note.tags && note.tags.length > 0) {
+          doc.text(`Tags: ${note.tags.join(', ')}`, 10, yOffset);
+          yOffset += 5;
+        }
+
+        // Add content
+        doc.setFontSize(12);
+        const splitContent = doc.splitTextToSize(note.content, 180);
+        doc.text(splitContent, 10, yOffset + 5);
+      });
+
+      doc.save('my_notes.pdf');
+    }
+  };
+
+  const handleImport = async (importedNotes) => {
+    if (!user) return;
+    
+    try {
+      // Import each note
+      for (const note of importedNotes) {
+        await addNote({
+          ...note,
+          userId: user.uid,
+          order: notes.length + 1000,
+          isArchived: false,
+          pinned: false,
+          category: note.category || 'Uncategorized',
+          tags: note.tags || []
+        });
+      }
+    } catch (error) {
+      console.error('Error importing notes:', error);
+    }
+  };
+
   if (loading) {
     return (
       <div className={`min-h-screen ${themes[theme].background} flex items-center justify-center`}>
@@ -242,6 +347,9 @@ function App() {
         setSelectedTag={setSelectedTag}
         setSelectedCategory={setSelectedCategory}
         searchInputRef={searchInputRef}
+        onExport={handleExport}
+        onImport={() => setShowImportModal(true)}
+        notes={notes}
       />
       <div className="flex flex-1 overflow-hidden">
         <Sidebar
@@ -284,6 +392,11 @@ function App() {
       {showWelcomeGuide && (
         <WelcomeGuide onClose={handleCloseWelcomeGuide} />
       )}
+      <ImportModal
+        isOpen={showImportModal}
+        onRequestClose={() => setShowImportModal(false)}
+        onImport={handleImport}
+      />
     </div>
   );
 }

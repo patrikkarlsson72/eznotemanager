@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Note from './Note';
 import NoteModal from './NoteModal';
 import './ContentArea.css';
@@ -108,13 +108,39 @@ const ContentArea = ({
     };
   }, [contextMenu.visible]);
 
+  // Memoize createNote function
+  const createNote = useCallback(async () => {
+    closeContextMenu();
+    const user = auth.currentUser;
+    if (!user) {
+      setError('Please sign in to create notes');
+      return;
+    }
+
+    // Find the highest order value
+    const maxOrder = notes.reduce((max, note) => Math.max(max, note.order || 0), 0);
+
+    const newNote = {
+      userId: user.uid,
+      title: '',
+      content: '',
+      color: '#ADD8E6',
+      category: 'Uncategorized',
+      tags: [],
+      isArchived: false,
+      pinned: false,
+      order: maxOrder + 1000 // Place new note at the end
+    };
+    setSelectedNote(newNote);
+  }, [closeContextMenu, notes, setError, setSelectedNote]);
+
   // Handle the create note trigger
   useEffect(() => {
     if (createNoteTrigger) {
       createNote();
       setCreateNoteTrigger(false); // Reset the trigger
     }
-  }, [createNoteTrigger, setCreateNoteTrigger]);
+  }, [createNoteTrigger, setCreateNoteTrigger, createNote]);
 
   // Split notes into rows
   const getNotesInRows = (notes) => {
@@ -123,14 +149,6 @@ const ContentArea = ({
       rows.push(notes.slice(i, i + ITEMS_PER_ROW));
     }
     return rows;
-  };
-
-  const getActualRowIndex = (rowIndex, index, notesArray) => {
-    let actualIndex = 0;
-    for (let i = 0; i < rowIndex; i++) {
-      actualIndex += Math.min(ITEMS_PER_ROW, notesArray.length - (i * ITEMS_PER_ROW));
-    }
-    return actualIndex + index;
   };
 
   const onDragEnd = async (result) => {
@@ -211,56 +229,6 @@ const ContentArea = ({
     }
   };
 
-  const calculateNewOrder = (index, notes) => {
-    try {
-      // Handle edge cases
-      if (!notes || notes.length === 0) return 1000;
-      if (index === 0) return Math.max(0, (notes[0]?.order ?? 1000) - 1000);
-      if (index === notes.length - 1) return (notes[notes.length - 1]?.order ?? 0) + 1000;
-
-      const prevNote = notes[index - 1];
-      const nextNote = notes[index + 1];
-
-      // If either note is missing, provide fallback values
-      if (!prevNote || !nextNote) return index * 1000;
-
-      // Calculate the midpoint between the previous and next notes
-      const prevOrder = prevNote.order ?? (index - 1) * 1000;
-      const nextOrder = nextNote.order ?? (index + 1) * 1000;
-
-      return Math.floor(prevOrder + (nextOrder - prevOrder) / 2);
-    } catch (error) {
-      console.error('Error calculating order:', error);
-      // Fallback to a safe value based on index
-      return index * 1000;
-    }
-  };
-
-  const createNote = async () => {
-    closeContextMenu();
-    const user = auth.currentUser;
-    if (!user) {
-      setError('Please sign in to create notes');
-      return;
-    }
-
-    // Find the highest order value
-    const maxOrder = notes.reduce((max, note) => Math.max(max, note.order || 0), 0);
-
-    const newNote = {
-      userId: user.uid,
-      title: '',
-      content: '',
-      color: '#ADD8E6',
-      category: 'Uncategorized',
-      tags: [],
-      isArchived: false,
-      pinned: false,
-      order: maxOrder + 1000 // Place new note at the end
-    };
-    setSelectedNote(newNote);
-  };
-
   const saveNoteContent = async (newTitle, newContent, newCategory, newTags) => {
     try {
       console.log('Saving note content:', { newTitle, newContent, newCategory, newTags });
@@ -295,10 +263,6 @@ const ContentArea = ({
       console.error('Error saving note:', err);
       setError(err.message);
     }
-  };
-
-  const cancelNoteCreation = () => {
-    setSelectedNote(null);
   };
 
   const deleteNoteHandler = async (id) => {

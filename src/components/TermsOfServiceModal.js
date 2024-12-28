@@ -13,22 +13,63 @@ const TermsOfServiceModal = ({ isOpen, onRequestClose }) => {
       overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center"
     >
       <h2 className="text-2xl font-semibold mb-4">Terms of Service</h2>
-      <p>These Terms of Service govern your use of our website and services.</p>
+      <p>These Terms of Service govern your use of EzNoteManagerPro and its associated services.</p>
       
       <h3 className="text-lg font-semibold mt-4">Acceptance of Terms</h3>
-      <p>By accessing or using our service, you agree to be bound by these Terms.</p>
+      <p>By accessing or using EzNoteManagerPro, you agree to be bound by these Terms. If you disagree with any part of the terms, you may not access the service.</p>
+      
+      <h3 className="text-lg font-semibold mt-4">Service Description</h3>
+      <p>EzNoteManagerPro provides:</p>
+      <ul className="list-disc ml-6 mt-2">
+        <li>Professional note-taking and organization tools</li>
+        <li>Cloud storage and synchronization</li>
+        <li>File attachment and image upload capabilities</li>
+        <li>Export and import functionality</li>
+        <li>Customization and formatting options</li>
+      </ul>
       
       <h3 className="text-lg font-semibold mt-4">User Responsibilities</h3>
-      <p>You agree to use the service only for lawful purposes and in a way that does not infringe the rights of others.</p>
+      <p>As a user of EzNoteManagerPro, you agree to:</p>
+      <ul className="list-disc ml-6 mt-2">
+        <li>Provide accurate account information</li>
+        <li>Use the service only for lawful purposes</li>
+        <li>Not upload malicious content or files</li>
+        <li>Respect intellectual property rights</li>
+        <li>Not attempt to breach system security</li>
+      </ul>
       
       <h3 className="text-lg font-semibold mt-4">Account Security</h3>
-      <p>You are responsible for maintaining the confidentiality of your account and password.</p>
+      <p>You are responsible for:</p>
+      <ul className="list-disc ml-6 mt-2">
+        <li>Maintaining the security of your account</li>
+        <li>All activities that occur under your account</li>
+        <li>Notifying us of any unauthorized access</li>
+        <li>Protecting your authentication credentials</li>
+      </ul>
+      
+      <h3 className="text-lg font-semibold mt-4">Data Usage</h3>
+      <p>By using EzNoteManagerPro, you understand that:</p>
+      <ul className="list-disc ml-6 mt-2">
+        <li>Your notes are stored securely in the cloud</li>
+        <li>You retain ownership of your content</li>
+        <li>We may process your data to provide the service</li>
+        <li>You can export your data at any time</li>
+      </ul>
+      
+      <h3 className="text-lg font-semibold mt-4">Service Modifications</h3>
+      <p>We reserve the right to:</p>
+      <ul className="list-disc ml-6 mt-2">
+        <li>Modify or discontinue features</li>
+        <li>Update the service and these terms</li>
+        <li>Change storage limits or functionality</li>
+        <li>Implement new capabilities</li>
+      </ul>
       
       <h3 className="text-lg font-semibold mt-4">Limitation of Liability</h3>
-      <p>We are not liable for any damages that may occur from your use of the service.</p>
+      <p>EzNoteManagerPro is provided "as is" without warranties of any kind. We are not liable for any damages that may occur from your use of the service.</p>
       
-      <h3 className="text-lg font-semibold mt-4">Governing Law</h3>
-      <p>These Terms will be governed by the laws of the jurisdiction in which we operate.</p>
+      <h3 className="text-lg font-semibold mt-4">Contact</h3>
+      <p>For questions about these Terms of Service, please contact us through our LinkedIn profile.</p>
 
       <button 
         onClick={onRequestClose}

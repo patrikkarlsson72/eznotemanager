@@ -673,7 +673,7 @@ const TipTapEditor = ({ content, onChange }) => {
         const text = event.clipboardData?.getData('text/plain');
         if (!text) return false;
 
-        const hasMarkdownSyntax = /[#*_`\[\]\(\)\n\-\+]/.test(text);
+        const hasMarkdownSyntax = /[#*_`[\]()\\n\-+]/.test(text);
         if (!hasMarkdownSyntax) return false;
 
         try {

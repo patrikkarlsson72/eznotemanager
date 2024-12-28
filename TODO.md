@@ -1,7 +1,7 @@
 # EzNoteManager - Future Enhancements
 
 ## Welcome Experience
-- [ ] Add example notes for new users
+- [x] Add example notes for new users
   - Create a set of helpful example notes showing different features
   - Include notes with tags, categories, and formatting examples
   - Auto-generate these when a new user signs up
@@ -46,7 +46,7 @@
   - Real-time collaboration
   - Comments on notes
 
-- [ ] Export/Import functionality
+- [x] Export/Import functionality
   - Export notes as PDF/Markdown
   - Bulk export all notes
   - Import from other note apps

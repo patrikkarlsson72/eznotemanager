@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBoxArchive, faTrash, faThumbtack, faClone, faTag } from '@fortawesome/free-solid-svg-icons';
+import { faBoxArchive, faTrash, faThumbtack, faTag } from '@fortawesome/free-solid-svg-icons';
 
 const Note = ({ title, color, content, tags = [], onDelete, onArchive, onPin, isArchived, isPinned, onDuplicate, onTagAdd }) => {
   const [contextMenu, setContextMenu] = useState({ visible: false, x: 0, y: 0 });

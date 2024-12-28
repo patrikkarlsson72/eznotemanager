@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import logo from '../assets/EzNoteManagerlogo2.png';
+import logo from '../assets/EzNoteManagerPrologo.png';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../firebase';
 import { signOut } from 'firebase/auth';
 import GoogleSignIn from './GoogleSignIn';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faSun, faMoon, faFileExport, faFileImport, faEllipsisV, faCircleQuestion } from '@fortawesome/free-solid-svg-icons';
 import KeyboardShortcutGuide from './KeyboardShortcutGuide';
+import ExportModal from './ExportModal';
 import { useTheme } from '../context/ThemeContext';
+import { Menu } from '@headlessui/react';
 
 const Header = ({
   onSearchChange,
@@ -18,10 +20,14 @@ const Header = ({
   triggerNewNote,
   setSelectedTag,
   setSelectedCategory,
-  searchInputRef
+  searchInputRef,
+  onExport,
+  onImport,
+  notes = []
 }) => {
   const [user] = useAuthState(auth);
   const [showShortcutGuide, setShowShortcutGuide] = useState(false);
+  const [showExportModal, setShowExportModal] = useState(false);
   const { theme, toggleTheme } = useTheme();
 
   const handleClearFilters = () => {
@@ -36,12 +42,16 @@ const Header = ({
     }
   };
 
+  const handleExport = () => {
+    setShowExportModal(true);
+  };
+
   return (
     <header className={`bg-transparent p-4 flex items-center justify-between w-full ${theme === 'light' ? 'text-gray-800' : 'text-white'}`}>
       <div className="flex items-center">
         <img src={logo} alt="Logo" className="h-12 w-12 mr-4" />
         <h1 className="font-sans text-2xl font-bold">
-          EzNote<span className="text-yellow-500">Manager</span>
+          EzNote<span className="text-yellow-500">Manager</span><span className="text-blue-500">Pro</span>
         </h1>
       </div>
       
@@ -117,6 +127,43 @@ const Header = ({
             >
               ?
             </button>
+            <Menu as="div" className="relative ml-4">
+              <Menu.Button className={`p-2 hover:bg-opacity-80 rounded-lg transition-colors ${
+                theme === 'light' 
+                  ? 'text-gray-600 hover:text-gray-800 hover:bg-gray-100' 
+                  : 'text-gray-200 hover:text-white hover:bg-gray-700'
+              }`}>
+                <FontAwesomeIcon icon={faEllipsisV} className="text-xl" />
+              </Menu.Button>
+              <Menu.Items className="absolute right-0 mt-2 w-48 origin-top-right bg-white dark:bg-gray-800 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
+                <Menu.Item>
+                  {({ active }) => (
+                    <button
+                      onClick={handleExport}
+                      className={`${
+                        active ? 'bg-gray-100 dark:bg-gray-700' : ''
+                      } group flex items-center w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-300`}
+                    >
+                      <FontAwesomeIcon icon={faFileExport} className="mr-3" />
+                      Export Notes
+                    </button>
+                  )}
+                </Menu.Item>
+                <Menu.Item>
+                  {({ active }) => (
+                    <button
+                      onClick={() => onImport()}
+                      className={`${
+                        active ? 'bg-gray-100 dark:bg-gray-700' : ''
+                      } group flex items-center w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-300`}
+                    >
+                      <FontAwesomeIcon icon={faFileImport} className="mr-3" />
+                      Import Notes
+                    </button>
+                  )}
+                </Menu.Item>
+              </Menu.Items>
+            </Menu>
           </>
         ) : (
           <GoogleSignIn />
@@ -126,6 +173,13 @@ const Header = ({
       <KeyboardShortcutGuide 
         isOpen={showShortcutGuide} 
         onClose={() => setShowShortcutGuide(false)} 
+      />
+
+      <ExportModal
+        isOpen={showExportModal}
+        onRequestClose={() => setShowExportModal(false)}
+        onExport={handleExport}
+        notes={notes}
       />
     </header>
   );

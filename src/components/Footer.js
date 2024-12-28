@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import logo from '../assets/EzNoteManagerlogo2.png';
+import logo from '../assets/EzNoteManagerPrologo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareXTwitter, faLinkedin, faGithub, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import PrivacyPolicyModal from './PrivacyPolicyModal';  // Import the PrivacyPolicyModal component
@@ -15,9 +15,9 @@ const Footer = () => {
     <footer className="bg-blue-950 text-white p-4 flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
       {/* Logo and Title */}
       <div className="flex items-center mb-2 sm:mb-0">
-        <img src={logo} alt="EzNoteManager Logo" className="h-16 w-auto mr-4" />
+        <img src={logo} alt="EzNoteManagerPro Logo" className="h-16 w-auto mr-4" />
         <h1 className="font-sans text-3xl font-bold">
-          EzNote<span className="text-yellow-500">Manager</span>
+          EzNote<span className="text-yellow-500">Manager</span><span className="text-blue-500">Pro</span>
         </h1>
       </div>
 
