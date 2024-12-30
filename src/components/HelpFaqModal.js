@@ -1,18 +1,21 @@
 // HelpFaqModal.js
 import React from 'react';
 import Modal from 'react-modal';
+import { useTheme } from '../context/ThemeContext';
 
 const HelpFaqModal = ({ isOpen, onRequestClose }) => {
+  const { theme } = useTheme();
+
   return (
     <Modal
       isOpen={isOpen}
       onRequestClose={onRequestClose}
       contentLabel="Help / FAQ"
-      className="bg-white p-6 rounded-lg shadow-lg w-3/4 h-auto max-w-4xl mx-auto my-16"
+      className={`${theme === 'light' ? 'bg-white' : 'bg-gray-800'} p-6 rounded-lg shadow-lg w-3/4 h-auto max-w-4xl mx-auto my-16`}
       overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center"
     >
-      <h2 className="text-2xl font-semibold mb-4">Help / FAQ</h2>
-      <div className="faq-content text-gray-700 overflow-y-auto" style={{ maxHeight: '60vh' }}>
+      <h2 className={`text-2xl font-semibold mb-4 ${theme === 'light' ? 'text-gray-800' : 'text-white'}`}>Help / FAQ</h2>
+      <div className={`faq-content ${theme === 'light' ? 'text-gray-700' : 'text-gray-200'} overflow-y-auto`} style={{ maxHeight: '60vh' }}>
         <h3 className="text-xl font-bold mb-2">General Questions</h3>
         <p><strong>What is EzNoteManagerPro?</strong></p>
         <p>EzNoteManagerPro is a professional note-taking application that helps you organize, manage, and customize your notes with advanced features. Whether you're brainstorming ideas, planning your day, or storing important information, EzNoteManagerPro provides a user-friendly interface and robust features to support your professional needs.</p>
@@ -28,6 +31,11 @@ const HelpFaqModal = ({ isOpen, onRequestClose }) => {
           <li>File attachments</li>
           <li>Dark/Light theme support</li>
           <li>Real-time content updates</li>
+          <li>Google Analytics integration</li>
+          <li>PDF and Markdown export options</li>
+          <li>Note import functionality</li>
+          <li>Category and tag organization</li>
+          <li>Advanced search capabilities</li>
         </ul>
 
         <h3 className="text-xl font-bold mb-2 mt-4">Security and Privacy</h3>
@@ -51,10 +59,18 @@ const HelpFaqModal = ({ isOpen, onRequestClose }) => {
           <li>Attachments and images are also available offline</li>
         </ul>
 
-        <p><strong>How do I create a new note?</strong></p>
-        <p>To create a new note, click on the "Create Note" button in the header. This will open the note editor where you can write your note, add tags, select a category, and use various formatting options.</p>
-
         <h3 className="text-xl font-bold mb-2 mt-4">Working with Notes</h3>
+        <p><strong>How do I create a new note?</strong></p>
+        <p>To create a new note:</p>
+        <ul className="list-disc ml-6 mb-4">
+          <li>Click the "Create Note" button in the header</li>
+          <li>Enter a title for your note</li>
+          <li>Select a category (optional)</li>
+          <li>Add tags to organize your note (optional)</li>
+          <li>Write your note content using the rich text editor</li>
+          <li>Click "Save" to store your note</li>
+        </ul>
+
         <p><strong>How do I format my notes?</strong></p>
         <p>The advanced text editor provides several formatting options:</p>
         <ul className="list-disc ml-6 mb-4">
@@ -103,16 +119,30 @@ const HelpFaqModal = ({ isOpen, onRequestClose }) => {
           <li>Use the "Clear Filters" button to reset all filters</li>
         </ul>
 
+        <h3 className="text-xl font-bold mb-2 mt-4">Analytics and Performance</h3>
+        <p><strong>How is my usage tracked?</strong></p>
+        <p>EzNoteManagerPro uses Google Analytics to:</p>
+        <ul className="list-disc ml-6 mb-4">
+          <li>Improve user experience based on usage patterns</li>
+          <li>Monitor application performance</li>
+          <li>Track feature usage to guide development</li>
+          <li>Ensure optimal service delivery</li>
+        </ul>
+
         <h3 className="text-xl font-bold mb-2 mt-4">Data Management</h3>
         <p><strong>Is my data secure?</strong></p>
         <p>EzNoteManagerPro uses Firebase for secure cloud storage and offers end-to-end encryption for additional security. Your notes are automatically synchronized across devices when you're signed in, and you can work offline with automatic syncing when you're back online.</p>
 
         <h3 className="text-xl font-bold mb-2 mt-4">Getting Support</h3>
-        <p>If you encounter issues or have questions not covered here, please reach out to me at <a href="https://www.linkedin.com/in/patrik-karlsson-808b5855/" target="_blank" rel="noopener noreferrer" className="text-blue-800 hover:text-yellow-400">LinkedIn</a>. I'm here to help!</p>
+        <p>If you encounter issues or have questions not covered here, please reach out to me at <a href="https://www.linkedin.com/in/patrik-karlsson-808b5855/" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:text-blue-600">LinkedIn</a>. I'm here to help!</p>
       </div>
       <button
         onClick={onRequestClose}
-        className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500"
+        className={`mt-4 px-4 py-2 rounded ${
+          theme === 'light'
+            ? 'bg-blue-600 hover:bg-blue-500 text-white'
+            : 'bg-blue-500 hover:bg-blue-400 text-white'
+        }`}
       >
         Close
       </button>

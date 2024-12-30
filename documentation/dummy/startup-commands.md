@@ -42,11 +42,13 @@ Run this after cloning the repository or when new dependencies are added
 firebase login        # Login to Firebase
 firebase init        # Initialize Firebase in the project
 firebase deploy      # Deploy the application
+firebase projects:list   
 ```
 
 ### Build for Production
 ```bash
 npm run build
+firebase deploy
 ```
 Creates an optimized production build in the 'build' folder
 

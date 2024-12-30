@@ -767,7 +767,7 @@ const TipTapEditor = ({ content, onChange }) => {
       }),
       CodeBlock.configure({
         HTMLAttributes: {
-          class: 'bg-gray-100 dark:bg-gray-800 rounded-md p-2 font-mono text-sm',
+          class: 'bg-slate-100 dark:bg-slate-900 rounded-lg p-3 font-mono text-sm border dark:border-gray-700',
         },
       }),
       Highlight.configure({
