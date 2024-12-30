@@ -4,12 +4,12 @@ import { getFirestore, enableIndexedDbPersistence } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDQnJHbZcL8QCkHJqVF2VPOr1lWYiDJ_Ow",
-  authDomain: "eznotemanager-95745.firebaseapp.com",
-  projectId: "eznotemanager-95745",
-  storageBucket: "eznotemanager-95745.appspot.com",
-  messagingSenderId: "1043517900865",
-  appId: "1:1043517900865:web:c0e5c7c9c6c6e8c6c6c6e8"
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID
 };
 
 // Initialize Firebase only if it hasn't been initialized yet
