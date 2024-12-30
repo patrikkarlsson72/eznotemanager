@@ -1,0 +1,459 @@
+ Download the React DevTools for a better development experience: https://reactjs.org/link/react-devtools
+ [2024-12-30T12:08:24.949Z]  @firebase/firestore: Firestore (10.14.1): enableIndexedDbPersistence() will be deprecated in the future, you can use `FirestoreSettings.cache` instead.
+defaultLogHandler @ bundle.js:116150
+ Subscribing to notes for user: GLNz0QZAbfefAUFkbcOJL8N1T513
+ Attempting to initialize user: GLNz0QZAbfefAUFkbcOJL8N1T513
+ Encryption key loaded successfully
+ Encryption key loaded successfully
+ Setting up subscription for user: GLNz0QZAbfefAUFkbcOJL8N1T513
+ Final filtered notes: 0
+ Setting up subscription for user: GLNz0QZAbfefAUFkbcOJL8N1T513
+ Final filtered notes: 0
+ Final filtered notes: 0
+ Received snapshot with changes
+ Processed notes: 12
+ Received updated notes: Array(12)
+ Current selected category: All Notes
+ All notes: 12
+ Note Cheat Sheets: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note Firebase command: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note Project Ideas 2024: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note Weekly Goals: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note Meeting Notes - Client Discussion: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note 2024-12-30: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note Decommission package: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note Dashboard: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note RD Session template: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note 2024-12-30: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note Abaqus: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note logi options+: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note Cheat Sheets: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note Firebase command: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note Project Ideas 2024: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note Weekly Goals: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note Meeting Notes - Client Discussion: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note 2024-12-30: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note Decommission package: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note Dashboard: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note RD Session template: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note 2024-12-30: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note Abaqus: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note logi options+: checking All Notes condition: Object
+ Final filtered notes: 9
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ Received updated tags: Array(36)
+ Received updated categories: Array(9)
+ Current selected category: All Notes
+ All notes: 12
+ Note Cheat Sheets: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note Firebase command: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note Project Ideas 2024: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note Weekly Goals: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note Meeting Notes - Client Discussion: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note 2024-12-30: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note Decommission package: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note Dashboard: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note RD Session template: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note 2024-12-30: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note Abaqus: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note logi options+: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note Cheat Sheets: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note Firebase command: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note Project Ideas 2024: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note Weekly Goals: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note Meeting Notes - Client Discussion: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note 2024-12-30: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note Decommission package: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note Dashboard: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note RD Session template: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note 2024-12-30: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note Abaqus: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note logi options+: checking All Notes condition: Object
+ Final filtered notes: 9
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ Subscribing to notes for user: GLNz0QZAbfefAUFkbcOJL8N1T513
+ Subscribing to notes for user: GLNz0QZAbfefAUFkbcOJL8N1T513
+ Current selected category: All Notes
+ All notes: 12
+ Note Cheat Sheets: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note Firebase command: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note Project Ideas 2024: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note Weekly Goals: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note Meeting Notes - Client Discussion: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note 2024-12-30: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note Decommission package: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note Dashboard: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note RD Session template: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note 2024-12-30: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note Abaqus: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note logi options+: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note Cheat Sheets: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note Firebase command: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note Project Ideas 2024: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note Weekly Goals: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note Meeting Notes - Client Discussion: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note 2024-12-30: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note Decommission package: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note Dashboard: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note RD Session template: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note 2024-12-30: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note Abaqus: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note logi options+: checking All Notes condition: Object
+ Final filtered notes: 9
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ Received snapshot with changes
+ Processed notes: 12
+ Received notes update: 12
+ Received snapshot with changes
+ Processed notes: 12
+ Received notes update: 12
+ Current selected category: All Notes
+ All notes: 12
+ Note Cheat Sheets: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note Firebase command: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note Project Ideas 2024: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note Weekly Goals: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note Meeting Notes - Client Discussion: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note 2024-12-30: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note Decommission package: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note Dashboard: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note RD Session template: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note 2024-12-30: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note Abaqus: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note logi options+: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 12
+ Note Cheat Sheets: checking All Notes condition: Object
+ Current selected category: All Notes
+ContentArea.js:335 All notes: 12
+ContentArea.js:342 Note Firebase command: checking All Notes condition: Object
+ContentArea.js:334 Current selected category: All Notes
+ContentArea.js:335 All notes: 12
+ContentArea.js:342 Note Project Ideas 2024: checking All Notes condition: Object
+ContentArea.js:334 Current selected category: All Notes
+ContentArea.js:335 All notes: 12
+ContentArea.js:342 Note Weekly Goals: checking All Notes condition: Object
+ContentArea.js:334 Current selected category: All Notes
+ContentArea.js:335 All notes: 12
+ContentArea.js:342 Note Meeting Notes - Client Discussion: checking All Notes condition: Object
+ContentArea.js:334 Current selected category: All Notes
+ContentArea.js:335 All notes: 12
+ContentArea.js:342 Note 2024-12-30: checking All Notes condition: Object
+ContentArea.js:334 Current selected category: All Notes
+ContentArea.js:335 All notes: 12
+ContentArea.js:342 Note Decommission package: checking All Notes condition: Object
+ContentArea.js:334 Current selected category: All Notes
+ContentArea.js:335 All notes: 12
+ContentArea.js:342 Note Dashboard: checking All Notes condition: Object
+ContentArea.js:334 Current selected category: All Notes
+ContentArea.js:335 All notes: 12
+ContentArea.js:342 Note RD Session template: checking All Notes condition: Object
+ContentArea.js:334 Current selected category: All Notes
+ContentArea.js:335 All notes: 12
+ContentArea.js:342 Note 2024-12-30: checking All Notes condition: Object
+ContentArea.js:334 Current selected category: All Notes
+ContentArea.js:335 All notes: 12
+ContentArea.js:342 Note Abaqus: checking All Notes condition: Object
+ContentArea.js:334 Current selected category: All Notes
+ContentArea.js:335 All notes: 12
+ContentArea.js:342 Note logi options+: checking All Notes condition: Object
+react-dom.development.js:86 Warning: Connect(Droppable): Support for defaultProps will be removed from memo components in a future major release. Use JavaScript default parameters instead.
+    at div
+    at div
+    at Provider (http://localhost:3000/static/js/bundle.js:97349:20)
+    at App (http://localhost:3000/static/js/bundle.js:67060:25)
+    at ErrorBoundary (http://localhost:3000/static/js/bundle.js:61273:35)
+    at DragDropContext (http://localhost:3000/static/js/bundle.js:67184:19)
+    at ContentArea (http://localhost:3000/static/js/bundle.js:580:3)
+    at div
+    at div
+    at EncryptionProvider (http://localhost:3000/static/js/bundle.js:7794:3)
+    at App (http://localhost:3000/static/js/bundle.js:80:70)
+    at ThemeProvider (http://localhost:3000/static/js/bundle.js:7937:3)
+printWarning @ react-dom.development.js:86
+ContentArea.js:372 Final filtered notes: 9
+ContentArea.js:374 - Note: Object
+ContentArea.js:374 - Note: Object
+ContentArea.js:374 - Note: Object
+ContentArea.js:374 - Note: Object
+ContentArea.js:374 - Note: Object
+ContentArea.js:374 - Note: Object
+ContentArea.js:374 - Note: Object
+ContentArea.js:374 - Note: Object
+ContentArea.js:374 - Note: Object
+ContentArea.js:334 Current selected category: All Notes
+ContentArea.js:335 All notes: 12
+ContentArea.js:342 Note Cheat Sheets: checking All Notes condition: Object
+ContentArea.js:334 Current selected category: All Notes
+ContentArea.js:335 All notes: 12
+ContentArea.js:342 Note Firebase command: checking All Notes condition: Object
+ContentArea.js:334 Current selected category: All Notes
+ContentArea.js:335 All notes: 12
+ContentArea.js:342 Note Project Ideas 2024: checking All Notes condition: Object
+ContentArea.js:334 Current selected category: All Notes
+ContentArea.js:335 All notes: 12
+ContentArea.js:342 Note Weekly Goals: checking All Notes condition: Object
+ContentArea.js:334 Current selected category: All Notes
+ContentArea.js:335 All notes: 12
+ContentArea.js:342 Note Meeting Notes - Client Discussion: checking All Notes condition: Object
+ContentArea.js:334 Current selected category: All Notes
+ContentArea.js:335 All notes: 12
+ContentArea.js:342 Note 2024-12-30: checking All Notes condition: Object
+ContentArea.js:334 Current selected category: All Notes
+ContentArea.js:335 All notes: 12
+ContentArea.js:342 Note Decommission package: checking All Notes condition: Object
+ContentArea.js:334 Current selected category: All Notes
+ContentArea.js:335 All notes: 12
+ContentArea.js:342 Note Dashboard: checking All Notes condition: Object
+ContentArea.js:334 Current selected category: All Notes
+ContentArea.js:335 All notes: 12
+ContentArea.js:342 Note RD Session template: checking All Notes condition: Object
+ContentArea.js:334 Current selected category: All Notes
+ContentArea.js:335 All notes: 12
+ContentArea.js:342 Note 2024-12-30: checking All Notes condition: Object
+ContentArea.js:334 Current selected category: All Notes
+ContentArea.js:335 All notes: 12
+ContentArea.js:342 Note Abaqus: checking All Notes condition: Object
+ContentArea.js:334 Current selected category: All Notes
+ContentArea.js:335 All notes: 12
+ContentArea.js:342 Note logi options+: checking All Notes condition: Object
+ContentArea.js:334 Current selected category: All Notes
+ContentArea.js:335 All notes: 12
+ContentArea.js:342 Note Cheat Sheets: checking All Notes condition: Object
+ContentArea.js:334 Current selected category: All Notes
+ContentArea.js:335 All notes: 12
+ContentArea.js:342 Note Firebase command: checking All Notes condition: Object
+ContentArea.js:334 Current selected category: All Notes
+ContentArea.js:335 All notes: 12
+ContentArea.js:342 Note Project Ideas 2024: checking All Notes condition: Object
+ContentArea.js:334 Current selected category: All Notes
+ContentArea.js:335 All notes: 12
+ContentArea.js:342 Note Weekly Goals: checking All Notes condition: Object
+ContentArea.js:334 Current selected category: All Notes
+ContentArea.js:335 All notes: 12
+ContentArea.js:342 Note Meeting Notes - Client Discussion: checking All Notes condition: Object
+ContentArea.js:334 Current selected category: All Notes
+ContentArea.js:335 All notes: 12
+ContentArea.js:342 Note 2024-12-30: checking All Notes condition: Object
+ContentArea.js:334 Current selected category: All Notes
+ContentArea.js:335 All notes: 12
+ContentArea.js:342 Note Decommission package: checking All Notes condition: Object
+ContentArea.js:334 Current selected category: All Notes
+ContentArea.js:335 All notes: 12
+ContentArea.js:342 Note Dashboard: checking All Notes condition: Object
+ContentArea.js:334 Current selected category: All Notes
+ContentArea.js:335 All notes: 12
+ContentArea.js:342 Note RD Session template: checking All Notes condition: Object
+ContentArea.js:334 Current selected category: All Notes
+ContentArea.js:335 All notes: 12
+ContentArea.js:342 Note 2024-12-30: checking All Notes condition: Object
+ContentArea.js:334 Current selected category: All Notes
+ContentArea.js:335 All notes: 12
+ContentArea.js:342 Note Abaqus: checking All Notes condition: Object
+ContentArea.js:334 Current selected category: All Notes
+ContentArea.js:335 All notes: 12
+ContentArea.js:342 Note logi options+: checking All Notes condition: Object
+ContentArea.js:372 Final filtered notes: 9
+ContentArea.js:374 - Note: Object
+ContentArea.js:374 - Note: Object
+ContentArea.js:374 - Note: Object
+ContentArea.js:374 - Note: Object
+ContentArea.js:374 - Note: Object
+ContentArea.js:374 - Note: Object
+ContentArea.js:374 - Note: Object
+ContentArea.js:374 - Note: Object
+ContentArea.js:374 - Note: Object
+ExportModal.js:25 Showing preview for format: pdf
+ExportModal.js:31 Export button clicked, format: pdf
+ExportModal.js:14 Exporting notes in format: pdf
+ExportModal.js:15 Selected notes: Array(1)
+ExportModal.js:19 Notes to export: Array(1)
+ExportModal.js:25 Showing preview for format: markdown
+ExportModal.js:31 Export button clicked, format: markdown
+ExportModal.js:14 Exporting notes in format: markdown
+ExportModal.js:15 Selected notes: ['JQPVVp9hLEK6JHRPBY79']
+ExportModal.js:19 Notes to export: [{…}]

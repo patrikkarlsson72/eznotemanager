@@ -1,5 +1,5 @@
 import React from 'react';
-import { useEditor, EditorContent } from '@tiptap/react';
+import { useEditor, EditorContent, BubbleMenu } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import CodeBlock from '@tiptap/extension-code-block';
 import Highlight from '@tiptap/extension-highlight';
@@ -15,7 +15,7 @@ import {
   faBold, faItalic, faCode, faListUl, 
   faListOl, faHighlighter, faQuoteLeft,
   faHeading, faUndo, faRedo, faImage,
-  faPaperclip, faSquareCheck
+  faPaperclip, faSquareCheck, faLink
 } from '@fortawesome/free-solid-svg-icons';
 import styles from './TipTapEditor.module.css';
 import MarkdownIt from 'markdown-it';
@@ -228,6 +228,8 @@ const MenuBar = ({ editor }) => {
   const { theme } = useTheme();
   const imageInputRef = React.useRef(null);
   const fileInputRef = React.useRef(null);
+  const [isLinkModalOpen, setIsLinkModalOpen] = React.useState(false);
+  const [linkUrl, setLinkUrl] = React.useState('');
   
   if (!editor) {
     return null;
@@ -245,6 +247,58 @@ const MenuBar = ({ editor }) => {
     if (input) {
       input.click();
     }
+  };
+
+  const addLink = () => {
+    const selection = editor.state.selection;
+    const selectedText = selection.empty 
+      ? '' 
+      : editor.state.doc.textBetween(selection.from, selection.to);
+
+    if (selectedText) {
+      setLinkUrl('');
+      setIsLinkModalOpen(true);
+    } else {
+      const url = window.prompt('Enter URL:');
+      if (url) {
+        // If no text is selected, insert the URL as the text
+        editor
+          .chain()
+          .focus()
+          .insertContent({
+            type: 'text',
+            text: url,
+          })
+          .setLink({ href: url })
+          .run();
+      }
+    }
+  };
+
+  const handleLinkSubmit = () => {
+    if (linkUrl) {
+      // If text is selected, convert it to a link
+      if (!editor.state.selection.empty) {
+        editor
+          .chain()
+          .focus()
+          .setLink({ href: linkUrl })
+          .run();
+      } else {
+        // If no text is selected, insert the URL as both text and link
+        editor
+          .chain()
+          .focus()
+          .insertContent({
+            type: 'text',
+            text: linkUrl,
+          })
+          .setLink({ href: linkUrl })
+          .run();
+      }
+    }
+    setIsLinkModalOpen(false);
+    setLinkUrl('');
   };
 
   const handleImageUpload = async (event) => {
@@ -296,184 +350,342 @@ const MenuBar = ({ editor }) => {
   };
 
   return (
-    <div className="flex flex-wrap gap-2 p-2 border-b border-gray-200 dark:border-gray-700">
-      <button
-        onClick={() => editor.chain().focus().toggleBold().run()}
-        disabled={!editor.can().chain().focus().toggleBold().run()}
-        className={`p-2 rounded-lg transition-colors ${
-          editor.isActive('bold')
-            ? 'bg-blue-500 text-white'
-            : `${theme === 'light' ? 'text-gray-700' : 'text-gray-300'} hover:bg-gray-100 dark:hover:bg-gray-700`
-        }`}
-        title="Bold (Ctrl+B)"
-      >
-        <FontAwesomeIcon icon={faBold} />
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleItalic().run()}
-        disabled={!editor.can().chain().focus().toggleItalic().run()}
-        className={`p-2 rounded-lg transition-colors ${
-          editor.isActive('italic')
-            ? 'bg-blue-500 text-white'
-            : `${theme === 'light' ? 'text-gray-700' : 'text-gray-300'} hover:bg-gray-100 dark:hover:bg-gray-700`
-        }`}
-        title="Italic (Ctrl+I)"
-      >
-        <FontAwesomeIcon icon={faItalic} />
-      </button>
-      <div className="w-px h-6 bg-gray-300 dark:bg-gray-600 my-auto mx-1" />
-      <div className="relative group">
+    <>
+      <div className="flex flex-wrap gap-2 p-2 border-b border-gray-200 dark:border-gray-700">
         <button
-          onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
+          onClick={() => editor.chain().focus().toggleBold().run()}
+          disabled={!editor.can().chain().focus().toggleBold().run()}
           className={`p-2 rounded-lg transition-colors ${
-            editor.isActive('heading')
+            editor.isActive('bold')
               ? 'bg-blue-500 text-white'
               : `${theme === 'light' ? 'text-gray-700' : 'text-gray-300'} hover:bg-gray-100 dark:hover:bg-gray-700`
           }`}
-          title="Heading"
+          title="Bold (Ctrl+B)"
         >
-          <FontAwesomeIcon icon={faHeading} />
+          <FontAwesomeIcon icon={faBold} />
         </button>
-        <div 
-          className="absolute hidden group-hover:block bg-white dark:bg-gray-800 rounded shadow-lg mt-1 py-1 min-w-[150px] z-10 transition-opacity duration-150"
-          style={{ left: '50%', transform: 'translateX(-50%)' }}
+        <button
+          onClick={() => editor.chain().focus().toggleItalic().run()}
+          disabled={!editor.can().chain().focus().toggleItalic().run()}
+          className={`p-2 rounded-lg transition-colors ${
+            editor.isActive('italic')
+              ? 'bg-blue-500 text-white'
+              : `${theme === 'light' ? 'text-gray-700' : 'text-gray-300'} hover:bg-gray-100 dark:hover:bg-gray-700`
+          }`}
+          title="Italic (Ctrl+I)"
         >
-          <div className="absolute w-full h-4 -top-4 bg-transparent"></div>
-          {[1, 2, 3].map((level) => (
-            <button
-              key={level}
-              onClick={(e) => {
-                e.preventDefault();
-                editor.chain().focus().toggleHeading({ level }).run();
-              }}
-              className={`w-full px-4 py-3 text-left transition-colors ${
-                editor.isActive('heading', { level })
-                  ? 'bg-blue-500 text-white'
-                  : `${theme === 'light' 
-                      ? 'text-gray-700 hover:bg-gray-100 hover:text-gray-900' 
-                      : 'text-gray-300 hover:bg-gray-700 hover:text-white'}`
-              }`}
-            >
-              Heading {level}
-            </button>
-          ))}
-          <div className="absolute w-full h-4 -bottom-4 bg-transparent"></div>
+          <FontAwesomeIcon icon={faItalic} />
+        </button>
+        <div className="w-px h-6 bg-gray-300 dark:bg-gray-600 my-auto mx-1" />
+        <div className="relative group">
+          <button
+            onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
+            className={`p-2 rounded-lg transition-colors ${
+              editor.isActive('heading')
+                ? 'bg-blue-500 text-white'
+                : `${theme === 'light' ? 'text-gray-700' : 'text-gray-300'} hover:bg-gray-100 dark:hover:bg-gray-700`
+            }`}
+            title="Heading"
+          >
+            <FontAwesomeIcon icon={faHeading} />
+          </button>
+          <div 
+            className="absolute hidden group-hover:block bg-white dark:bg-gray-800 rounded shadow-lg mt-1 py-1 min-w-[150px] z-10 transition-opacity duration-150"
+            style={{ left: '50%', transform: 'translateX(-50%)' }}
+          >
+            <div className="absolute w-full h-4 -top-4 bg-transparent"></div>
+            {[1, 2, 3].map((level) => (
+              <button
+                key={level}
+                onClick={(e) => {
+                  e.preventDefault();
+                  editor.chain().focus().toggleHeading({ level }).run();
+                }}
+                className={`w-full px-4 py-3 text-left transition-colors ${
+                  editor.isActive('heading', { level })
+                    ? 'bg-blue-500 text-white'
+                    : `${theme === 'light' 
+                        ? 'text-gray-700 hover:bg-gray-100 hover:text-gray-900' 
+                        : 'text-gray-300 hover:bg-gray-700 hover:text-white'}`
+                }`}
+              >
+                Heading {level}
+              </button>
+            ))}
+            <div className="absolute w-full h-4 -bottom-4 bg-transparent"></div>
+          </div>
         </div>
+        <button
+          onClick={() => editor.chain().focus().toggleBlockquote().run()}
+          className={`p-2 rounded-lg transition-colors ${
+            editor.isActive('blockquote')
+              ? 'bg-blue-500 text-white'
+              : `${theme === 'light' ? 'text-gray-700' : 'text-gray-300'} hover:bg-gray-100 dark:hover:bg-gray-700`
+          }`}
+          title="Quote"
+        >
+          <FontAwesomeIcon icon={faQuoteLeft} />
+        </button>
+        <div className="w-px h-6 bg-gray-300 dark:bg-gray-600 my-auto mx-1" />
+        <button
+          onClick={() => editor.chain().focus().toggleBulletList().run()}
+          className={`p-2 rounded-lg transition-colors ${
+            editor.isActive('bulletList')
+              ? 'bg-blue-500 text-white'
+              : `${theme === 'light' ? 'text-gray-700' : 'text-gray-300'} hover:bg-gray-100 dark:hover:bg-gray-700`
+          }`}
+          title="Bullet List"
+        >
+          <FontAwesomeIcon icon={faListUl} />
+        </button>
+        <button
+          onClick={() => editor.chain().focus().toggleOrderedList().run()}
+          className={`p-2 rounded-lg transition-colors ${
+            editor.isActive('orderedList')
+              ? 'bg-blue-500 text-white'
+              : `${theme === 'light' ? 'text-gray-700' : 'text-gray-300'} hover:bg-gray-100 dark:hover:bg-gray-700`
+          }`}
+          title="Numbered List"
+        >
+          <FontAwesomeIcon icon={faListOl} />
+        </button>
+        <div className="w-px h-6 bg-gray-300 dark:bg-gray-600 my-auto mx-1" />
+        <button
+          onClick={() => editor.chain().focus().toggleCodeBlock().run()}
+          className={`p-2 rounded-lg transition-colors ${
+            editor.isActive('codeBlock')
+              ? 'bg-blue-500 text-white'
+              : `${theme === 'light' ? 'text-gray-700' : 'text-gray-300'} hover:bg-gray-100 dark:hover:bg-gray-700`
+          }`}
+          title="Code Block"
+        >
+          <FontAwesomeIcon icon={faCode} />
+        </button>
+        <button
+          onClick={() => editor.chain().focus().toggleHighlight().run()}
+          className={`p-2 rounded-lg transition-colors ${
+            editor.isActive('highlight')
+              ? 'bg-blue-500 text-white'
+              : `${theme === 'light' ? 'text-gray-700' : 'text-gray-300'} hover:bg-gray-100 dark:hover:bg-gray-700`
+          }`}
+          title="Highlight"
+        >
+          <FontAwesomeIcon icon={faHighlighter} />
+        </button>
+        <div className="w-px h-6 bg-gray-300 dark:bg-gray-600 my-auto mx-1" />
+        <button
+          onClick={() => editor.chain().focus().undo().run()}
+          disabled={!editor.can().chain().focus().undo().run()}
+          className={`p-2 rounded-lg transition-colors ${theme === 'light' ? 'text-gray-700' : 'text-gray-300'} hover:bg-gray-100 dark:hover:bg-gray-700 disabled:opacity-50`}
+          title="Undo"
+        >
+          <FontAwesomeIcon icon={faUndo} />
+        </button>
+        <button
+          onClick={() => editor.chain().focus().redo().run()}
+          disabled={!editor.can().chain().focus().redo().run()}
+          className={`p-2 rounded-lg transition-colors ${theme === 'light' ? 'text-gray-700' : 'text-gray-300'} hover:bg-gray-100 dark:hover:bg-gray-700 disabled:opacity-50`}
+          title="Redo"
+        >
+          <FontAwesomeIcon icon={faRedo} />
+        </button>
+        <div className="w-px h-6 bg-gray-300 dark:bg-gray-600 my-auto mx-1" />
+        <button
+          onClick={addImage}
+          className={`p-2 rounded-lg transition-colors ${theme === 'light' ? 'text-gray-700' : 'text-gray-300'} hover:bg-gray-100 dark:hover:bg-gray-700`}
+          title="Add Image"
+        >
+          <FontAwesomeIcon icon={faImage} />
+        </button>
+        <button
+          onClick={addFile}
+          className={`p-2 rounded-lg transition-colors ${theme === 'light' ? 'text-gray-700' : 'text-gray-300'} hover:bg-gray-100 dark:hover:bg-gray-700`}
+          title="Attach File"
+        >
+          <FontAwesomeIcon icon={faPaperclip} />
+        </button>
+        <button
+          onClick={() => editor.chain().focus().toggleTaskList().run()}
+          className={`p-2 rounded-lg transition-colors ${
+            editor.isActive('taskList')
+              ? 'bg-blue-500 text-white'
+              : `${theme === 'light' ? 'text-gray-700' : 'text-gray-300'} hover:bg-gray-100 dark:hover:bg-gray-700`
+          }`}
+          title="Task List (Ctrl+Shift+T)"
+        >
+          <FontAwesomeIcon icon={faSquareCheck} />
+        </button>
+        <button
+          onClick={addLink}
+          className={`p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 ${
+            editor.isActive('link') ? 'bg-gray-200 dark:bg-gray-600' : ''
+          }`}
+          title="Add Link (Ctrl+K)"
+        >
+          <FontAwesomeIcon icon={faLink} className={theme === 'light' ? 'text-gray-600' : 'text-gray-300'} />
+        </button>
+        <input
+          ref={imageInputRef}
+          type="file"
+          accept="image/*"
+          onChange={handleImageUpload}
+          className="hidden"
+        />
+        <input
+          ref={fileInputRef}
+          type="file"
+          onChange={handleFileUpload}
+          className="hidden"
+        />
       </div>
-      <button
-        onClick={() => editor.chain().focus().toggleBlockquote().run()}
-        className={`p-2 rounded-lg transition-colors ${
-          editor.isActive('blockquote')
-            ? 'bg-blue-500 text-white'
-            : `${theme === 'light' ? 'text-gray-700' : 'text-gray-300'} hover:bg-gray-100 dark:hover:bg-gray-700`
-        }`}
-        title="Quote"
-      >
-        <FontAwesomeIcon icon={faQuoteLeft} />
-      </button>
-      <div className="w-px h-6 bg-gray-300 dark:bg-gray-600 my-auto mx-1" />
-      <button
-        onClick={() => editor.chain().focus().toggleBulletList().run()}
-        className={`p-2 rounded-lg transition-colors ${
-          editor.isActive('bulletList')
-            ? 'bg-blue-500 text-white'
-            : `${theme === 'light' ? 'text-gray-700' : 'text-gray-300'} hover:bg-gray-100 dark:hover:bg-gray-700`
-        }`}
-        title="Bullet List"
-      >
-        <FontAwesomeIcon icon={faListUl} />
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleOrderedList().run()}
-        className={`p-2 rounded-lg transition-colors ${
-          editor.isActive('orderedList')
-            ? 'bg-blue-500 text-white'
-            : `${theme === 'light' ? 'text-gray-700' : 'text-gray-300'} hover:bg-gray-100 dark:hover:bg-gray-700`
-        }`}
-        title="Numbered List"
-      >
-        <FontAwesomeIcon icon={faListOl} />
-      </button>
-      <div className="w-px h-6 bg-gray-300 dark:bg-gray-600 my-auto mx-1" />
-      <button
-        onClick={() => editor.chain().focus().toggleCodeBlock().run()}
-        className={`p-2 rounded-lg transition-colors ${
-          editor.isActive('codeBlock')
-            ? 'bg-blue-500 text-white'
-            : `${theme === 'light' ? 'text-gray-700' : 'text-gray-300'} hover:bg-gray-100 dark:hover:bg-gray-700`
-        }`}
-        title="Code Block"
-      >
-        <FontAwesomeIcon icon={faCode} />
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleHighlight().run()}
-        className={`p-2 rounded-lg transition-colors ${
-          editor.isActive('highlight')
-            ? 'bg-blue-500 text-white'
-            : `${theme === 'light' ? 'text-gray-700' : 'text-gray-300'} hover:bg-gray-100 dark:hover:bg-gray-700`
-        }`}
-        title="Highlight"
-      >
-        <FontAwesomeIcon icon={faHighlighter} />
-      </button>
-      <div className="w-px h-6 bg-gray-300 dark:bg-gray-600 my-auto mx-1" />
-      <button
-        onClick={() => editor.chain().focus().undo().run()}
-        disabled={!editor.can().chain().focus().undo().run()}
-        className={`p-2 rounded-lg transition-colors ${theme === 'light' ? 'text-gray-700' : 'text-gray-300'} hover:bg-gray-100 dark:hover:bg-gray-700 disabled:opacity-50`}
-        title="Undo"
-      >
-        <FontAwesomeIcon icon={faUndo} />
-      </button>
-      <button
-        onClick={() => editor.chain().focus().redo().run()}
-        disabled={!editor.can().chain().focus().redo().run()}
-        className={`p-2 rounded-lg transition-colors ${theme === 'light' ? 'text-gray-700' : 'text-gray-300'} hover:bg-gray-100 dark:hover:bg-gray-700 disabled:opacity-50`}
-        title="Redo"
-      >
-        <FontAwesomeIcon icon={faRedo} />
-      </button>
-      <div className="w-px h-6 bg-gray-300 dark:bg-gray-600 my-auto mx-1" />
-      <button
-        onClick={addImage}
-        className={`p-2 rounded-lg transition-colors ${theme === 'light' ? 'text-gray-700' : 'text-gray-300'} hover:bg-gray-100 dark:hover:bg-gray-700`}
-        title="Add Image"
-      >
-        <FontAwesomeIcon icon={faImage} />
-      </button>
-      <button
-        onClick={addFile}
-        className={`p-2 rounded-lg transition-colors ${theme === 'light' ? 'text-gray-700' : 'text-gray-300'} hover:bg-gray-100 dark:hover:bg-gray-700`}
-        title="Attach File"
-      >
-        <FontAwesomeIcon icon={faPaperclip} />
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleTaskList().run()}
-        className={`p-2 rounded-lg transition-colors ${
-          editor.isActive('taskList')
-            ? 'bg-blue-500 text-white'
-            : `${theme === 'light' ? 'text-gray-700' : 'text-gray-300'} hover:bg-gray-100 dark:hover:bg-gray-700`
-        }`}
-        title="Task List (Ctrl+Shift+T)"
-      >
-        <FontAwesomeIcon icon={faSquareCheck} />
-      </button>
-      <input
-        ref={imageInputRef}
-        type="file"
-        accept="image/*"
-        onChange={handleImageUpload}
-        className="hidden"
-      />
-      <input
-        ref={fileInputRef}
-        type="file"
-        onChange={handleFileUpload}
-        className="hidden"
-      />
-    </div>
+
+      {/* Link Modal */}
+      {isLinkModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-6 w-96">
+            <h3 className="text-lg font-medium mb-4 text-gray-900 dark:text-gray-100">Insert Link</h3>
+            <input
+              type="url"
+              value={linkUrl}
+              onChange={(e) => setLinkUrl(e.target.value)}
+              placeholder="Enter URL"
+              className="w-full p-2 border rounded mb-4 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+              autoFocus
+            />
+            <div className="flex justify-end gap-2">
+              <button
+                onClick={() => setIsLinkModalOpen(false)}
+                className="px-4 py-2 rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-900 dark:text-gray-100"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleLinkSubmit}
+                className="px-4 py-2 rounded bg-blue-500 hover:bg-blue-600 text-white"
+              >
+                Add Link
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
+};
+
+const FloatingLinkMenu = ({ editor }) => {
+  const { theme } = useTheme();
+  const [editMode, setEditMode] = React.useState(false);
+  const [linkUrl, setLinkUrl] = React.useState('');
+  const inputRef = React.useRef(null);
+
+  React.useEffect(() => {
+    if (editMode && inputRef.current) {
+      const url = editor.getAttributes('link').href;
+      setLinkUrl(url);
+      inputRef.current.focus();
+    }
+  }, [editMode, editor]);
+
+  const handleEditClick = () => {
+    setEditMode(true);
+  };
+
+  const handleSaveEdit = () => {
+    if (linkUrl) {
+      editor.chain().focus().extendMarkRange('link').setLink({ href: linkUrl }).run();
+    }
+    setEditMode(false);
+  };
+
+  const handleRemoveLink = () => {
+    editor.chain().focus().unsetLink().run();
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      handleSaveEdit();
+    }
+    if (e.key === 'Escape') {
+      setEditMode(false);
+    }
+  };
+
+  return (
+    <BubbleMenu 
+      editor={editor} 
+      shouldShow={({ editor }) => editor.isActive('link')}
+      tippyOptions={{ 
+        duration: 100,
+        placement: 'top',
+      }}
+      className={`flex items-center gap-1 p-1 rounded-lg shadow-lg border ${
+        theme === 'light' 
+          ? 'bg-white border-gray-200' 
+          : 'bg-gray-800 border-gray-700'
+      }`}
+    >
+      {editMode ? (
+        <div className="flex items-center gap-1">
+          <input
+            ref={inputRef}
+            type="url"
+            value={linkUrl}
+            onChange={(e) => setLinkUrl(e.target.value)}
+            onKeyDown={handleKeyDown}
+            className={`w-64 px-2 py-1 text-sm rounded border ${
+              theme === 'light'
+                ? 'bg-white border-gray-200 text-gray-900'
+                : 'bg-gray-700 border-gray-600 text-gray-100'
+            }`}
+            placeholder="Enter URL"
+          />
+          <button
+            onClick={handleSaveEdit}
+            className="p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700"
+            title="Save"
+          >
+            ✓
+          </button>
+          <button
+            onClick={() => setEditMode(false)}
+            className="p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700"
+            title="Cancel"
+          >
+            ✕
+          </button>
+        </div>
+      ) : (
+        <div className="flex items-center gap-1">
+          <a
+            href={editor.getAttributes('link').href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`px-2 py-1 text-sm ${
+              theme === 'light' ? 'text-blue-500' : 'text-blue-400'
+            }`}
+          >
+            {editor.getAttributes('link').href}
+          </a>
+          <div className="w-px h-4 bg-gray-300 dark:bg-gray-600" />
+          <button
+            onClick={handleEditClick}
+            className="p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700"
+            title="Edit link"
+          >
+            ✎
+          </button>
+          <button
+            onClick={handleRemoveLink}
+            className="p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700"
+            title="Remove link"
+          >
+            ✕
+          </button>
+        </div>
+      )}
+    </BubbleMenu>
   );
 };
 
@@ -488,11 +700,9 @@ const TipTapEditor = ({ content, onChange }) => {
           HTMLAttributes: {
             class: theme === 'light' ? 'text-gray-800' : 'text-gray-200',
           },
-          // Enable Markdown-style headings
           marks: '',
           transformInputRule: true,
           transformPastedText: true,
-          // Add keyboard shortcuts for headings
           keymap: {
             'Mod-Alt-1': () => editor?.chain().focus().toggleHeading({ level: 1 }).run(),
             'Mod-Alt-2': () => editor?.chain().focus().toggleHeading({ level: 2 }).run(),
@@ -510,10 +720,8 @@ const TipTapEditor = ({ content, onChange }) => {
               ? 'border-l-4 border-gray-300 pl-4 text-gray-700' 
               : 'border-l-4 border-gray-600 pl-4 text-gray-300',
           },
-          // Enable Markdown-style blockquotes
           transformInputRule: true,
           transformPastedText: true,
-          // Add keyboard shortcut for blockquote
           keymap: {
             'Mod-Alt-q': () => editor?.chain().focus().toggleBlockquote().run(),
           }
@@ -522,10 +730,8 @@ const TipTapEditor = ({ content, onChange }) => {
           HTMLAttributes: {
             class: theme === 'light' ? 'list-disc ml-4' : 'list-disc ml-4 text-gray-200',
           },
-          // Enable Markdown-style bullet lists
           transformInputRule: true,
           transformPastedText: true,
-          // Add keyboard shortcut for bullet list
           keymap: {
             'Mod-Alt-l': () => editor?.chain().focus().toggleBulletList().run(),
           }
@@ -534,10 +740,8 @@ const TipTapEditor = ({ content, onChange }) => {
           HTMLAttributes: {
             class: theme === 'light' ? 'list-decimal ml-4' : 'list-decimal ml-4 text-gray-200',
           },
-          // Enable Markdown-style ordered lists
           transformInputRule: true,
           transformPastedText: true,
-          // Add keyboard shortcut for ordered list
           keymap: {
             'Mod-Alt-Shift-l': () => editor?.chain().focus().toggleOrderedList().run(),
           }
@@ -553,15 +757,28 @@ const TipTapEditor = ({ content, onChange }) => {
               ? 'bg-gray-100 rounded px-1 font-mono text-sm text-gray-800'
               : 'bg-gray-800 rounded px-1 font-mono text-sm text-blue-300',
           },
-          // Enable Markdown-style inline code
           transformInputRule: true,
           transformPastedText: true,
-          // Add keyboard shortcut for inline code
           keymap: {
             'Mod-Alt-`': () => editor?.chain().focus().toggleCode().run(),
           }
         },
-        codeBlock: false, // Disable codeBlock from StarterKit since we're using it separately
+        codeBlock: false,
+      }),
+      CodeBlock.configure({
+        HTMLAttributes: {
+          class: 'bg-gray-100 dark:bg-gray-800 rounded-md p-2 font-mono text-sm',
+        },
+      }),
+      Highlight.configure({
+        HTMLAttributes: {
+          class: theme === 'light'
+            ? 'bg-yellow-200 text-gray-900 rounded px-1'
+            : 'bg-yellow-900 text-gray-100 rounded px-1',
+        },
+      }),
+      Placeholder.configure({
+        placeholder: 'Write something...',
       }),
       ResizableImage.configure({
         HTMLAttributes: {
@@ -580,20 +797,6 @@ const TipTapEditor = ({ content, onChange }) => {
           return null;
         },
       }),
-      Placeholder.configure({
-        placeholder: 'Write something...',
-      }),
-      CodeBlock,
-      Link.configure({
-        openOnClick: false,
-      }),
-      Highlight.configure({
-        HTMLAttributes: {
-          class: theme === 'light'
-            ? 'bg-yellow-200 text-gray-900 rounded px-1'
-            : 'bg-yellow-900 text-gray-100 rounded px-1',
-        },
-      }),
       FileAttachment,
       TaskList.configure({
         HTMLAttributes: {
@@ -605,6 +808,15 @@ const TipTapEditor = ({ content, onChange }) => {
           class: 'flex items-start gap-2 my-1',
         },
         nested: true,
+      }),
+      Link.configure({
+        openOnClick: false,
+        autolink: true,
+        linkOnPaste: true,
+        HTMLAttributes: {
+          class: 'text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 underline',
+          rel: 'noopener noreferrer nofollow',
+        },
       }),
     ],
     content: content || '',
@@ -661,7 +873,7 @@ const TipTapEditor = ({ content, onChange }) => {
           return true;
         }
 
-        // Handle Markdown text paste (existing code)
+        // Handle Markdown text paste
         const text = event.clipboardData?.getData('text/plain');
         if (!text) return false;
 
@@ -698,20 +910,15 @@ const TipTapEditor = ({ content, onChange }) => {
         : 'dark bg-gray-800 border-gray-700'
     }`}>
       <MenuBar editor={editor} />
-      <div className={`p-4 ${styles.editor} ${
-        theme === 'light'
-          ? 'prose'
-          : 'prose prose-invert'
-      } max-w-none`}>
-        <EditorContent 
-          editor={editor} 
-          className={`${
-            theme === 'light'
-              ? 'text-gray-800'
-              : 'text-gray-100'
-          }`}
-        />
-      </div>
+      <FloatingLinkMenu editor={editor} />
+      <EditorContent 
+        editor={editor} 
+        className={`${
+          theme === 'light'
+            ? 'text-gray-800'
+            : 'text-gray-100'
+        }`}
+      />
     </div>
   );
 };

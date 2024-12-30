@@ -11,16 +11,25 @@ const ExportModal = ({ isOpen, onRequestClose, onExport, notes = [] }) => {
   const [selectedNotes, setSelectedNotes] = useState([]);
 
   const handleExport = (format) => {
+    console.log('Exporting notes in format:', format);
+    console.log('Selected notes:', selectedNotes);
     const notesToExport = selectedNotes.length > 0 
       ? notes.filter(note => selectedNotes.includes(note.id))
       : notes;
+    console.log('Notes to export:', notesToExport);
     onExport(format, notesToExport);
     onRequestClose();
   };
 
   const handleShowPreview = (format) => {
+    console.log('Showing preview for format:', format);
     setPreviewFormat(format);
     setShowPreview(true);
+  };
+
+  const handleExportClick = () => {
+    console.log('Export button clicked, format:', previewFormat);
+    handleExport(previewFormat);
   };
 
   const toggleNoteSelection = (noteId) => {
@@ -119,9 +128,10 @@ const ExportModal = ({ isOpen, onRequestClose, onExport, notes = [] }) => {
                   Tags: {note.tags.join(', ')}
                 </p>
               )}
-              <div className={`mt-2 text-sm ${theme === 'light' ? 'text-gray-700' : 'text-gray-200'}`}>
-                {note.content?.substring(0, 100)}...
-              </div>
+              <div 
+                className={`mt-2 text-sm ${theme === 'light' ? 'text-gray-700' : 'text-gray-200'}`}
+                dangerouslySetInnerHTML={{ __html: note.content }}
+              />
               {index < notesToPreview.length - 1 && <hr className="my-4 border-gray-600" />}
             </div>
           ))}
@@ -143,7 +153,7 @@ const ExportModal = ({ isOpen, onRequestClose, onExport, notes = [] }) => {
 {notesToPreview.map(note => `## ${note.title}
 
 ${note.category ? `Category: ${note.category}\n` : ''}${note.tags?.length ? `Tags: ${note.tags.join(', ')}\n` : ''}
-${note.content?.substring(0, 100)}...
+${note.content}
 
 ---
 
@@ -234,7 +244,7 @@ ${note.content?.substring(0, 100)}...
             </button>
             {showPreview && (
               <button
-                onClick={() => handleExport(previewFormat)}
+                onClick={handleExportClick}
                 className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
               >
                 Export {selectedNotes.length > 0 ? `(${selectedNotes.length} notes)` : ''}

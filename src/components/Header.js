@@ -181,7 +181,7 @@ const Header = ({
       <ExportModal
         isOpen={showExportModal}
         onRequestClose={() => setShowExportModal(false)}
-        onExport={handleExport}
+        onExport={onExport}
         notes={notes}
       />
     </header>

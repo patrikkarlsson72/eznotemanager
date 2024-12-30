@@ -1,0 +1,801 @@
+Removing unpermitted intrinsics lockdown-install.js:1:52832
+Varningar om kakor 3
+Download the React DevTools for a better development experience: https://reactjs.org/link/react-devtools react-dom.development.js:29895
+[2024-12-30T12:00:45.355Z]  @firebase/firestore: Firestore (10.14.1): enableIndexedDbPersistence() will be deprecated in the future, you can use `FirestoreSettings.cache` instead. logger.ts:115
+Subscribing to notes for user: GLNz0QZAbfefAUFkbcOJL8N1T513 notes.js:128
+Attempting to initialize user: GLNz0QZAbfefAUFkbcOJL8N1T513 App.js:142
+No encryption key found 2 EncryptionContext.js:34
+Setting up subscription for user: GLNz0QZAbfefAUFkbcOJL8N1T513 ContentArea.js:44
+Final filtered notes: 0 ContentArea.js:372
+Setting up subscription for user: GLNz0QZAbfefAUFkbcOJL8N1T513 ContentArea.js:44
+Final filtered notes: 0 2 ContentArea.js:372
+Received snapshot with changes bundle.js:8373:13
+Processed notes: 12 bundle.js:8384:13
+Received updated notes: 
+Array(12) [ {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, … ]
+bundle.js:101:17
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Cheat Sheets: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Firebase command: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Project Ideas 2024: checking All Notes condition: 
+Object { isArchived: true, matchesCategory: false }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Weekly Goals: checking All Notes condition: 
+Object { isArchived: true, matchesCategory: false }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Meeting Notes - Client Discussion: checking All Notes condition: 
+Object { isArchived: true, matchesCategory: false }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note 2024-12-30: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Decommission package: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Dashboard: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note RD Session template: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note 2024-12-30: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Abaqus: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note logi options+: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Cheat Sheets: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Firebase command: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Project Ideas 2024: checking All Notes condition: 
+Object { isArchived: true, matchesCategory: false }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Weekly Goals: checking All Notes condition: 
+Object { isArchived: true, matchesCategory: false }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Meeting Notes - Client Discussion: checking All Notes condition: 
+Object { isArchived: true, matchesCategory: false }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note 2024-12-30: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Decommission package: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Dashboard: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note RD Session template: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note 2024-12-30: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Abaqus: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note logi options+: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Final filtered notes: 9 ContentArea.js:372
+- Note: 
+Object { id: "JQPVVp9hLEK6JHRPBY79", title: "Cheat Sheets", category: "Work/Projects", isArchived: false, order: 10290.065368652344 }
+ContentArea.js:374
+- Note: 
+Object { id: "uZvPm8BfpgKJEMOsNSun", title: "Firebase command", category: "Work/Projects", isArchived: false, order: 13563.002151489258 }
+ContentArea.js:374
+- Note: 
+Object { id: "9X4FgR1FbTcGb6RyH9J0", title: "2024-12-30", category: "Uncategorized", isArchived: false, order: 14563.002151489258 }
+ContentArea.js:374
+- Note: 
+Object { id: "5KbiAqoJ6ye1FdEg5QSE", title: "Decommission package", category: "Work/Projects", isArchived: false, order: 15563.002151489258 }
+ContentArea.js:374
+- Note: 
+Object { id: "Dl5eDbEZF07knirP6U6J", title: "Dashboard", category: "Ideas", isArchived: false, order: 16563.002151489258 }
+ContentArea.js:374
+- Note: 
+Object { id: "uQ3jAnXhzp4HP7dI2ZMn", title: "RD Session template", category: "Templates", isArchived: false, order: 17563.002151489258 }
+ContentArea.js:374
+- Note: 
+Object { id: "ZfJcloZrBLtx6pGrCRij", title: "2024-12-30", category: "Questions", isArchived: false, order: 18563.002151489258 }
+ContentArea.js:374
+- Note: 
+Object { id: "NH62L3MXhNJY8Etc1gU3", title: "Abaqus", category: "Work/Projects", isArchived: false, order: 19563.002151489258 }
+ContentArea.js:374
+- Note: 
+Object { id: "WllvMOZYbjUZB4Zyeffc", title: "logi options+", category: "Work/Projects", isArchived: false, order: 20563.002151489258 }
+ContentArea.js:374
+Received updated tags: 
+Array(36) [ "pcm", "intune", "entra", "smoketest", "appdisco", "git", "Abaqus", "tutorial", "formatting", "organization", … ]
+App.js:79
+Received updated categories: 
+Array(9) [ {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…} ]
+App.js:95
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Cheat Sheets: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Firebase command: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Project Ideas 2024: checking All Notes condition: 
+Object { isArchived: true, matchesCategory: false }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Weekly Goals: checking All Notes condition: 
+Object { isArchived: true, matchesCategory: false }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Meeting Notes - Client Discussion: checking All Notes condition: 
+Object { isArchived: true, matchesCategory: false }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note 2024-12-30: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Decommission package: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Dashboard: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note RD Session template: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note 2024-12-30: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Abaqus: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note logi options+: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Cheat Sheets: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Firebase command: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Project Ideas 2024: checking All Notes condition: 
+Object { isArchived: true, matchesCategory: false }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Weekly Goals: checking All Notes condition: 
+Object { isArchived: true, matchesCategory: false }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Meeting Notes - Client Discussion: checking All Notes condition: 
+Object { isArchived: true, matchesCategory: false }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note 2024-12-30: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Decommission package: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Dashboard: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note RD Session template: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note 2024-12-30: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Abaqus: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note logi options+: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Final filtered notes: 9 ContentArea.js:372
+- Note: 
+Object { id: "JQPVVp9hLEK6JHRPBY79", title: "Cheat Sheets", category: "Work/Projects", isArchived: false, order: 10290.065368652344 }
+ContentArea.js:374
+- Note: 
+Object { id: "uZvPm8BfpgKJEMOsNSun", title: "Firebase command", category: "Work/Projects", isArchived: false, order: 13563.002151489258 }
+ContentArea.js:374
+- Note: 
+Object { id: "9X4FgR1FbTcGb6RyH9J0", title: "2024-12-30", category: "Uncategorized", isArchived: false, order: 14563.002151489258 }
+ContentArea.js:374
+- Note: 
+Object { id: "5KbiAqoJ6ye1FdEg5QSE", title: "Decommission package", category: "Work/Projects", isArchived: false, order: 15563.002151489258 }
+ContentArea.js:374
+- Note: 
+Object { id: "Dl5eDbEZF07knirP6U6J", title: "Dashboard", category: "Ideas", isArchived: false, order: 16563.002151489258 }
+ContentArea.js:374
+- Note: 
+Object { id: "uQ3jAnXhzp4HP7dI2ZMn", title: "RD Session template", category: "Templates", isArchived: false, order: 17563.002151489258 }
+ContentArea.js:374
+- Note: 
+Object { id: "ZfJcloZrBLtx6pGrCRij", title: "2024-12-30", category: "Questions", isArchived: false, order: 18563.002151489258 }
+ContentArea.js:374
+- Note: 
+Object { id: "NH62L3MXhNJY8Etc1gU3", title: "Abaqus", category: "Work/Projects", isArchived: false, order: 19563.002151489258 }
+ContentArea.js:374
+- Note: 
+Object { id: "WllvMOZYbjUZB4Zyeffc", title: "logi options+", category: "Work/Projects", isArchived: false, order: 20563.002151489258 }
+ContentArea.js:374
+Subscribing to notes for user: GLNz0QZAbfefAUFkbcOJL8N1T513 2 notes.js:128
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Cheat Sheets: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Firebase command: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Project Ideas 2024: checking All Notes condition: 
+Object { isArchived: true, matchesCategory: false }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Weekly Goals: checking All Notes condition: 
+Object { isArchived: true, matchesCategory: false }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Meeting Notes - Client Discussion: checking All Notes condition: 
+Object { isArchived: true, matchesCategory: false }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note 2024-12-30: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Decommission package: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Dashboard: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note RD Session template: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note 2024-12-30: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Abaqus: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note logi options+: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Cheat Sheets: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Firebase command: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Project Ideas 2024: checking All Notes condition: 
+Object { isArchived: true, matchesCategory: false }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Weekly Goals: checking All Notes condition: 
+Object { isArchived: true, matchesCategory: false }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Meeting Notes - Client Discussion: checking All Notes condition: 
+Object { isArchived: true, matchesCategory: false }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note 2024-12-30: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Decommission package: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Dashboard: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note RD Session template: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note 2024-12-30: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Abaqus: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note logi options+: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Final filtered notes: 9 ContentArea.js:372
+- Note: 
+Object { id: "JQPVVp9hLEK6JHRPBY79", title: "Cheat Sheets", category: "Work/Projects", isArchived: false, order: 10290.065368652344 }
+ContentArea.js:374
+- Note: 
+Object { id: "uZvPm8BfpgKJEMOsNSun", title: "Firebase command", category: "Work/Projects", isArchived: false, order: 13563.002151489258 }
+ContentArea.js:374
+- Note: 
+Object { id: "9X4FgR1FbTcGb6RyH9J0", title: "2024-12-30", category: "Uncategorized", isArchived: false, order: 14563.002151489258 }
+ContentArea.js:374
+- Note: 
+Object { id: "5KbiAqoJ6ye1FdEg5QSE", title: "Decommission package", category: "Work/Projects", isArchived: false, order: 15563.002151489258 }
+ContentArea.js:374
+- Note: 
+Object { id: "Dl5eDbEZF07knirP6U6J", title: "Dashboard", category: "Ideas", isArchived: false, order: 16563.002151489258 }
+ContentArea.js:374
+- Note: 
+Object { id: "uQ3jAnXhzp4HP7dI2ZMn", title: "RD Session template", category: "Templates", isArchived: false, order: 17563.002151489258 }
+ContentArea.js:374
+- Note: 
+Object { id: "ZfJcloZrBLtx6pGrCRij", title: "2024-12-30", category: "Questions", isArchived: false, order: 18563.002151489258 }
+ContentArea.js:374
+- Note: 
+Object { id: "NH62L3MXhNJY8Etc1gU3", title: "Abaqus", category: "Work/Projects", isArchived: false, order: 19563.002151489258 }
+ContentArea.js:374
+- Note: 
+Object { id: "WllvMOZYbjUZB4Zyeffc", title: "logi options+", category: "Work/Projects", isArchived: false, order: 20563.002151489258 }
+ContentArea.js:374
+Received snapshot with changes bundle.js:8373:13
+Processed notes: 12 bundle.js:8384:13
+Received notes update: 12 bundle.js:630:19
+Received snapshot with changes bundle.js:8373:13
+Processed notes: 12 bundle.js:8384:13
+Received notes update: 12 bundle.js:630:19
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Cheat Sheets: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Firebase command: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Project Ideas 2024: checking All Notes condition: 
+Object { isArchived: true, matchesCategory: false }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Weekly Goals: checking All Notes condition: 
+Object { isArchived: true, matchesCategory: false }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Meeting Notes - Client Discussion: checking All Notes condition: 
+Object { isArchived: true, matchesCategory: false }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note 2024-12-30: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Decommission package: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Dashboard: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note RD Session template: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note 2024-12-30: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Abaqus: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note logi options+: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Cheat Sheets: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Firebase command: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Project Ideas 2024: checking All Notes condition: 
+Object { isArchived: true, matchesCategory: false }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Weekly Goals: checking All Notes condition: 
+Object { isArchived: true, matchesCategory: false }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Meeting Notes - Client Discussion: checking All Notes condition: 
+Object { isArchived: true, matchesCategory: false }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note 2024-12-30: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Decommission package: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Dashboard: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note RD Session template: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note 2024-12-30: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Abaqus: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note logi options+: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Warning: Connect(Droppable): Support for defaultProps will be removed from memo components in a future major release. Use JavaScript default parameters instead.
+div
+div
+Provider@http://localhost:3000/static/js/bundle.js:97356:15
+App@http://localhost:3000/static/js/bundle.js:67067:19
+ErrorBoundary@http://localhost:3000/static/js/bundle.js:61280:35
+DragDropContext@http://localhost:3000/static/js/bundle.js:67191:19
+ContentArea@http://localhost:3000/static/js/bundle.js:586:21
+div
+div
+EncryptionProvider@http://localhost:3000/static/js/bundle.js:7800:28
+App@http://localhost:3000/static/js/bundle.js:80:70
+ThemeProvider@http://localhost:3000/static/js/bundle.js:7943:23 react-dom.development.js:86
+Final filtered notes: 9 ContentArea.js:372
+- Note: 
+Object { id: "JQPVVp9hLEK6JHRPBY79", title: "Cheat Sheets", category: "Work/Projects", isArchived: false, order: 10290.065368652344 }
+ContentArea.js:374
+- Note: 
+Object { id: "uZvPm8BfpgKJEMOsNSun", title: "Firebase command", category: "Work/Projects", isArchived: false, order: 13563.002151489258 }
+ContentArea.js:374
+- Note: 
+Object { id: "9X4FgR1FbTcGb6RyH9J0", title: "2024-12-30", category: "Uncategorized", isArchived: false, order: 14563.002151489258 }
+ContentArea.js:374
+- Note: 
+Object { id: "5KbiAqoJ6ye1FdEg5QSE", title: "Decommission package", category: "Work/Projects", isArchived: false, order: 15563.002151489258 }
+ContentArea.js:374
+- Note: 
+Object { id: "Dl5eDbEZF07knirP6U6J", title: "Dashboard", category: "Ideas", isArchived: false, order: 16563.002151489258 }
+ContentArea.js:374
+- Note: 
+Object { id: "uQ3jAnXhzp4HP7dI2ZMn", title: "RD Session template", category: "Templates", isArchived: false, order: 17563.002151489258 }
+ContentArea.js:374
+- Note: 
+Object { id: "ZfJcloZrBLtx6pGrCRij", title: "2024-12-30", category: "Questions", isArchived: false, order: 18563.002151489258 }
+ContentArea.js:374
+- Note: 
+Object { id: "NH62L3MXhNJY8Etc1gU3", title: "Abaqus", category: "Work/Projects", isArchived: false, order: 19563.002151489258 }
+ContentArea.js:374
+- Note: 
+Object { id: "WllvMOZYbjUZB4Zyeffc", title: "logi options+", category: "Work/Projects", isArchived: false, order: 20563.002151489258 }
+ContentArea.js:374
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Cheat Sheets: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Firebase command: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Project Ideas 2024: checking All Notes condition: 
+Object { isArchived: true, matchesCategory: false }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Weekly Goals: checking All Notes condition: 
+Object { isArchived: true, matchesCategory: false }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Meeting Notes - Client Discussion: checking All Notes condition: 
+Object { isArchived: true, matchesCategory: false }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note 2024-12-30: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Decommission package: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Dashboard: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note RD Session template: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note 2024-12-30: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Abaqus: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note logi options+: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Cheat Sheets: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Firebase command: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Project Ideas 2024: checking All Notes condition: 
+Object { isArchived: true, matchesCategory: false }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Weekly Goals: checking All Notes condition: 
+Object { isArchived: true, matchesCategory: false }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Meeting Notes - Client Discussion: checking All Notes condition: 
+Object { isArchived: true, matchesCategory: false }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note 2024-12-30: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Decommission package: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Dashboard: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note RD Session template: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note 2024-12-30: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note Abaqus: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Current selected category: All Notes ContentArea.js:334
+All notes: 12 ContentArea.js:335
+Note logi options+: checking All Notes condition: 
+Object { isArchived: false, matchesCategory: true }
+ContentArea.js:342
+Final filtered notes: 9 ContentArea.js:372
+- Note: 
+Object { id: "JQPVVp9hLEK6JHRPBY79", title: "Cheat Sheets", category: "Work/Projects", isArchived: false, order: 10290.065368652344 }
+ContentArea.js:374
+- Note: 
+Object { id: "uZvPm8BfpgKJEMOsNSun", title: "Firebase command", category: "Work/Projects", isArchived: false, order: 13563.002151489258 }
+ContentArea.js:374
+- Note: 
+Object { id: "9X4FgR1FbTcGb6RyH9J0", title: "2024-12-30", category: "Uncategorized", isArchived: false, order: 14563.002151489258 }
+ContentArea.js:374
+- Note: 
+Object { id: "5KbiAqoJ6ye1FdEg5QSE", title: "Decommission package", category: "Work/Projects", isArchived: false, order: 15563.002151489258 }
+ContentArea.js:374
+- Note: 
+Object { id: "Dl5eDbEZF07knirP6U6J", title: "Dashboard", category: "Ideas", isArchived: false, order: 16563.002151489258 }
+ContentArea.js:374
+- Note: 
+Object { id: "uQ3jAnXhzp4HP7dI2ZMn", title: "RD Session template", category: "Templates", isArchived: false, order: 17563.002151489258 }
+ContentArea.js:374
+- Note: 
+Object { id: "ZfJcloZrBLtx6pGrCRij", title: "2024-12-30", category: "Questions", isArchived: false, order: 18563.002151489258 }
+ContentArea.js:374
+- Note: 
+Object { id: "NH62L3MXhNJY8Etc1gU3", title: "Abaqus", category: "Work/Projects", isArchived: false, order: 19563.002151489258 }
+ContentArea.js:374
+- Note: 
+Object { id: "WllvMOZYbjUZB4Zyeffc", title: "logi options+", category: "Work/Projects", isArchived: false, order: 20563.002151489258 }
+ContentArea.js:374
+MouseEvent.mozInputSource är föråldrad. Använd PointerEvent.pointerType istället. isVirtualEvent.ts:28
+Showing preview for format: pdf ExportModal.js:25
+Export button clicked, format: pdf ExportModal.js:31
+Exporting notes in format: pdf ExportModal.js:14
+Selected notes: 
+Array [ "JQPVVp9hLEK6JHRPBY79" ]
+ExportModal.js:15
+Notes to export: 
+Array [ {…} ]
+ExportModal.js:19
+Showing preview for format: markdown ExportModal.js:25
+Export button clicked, format: markdown ExportModal.js:31
+Exporting notes in format: markdown ExportModal.js:14
+Selected notes: 
+Array [ "JQPVVp9hLEK6JHRPBY79" ]
+ExportModal.js:15
+Notes to export: 
+Array [ {…} ]
+ExportModal.js:19

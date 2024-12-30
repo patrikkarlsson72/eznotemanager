@@ -39,6 +39,12 @@
   - Image drag & drop
   - File attachments
   - Checkboxes/todo lists within notes
+- [ ] Add link preview functionality
+  - Show preview cards for pasted URLs
+  - Include website title, description, and thumbnail
+  - Cache preview data for performance
+  - Handle cases where previews are unavailable
+  - Consider using a service like microlink.io or creating a custom solution with Firebase Functions
 
 ## Additional Features to Consider
 - [ ] Collaboration features

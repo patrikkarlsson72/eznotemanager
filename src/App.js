@@ -1,7 +1,14 @@
+// External imports
 import React, { useState, useEffect, useRef } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import Modal from 'react-modal';
+import { saveAs } from 'file-saver';
+
+// Firebase and Context imports
 import { auth } from './firebase';
 import { useTheme } from './context/ThemeContext';
+import { EncryptionProvider } from './context/EncryptionContext';
+import { ThemeProvider } from './context/ThemeContext';
 import { 
   subscribeToUserTags, 
   subscribeToUserCategories, 
@@ -11,13 +18,8 @@ import {
   addNote,
   subscribeToNotes
 } from './firebase/notes';
-import { saveAs } from 'file-saver';
-import jsPDF from 'jspdf';
-import Modal from 'react-modal';
-import { EncryptionProvider } from './context/EncryptionContext';
-import { ThemeProvider } from './context/ThemeContext';
 
-// Components
+// Component imports
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import ContentArea from './components/ContentArea';
@@ -29,6 +31,7 @@ import WelcomeGuide from './components/WelcomeGuide';
 import KeyboardShortcuts from './components/KeyboardShortcuts';
 import ImportModal from './components/ImportModal';
 
+// Styles
 import './App.css';
 
 // Set up Modal
@@ -235,6 +238,7 @@ function App() {
   };
 
   const handleExport = async (format, selectedNotes) => {
+    console.log('Starting export process...');
     const notesToExport = selectedNotes || notes;
     
     if (!notesToExport || notesToExport.length === 0) {
@@ -242,58 +246,57 @@ function App() {
       return;
     }
 
-    const sortedNotes = [...notesToExport].sort((a, b) => {
-      if (a.pinned && !b.pinned) return -1;
-      if (!a.pinned && b.pinned) return 1;
-      return (a.order || 0) - (b.order || 0);
-    });
+    console.log('Processing notes for export:', notesToExport);
 
-    if (format === 'markdown') {
-      let markdownContent = '# My Notes\n\n';
-      
-      sortedNotes.forEach(note => {
-        markdownContent += `## ${note.title}\n\n`;
-        if (note.category) markdownContent += `Category: ${note.category}\n\n`;
-        if (note.tags && note.tags.length > 0) markdownContent += `Tags: ${note.tags.join(', ')}\n\n`;
-        markdownContent += `${note.content}\n\n---\n\n`;
-      });
+    try {
+      if (format === 'markdown') {
+        let markdownContent = '# My Notes\n\n';
+        
+        notesToExport.forEach(note => {
+          markdownContent += `## ${note.title}\n\n`;
+          if (note.category) markdownContent += `Category: ${note.category}\n\n`;
+          if (note.tags && note.tags.length > 0) markdownContent += `Tags: ${note.tags.join(', ')}\n\n`;
+          markdownContent += `${note.content}\n\n---\n\n`;
+        });
 
-      const blob = new Blob([markdownContent], { type: 'text/markdown;charset=utf-8' });
-      saveAs(blob, 'my_notes.md');
-    } 
-    else if (format === 'pdf') {
-      const doc = new jsPDF();
-      let yOffset = 10;
+        console.log('Created markdown content, attempting to save...');
+        const element = document.createElement('a');
+        element.setAttribute('href', 'data:text/markdown;charset=utf-8,' + encodeURIComponent(markdownContent));
+        element.setAttribute('download', `my_notes_${new Date().toISOString().split('T')[0]}.md`);
+        element.style.display = 'none';
+        document.body.appendChild(element);
+        element.click();
+        document.body.removeChild(element);
+        console.log('Markdown file download initiated');
+      } 
+      else if (format === 'pdf') {
+        console.log('Starting PDF generation...');
+        
+        // Import pdfmake and its fonts
+        const pdfMake = (await import('pdfmake/build/pdfmake')).default;
+        await import('pdfmake/build/vfs_fonts');
+        
+        const docDefinition = {
+          content: notesToExport.map(note => [
+            { text: note.title, style: 'header' },
+            note.category ? { text: `Category: ${note.category}`, style: 'metadata' } : '',
+            note.tags?.length ? { text: `Tags: ${note.tags.join(', ')}`, style: 'metadata' } : '',
+            { text: note.content.replace(/<[^>]*>/g, ''), margin: [0, 10, 0, 10] },
+            { text: '', pageBreak: 'after' }
+          ]).flat().filter(Boolean),
+          defaultStyle: { font: 'Roboto' },
+          styles: {
+            header: { fontSize: 18, bold: true, margin: [0, 0, 0, 10] },
+            metadata: { fontSize: 10, margin: [0, 0, 0, 5] }
+          }
+        };
 
-      sortedNotes.forEach((note, index) => {
-        if (index > 0) {
-          doc.addPage();
-          yOffset = 10;
-        }
-
-        // Add title
-        doc.setFontSize(16);
-        doc.text(note.title, 10, yOffset);
-        yOffset += 10;
-
-        // Add category and tags
-        doc.setFontSize(10);
-        if (note.category) {
-          doc.text(`Category: ${note.category}`, 10, yOffset);
-          yOffset += 5;
-        }
-        if (note.tags && note.tags.length > 0) {
-          doc.text(`Tags: ${note.tags.join(', ')}`, 10, yOffset);
-          yOffset += 5;
-        }
-
-        // Add content
-        doc.setFontSize(12);
-        const splitContent = doc.splitTextToSize(note.content, 180);
-        doc.text(splitContent, 10, yOffset + 5);
-      });
-
-      doc.save('my_notes.pdf');
+        console.log('PDF document definition created, generating PDF...');
+        pdfMake.createPdf(docDefinition).download(`my_notes_${new Date().toISOString().split('T')[0]}.pdf`);
+        console.log('PDF download initiated');
+      }
+    } catch (error) {
+      console.error('Error in export process:', error);
     }
   };
 
