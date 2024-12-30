@@ -10,6 +10,7 @@ import KeyboardShortcutGuide from './KeyboardShortcutGuide';
 import ExportModal from './ExportModal';
 import { useTheme } from '../context/ThemeContext';
 import { Menu } from '@headlessui/react';
+import EncryptionSettings from './EncryptionSettings';
 
 const Header = ({
   onSearchChange,
@@ -162,6 +163,8 @@ const Header = ({
                     </button>
                   )}
                 </Menu.Item>
+                <div className="border-t border-gray-200 dark:border-gray-700 my-1" />
+                <EncryptionSettings />
               </Menu.Items>
             </Menu>
           </>

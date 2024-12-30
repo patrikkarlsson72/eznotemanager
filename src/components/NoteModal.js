@@ -3,6 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import TipTapEditor from './TipTapEditor';
 import { useTheme } from '../context/ThemeContext';
+import { encryptData, decryptData } from '../utils/encryption';
+import { useEncryption } from '../context/EncryptionContext';
 
 const NoteModal = ({ isOpen, onRequestClose, title: initialTitle, content: initialContent, onSave, categories, selectedCategory, tags: initialTags = [], availableTags = [] }) => {
   const [editedTitle, setEditedTitle] = useState('');
@@ -12,14 +14,34 @@ const NoteModal = ({ isOpen, onRequestClose, title: initialTitle, content: initi
   const [newTag, setNewTag] = useState('');
   const [tagSuggestions, setTagSuggestions] = useState([]);
   const { theme } = useTheme();
+  const { isEncryptionEnabled, encryptionKey } = useEncryption();
 
   useEffect(() => {
-    console.log('NoteModal content updated:', { initialTitle, initialContent });
-    setEditedTitle(initialTitle || '');
-    setEditedContent(initialContent || '');
-    setSelectedCat(selectedCategory || 'Uncategorized');
-    setTagList(initialTags || []);
-  }, [initialTitle, initialContent, selectedCategory, initialTags]);
+    const loadContent = async () => {
+      console.log('NoteModal content updated:', { initialTitle, initialContent });
+      setEditedTitle(initialTitle || '');
+      try {
+        // Decrypt content if it's encrypted
+        if (initialContent?.startsWith('encrypted:') && encryptionKey) {
+          const encryptedContent = initialContent.replace('encrypted:', '');
+          const decryptedContent = await decryptData(encryptedContent, encryptionKey);
+          if (!decryptedContent) {
+            throw new Error('Decryption resulted in empty content');
+          }
+          console.log('Content decrypted successfully');
+          setEditedContent(decryptedContent || '');
+        } else {
+          setEditedContent(initialContent || '');
+        }
+      } catch (error) {
+        console.error('Error decrypting content:', error);
+        setEditedContent('Error: Failed to decrypt content. Please check your encryption settings.');
+      }
+      setSelectedCat(selectedCategory || 'Uncategorized');
+      setTagList(initialTags || []);
+    };
+    loadContent();
+  }, [initialTitle, initialContent, selectedCategory, initialTags, encryptionKey]);
 
   useEffect(() => {
     if (newTag) {
@@ -38,11 +60,21 @@ const NoteModal = ({ isOpen, onRequestClose, title: initialTitle, content: initi
     }
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     const finalTitle = editedTitle.trim() === '' ? new Date().toLocaleDateString() : editedTitle;
-    console.log('Saving note:', { finalTitle, editedContent, selectedCat, tagList });
-    onSave(finalTitle, editedContent, selectedCat, tagList);
-    onRequestClose();
+    try {
+      // Encrypt content if encryption is enabled
+      let finalContent = editedContent;
+      if (isEncryptionEnabled && encryptionKey) {
+        const encryptedContent = await encryptData(editedContent, encryptionKey);
+        finalContent = `encrypted:${encryptedContent}`;
+      }
+      console.log('Saving note:', { finalTitle, finalContent, selectedCat, tagList });
+      onSave(finalTitle, finalContent, selectedCat, tagList);
+      onRequestClose();
+    } catch (error) {
+      console.error('Error encrypting content:', error);
+    }
   };
 
   const handleContentChange = (newContent) => {

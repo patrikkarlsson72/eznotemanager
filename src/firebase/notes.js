@@ -17,6 +17,7 @@ import {
   setDoc,
   writeBatch
 } from 'firebase/firestore';
+import { processNoteForSaving, processNoteForDisplay } from '../utils/noteEncryption';
 
 // Collection references
 const notesCollection = collection(db, 'notes');
@@ -37,15 +38,15 @@ export const addNote = async (note) => {
       maxOrder = Math.max(maxOrder, noteData.order || 0);
     });
 
-    // Create the new note with order field
-    const noteWithOrder = {
+    // Process note for saving (encrypt if enabled)
+    const processedNote = await processNoteForSaving({
       ...note,
       order: maxOrder + 1000,
       createdAt: Timestamp.now(),
       updatedAt: Timestamp.now()
-    };
+    });
 
-    const docRef = await addDoc(notesCollection, noteWithOrder);
+    const docRef = await addDoc(notesCollection, processedNote);
     console.log("Note added successfully:", docRef.id);
 
     // Update user's tags
@@ -53,7 +54,7 @@ export const addNote = async (note) => {
       await updateUserTags(note.userId, note.tags);
     }
 
-    return { ...noteWithOrder, id: docRef.id };
+    return { ...processedNote, id: docRef.id };
   } catch (error) {
     console.error("Error adding note: ", error);
     throw error;
@@ -64,10 +65,14 @@ export const addNote = async (note) => {
 export const updateNote = async (noteId, noteData) => {
   try {
     const noteRef = doc(db, 'notes', noteId);
-    await updateDoc(noteRef, {
+    
+    // Process note for saving (encrypt if enabled)
+    const processedNote = await processNoteForSaving({
       ...noteData,
       updatedAt: Timestamp.now()
     });
+
+    await updateDoc(noteRef, processedNote);
     console.log("Note updated successfully:", noteId);
 
     // Update user's tags
@@ -75,7 +80,7 @@ export const updateNote = async (noteId, noteData) => {
       await updateUserTags(noteData.userId, noteData.tags);
     }
 
-    return { ...noteData, id: noteId };
+    return { ...processedNote, id: noteId };
   } catch (error) {
     console.error("Error updating note: ", error);
     throw error;
@@ -137,13 +142,15 @@ export const subscribeToNotes = (userId, callback) => {
   );
 
   const unsubscribe = onSnapshot(q, 
-    (snapshot) => {
+    async (snapshot) => {
       console.log("Received snapshot with changes");
       const notes = [];
-      snapshot.forEach((doc) => {
+      for (const doc of snapshot.docs) {
         const note = { id: doc.id, ...doc.data() };
-        notes.push(note);
-      });
+        // Process note for display (decrypt if needed)
+        const processedNote = await processNoteForDisplay(note);
+        notes.push(processedNote);
+      }
       console.log("Processed notes:", notes.length);
       callback(notes);
     }, 

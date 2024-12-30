@@ -14,6 +14,8 @@ import {
 import { saveAs } from 'file-saver';
 import jsPDF from 'jspdf';
 import Modal from 'react-modal';
+import { EncryptionProvider } from './context/EncryptionContext';
+import { ThemeProvider } from './context/ThemeContext';
 
 // Components
 import Header from './components/Header';
@@ -329,75 +331,77 @@ function App() {
   }
 
   return (
-    <div className={`min-h-screen ${themes[theme].background} flex flex-col relative`}>
-      <KeyboardShortcuts
-        onCreateNote={handleCreateNote}
-        onFocusSearch={handleFocusSearch}
-        onSaveNote={handleSaveNote}
-        onCloseModal={handleCloseModal}
-        isModalOpen={!!selectedNote}
-      />
-      <Header
-        onSearchChange={setSearchQuery}
-        searchQuery={searchQuery}
-        searchFilter={searchFilter}
-        setSearchFilter={setSearchFilter}
-        onClearFilters={handleClearFilters}
-        triggerNewNote={() => setCreateNoteTrigger(true)}
-        setSelectedTag={setSelectedTag}
-        setSelectedCategory={setSelectedCategory}
-        searchInputRef={searchInputRef}
-        onExport={handleExport}
-        onImport={() => setShowImportModal(true)}
-        notes={notes}
-      />
-      <div className="flex flex-1 overflow-hidden">
-        <Sidebar
-          categories={categories}
-          setCategories={handleUpdateCategories}
-          onCategorySelect={handleCategorySelect}
-          notes={notes}
-          setNotes={setNotes}
-          tags={tags}
-          setShowTagManager={setShowTagManager}
-          onTagSelect={handleTagSelect}
-          selectedCategory={selectedCategory}
-          selectedTag={selectedTag}
+    <EncryptionProvider>
+      <div className={`min-h-screen ${themes[theme].background} ${theme === 'dark' ? 'dark' : ''} flex flex-col relative`}>
+        <KeyboardShortcuts
+          onCreateNote={handleCreateNote}
+          onFocusSearch={handleFocusSearch}
+          onSaveNote={handleSaveNote}
+          onCloseModal={handleCloseModal}
+          isModalOpen={!!selectedNote}
         />
-        <ContentArea
-          createNoteTrigger={createNoteTrigger}
-          setCreateNoteTrigger={setCreateNoteTrigger}
-          selectedCategory={selectedCategory}
+        <Header
+          onSearchChange={setSearchQuery}
           searchQuery={searchQuery}
-          categories={categories}
+          searchFilter={searchFilter}
+          setSearchFilter={setSearchFilter}
+          onClearFilters={handleClearFilters}
+          triggerNewNote={() => setCreateNoteTrigger(true)}
+          setSelectedTag={setSelectedTag}
+          setSelectedCategory={setSelectedCategory}
+          searchInputRef={searchInputRef}
+          onExport={handleExport}
+          onImport={() => setShowImportModal(true)}
           notes={notes}
-          setNotes={setNotes}
-          selectedTag={selectedTag}
-          tags={tags}
-          selectedNote={selectedNote}
-          setSelectedNote={setSelectedNote}
+        />
+        <div className="flex flex-1 overflow-hidden">
+          <Sidebar
+            categories={categories}
+            setCategories={handleUpdateCategories}
+            onCategorySelect={handleCategorySelect}
+            notes={notes}
+            setNotes={setNotes}
+            tags={tags}
+            setShowTagManager={setShowTagManager}
+            onTagSelect={handleTagSelect}
+            selectedCategory={selectedCategory}
+            selectedTag={selectedTag}
+          />
+          <ContentArea
+            createNoteTrigger={createNoteTrigger}
+            setCreateNoteTrigger={setCreateNoteTrigger}
+            selectedCategory={selectedCategory}
+            searchQuery={searchQuery}
+            categories={categories}
+            notes={notes}
+            setNotes={setNotes}
+            selectedTag={selectedTag}
+            tags={tags}
+            selectedNote={selectedNote}
+            setSelectedNote={setSelectedNote}
+          />
+        </div>
+        
+        <Footer />
+        <CookieConsent />
+        {showTagManager && (
+          <TagManager
+            tags={tags}
+            setTags={setTags}
+            setShowTagManager={setShowTagManager}
+            userId={user?.uid}
+          />
+        )}
+        {showWelcomeGuide && (
+          <WelcomeGuide onClose={handleCloseWelcomeGuide} />
+        )}
+        <ImportModal
+          isOpen={showImportModal}
+          onRequestClose={() => setShowImportModal(false)}
+          onImport={handleImport}
         />
       </div>
-      
-      <Footer />
-      <CookieConsent />
-      {showTagManager && (
-        <TagManager
-          tags={tags}
-          setTags={setTags}
-          setShowTagManager={setShowTagManager}
-          userId={user?.uid}
-        />
-      )}
-      {showWelcomeGuide && (
-        <WelcomeGuide onClose={handleCloseWelcomeGuide} />
-      )}
-      <ImportModal
-        isOpen={showImportModal}
-        onRequestClose={() => setShowImportModal(false)}
-        onImport={handleImport}
-      />
-    </div>
+    </EncryptionProvider>
   );
 }
 

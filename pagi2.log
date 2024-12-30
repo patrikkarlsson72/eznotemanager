@@ -1,0 +1,741 @@
+ Download the React DevTools for a better development experience: https://reactjs.org/link/react-devtools
+ Setting up subscription for user: GLNz0QZAbfefAUFkbcOJL8N1T513
+ Final filtered notes: 0
+ Error getting paginated notes: 
+getPaginatedNotes @ bundle.js:8140
+ Subscribing to notes for user: GLNz0QZAbfefAUFkbcOJL8N1T513
+ Attempting to initialize user: GLNz0QZAbfefAUFkbcOJL8N1T513
+ Setting up subscription for user: GLNz0QZAbfefAUFkbcOJL8N1T513
+ Final filtered notes: 0
+ Error getting paginated notes: 
+getPaginatedNotes @ bundle.js:8140
+ Error loading initial notes: 
+loadInitialNotes @ bundle.js:959
+ Error loading initial notes: 
+loadInitialNotes @ bundle.js:959
+ Error: Failed to load notes
+(anonymous) @ bundle.js:599
+ Final filtered notes: 0
+ Subscribing to notes for user: GLNz0QZAbfefAUFkbcOJL8N1T513
+ Received snapshot with changes
+ Processed notes: 16
+ Received updated notes: Array(16)
+ Subscribing to notes for user: GLNz0QZAbfefAUFkbcOJL8N1T513
+ Received updated tags: Array(24)
+ Received updated categories: Array(7)
+ Current selected category: All Notes
+ All notes: 16
+ Note Firebase command: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Project Ideas 2024: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Weekly Goals: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Meeting Notes - Client Discussion: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note testaaaa: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Testar image upload: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note 2024-12-28: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Testar: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note test123: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note10: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note11: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note12: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note13: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note15: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note14: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note16: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Firebase command: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Project Ideas 2024: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Weekly Goals: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Meeting Notes - Client Discussion: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note testaaaa: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Testar image upload: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note 2024-12-28: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Testar: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note test123: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note10: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note11: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note12: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note13: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note15: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note14: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note16: checking All Notes condition: Object
+ Warning: Connect(Droppable): Support for defaultProps will be removed from memo components in a future major release. Use JavaScript default parameters instead.
+    at div
+    at div
+    at Provider (http://localhost:3000/static/js/bundle.js:108782:20)
+    at App (http://localhost:3000/static/js/bundle.js:78493:25)
+    at ErrorBoundary (http://localhost:3000/static/js/bundle.js:72706:35)
+    at DragDropContext (http://localhost:3000/static/js/bundle.js:78617:19)
+    at ContentArea (http://localhost:3000/static/js/bundle.js:536:3)
+    at div
+    at div
+    at App (http://localhost:3000/static/js/bundle.js:74:70)
+    at ThemeProvider (http://localhost:3000/static/js/bundle.js:7421:3)
+printWarning @ bundle.js:80047
+ Received snapshot with changes
+ Processed notes: 16
+ Received notes update: 16
+ Received snapshot with changes
+ Processed notes: 16
+ Received notes update: 16
+ Final filtered notes: 13
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Firebase command: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Project Ideas 2024: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Weekly Goals: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Meeting Notes - Client Discussion: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note testaaaa: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Testar image upload: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note 2024-12-28: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Testar: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note test123: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note10: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note11: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note12: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note13: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note15: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note14: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note16: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Firebase command: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Project Ideas 2024: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Weekly Goals: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Meeting Notes - Client Discussion: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note testaaaa: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Testar image upload: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note 2024-12-28: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Testar: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note test123: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note10: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note11: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note12: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note13: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note15: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note14: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note16: checking All Notes condition: Object
+ Final filtered notes: 13
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Firebase command: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Project Ideas 2024: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Weekly Goals: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Meeting Notes - Client Discussion: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note testaaaa: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Testar image upload: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note 2024-12-28: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Testar: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note test123: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note10: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note11: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note12: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note13: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note15: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note14: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note16: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Firebase command: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Project Ideas 2024: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Weekly Goals: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Meeting Notes - Client Discussion: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note testaaaa: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Testar image upload: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note 2024-12-28: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Testar: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note test123: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note10: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note11: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note12: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note13: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note15: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note14: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note16: checking All Notes condition: Object
+ Final filtered notes: 13
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ Error in notes subscription: 
+(anonymous) @ bundle.js:7846
+ Received notes update: 0
+ Cross-Origin-Opener-Policy policy would block the window.close call.
+close @ bundle.js:18401
+ Cross-Origin-Opener-Policy policy would block the window.close call.
+close @ bundle.js:18401
+ Setting up subscription for user: GLNz0QZAbfefAUFkbcOJL8N1T513
+ Final filtered notes: 0
+ Error getting paginated notes: 
+getPaginatedNotes @ bundle.js:8140
+ Subscribing to notes for user: GLNz0QZAbfefAUFkbcOJL8N1T513
+ Attempting to initialize user: GLNz0QZAbfefAUFkbcOJL8N1T513
+ Setting up subscription for user: GLNz0QZAbfefAUFkbcOJL8N1T513
+ Final filtered notes: 0
+ Error getting paginated notes: 
+getPaginatedNotes @ bundle.js:8140
+ Error loading initial notes: 
+loadInitialNotes @ bundle.js:959
+ Error loading initial notes: 
+loadInitialNotes @ bundle.js:959
+ Error: Failed to load notes
+(anonymous) @ bundle.js:599
+ Final filtered notes: 0
+ Subscribing to notes for user: GLNz0QZAbfefAUFkbcOJL8N1T513
+ Received snapshot with changes
+ Processed notes: 16
+ Received updated notes: Array(16)
+ Subscribing to notes for user: GLNz0QZAbfefAUFkbcOJL8N1T513
+ Received updated tags: Array(24)
+ Received updated categories: Array(7)
+ Current selected category: All Notes
+ All notes: 16
+ Note Firebase command: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Project Ideas 2024: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Weekly Goals: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Meeting Notes - Client Discussion: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note testaaaa: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Testar image upload: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note 2024-12-28: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Testar: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note test123: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note10: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note11: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note12: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note13: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note15: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note14: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note16: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Firebase command: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Project Ideas 2024: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Weekly Goals: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Meeting Notes - Client Discussion: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note testaaaa: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Testar image upload: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note 2024-12-28: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Testar: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note test123: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note10: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note11: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note12: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note13: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note15: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note14: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note16: checking All Notes condition: Object
+ Received snapshot with changes
+ Processed notes: 16
+ Received notes update: 16
+ Received snapshot with changes
+ Processed notes: 16
+ Received notes update: 16
+ Final filtered notes: 13
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ - Note: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Firebase command: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Project Ideas 2024: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Weekly Goals: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Meeting Notes - Client Discussion: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note testaaaa: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Testar image upload: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note 2024-12-28: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Testar: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note test123: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note10: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note11: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note12: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note13: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note15: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note14: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note16: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Firebase command: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Project Ideas 2024: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Weekly Goals: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Meeting Notes - Client Discussion: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note testaaaa: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Testar image upload: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note 2024-12-28: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note Testar: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note test123: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note10: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note11: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note12: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note13: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note15: checking All Notes condition: Object
+ Current selected category: All Notes
+ All notes: 16
+ Note note14: checking All Notes condition: Object
+ContentArea.js:338 Current selected category: All Notes
+ContentArea.js:339 All notes: 16
+ContentArea.js:346 Note note16: checking All Notes condition: Object
+ContentArea.js:376 Final filtered notes: 13
+ContentArea.js:378 - Note: Object
+ContentArea.js:378 - Note: Object
+ContentArea.js:378 - Note: Object
+ContentArea.js:378 - Note: Object
+ContentArea.js:378 - Note: Object
+ContentArea.js:378 - Note: Object
+ContentArea.js:378 - Note: Object
+ContentArea.js:378 - Note: Object
+ContentArea.js:378 - Note: Object
+ContentArea.js:378 - Note: Object
+ContentArea.js:378 - Note: Object
+ContentArea.js:378 - Note: Object
+ContentArea.js:378 - Note: Object
+ContentArea.js:338 Current selected category: All Notes
+ContentArea.js:339 All notes: 16
+ContentArea.js:346 Note Firebase command: checking All Notes condition: Object
+ContentArea.js:338 Current selected category: All Notes
+ContentArea.js:339 All notes: 16
+ContentArea.js:346 Note Project Ideas 2024: checking All Notes condition: Object
+ContentArea.js:338 Current selected category: All Notes
+ContentArea.js:339 All notes: 16
+ContentArea.js:346 Note Weekly Goals: checking All Notes condition: Object
+ContentArea.js:338 Current selected category: All Notes
+ContentArea.js:339 All notes: 16
+ContentArea.js:346 Note Meeting Notes - Client Discussion: checking All Notes condition: Object
+ContentArea.js:338 Current selected category: All Notes
+ContentArea.js:339 All notes: 16
+ContentArea.js:346 Note testaaaa: checking All Notes condition: Object
+ContentArea.js:338 Current selected category: All Notes
+ContentArea.js:339 All notes: 16
+ContentArea.js:346 Note Testar image upload: checking All Notes condition: Object
+ContentArea.js:338 Current selected category: All Notes
+ContentArea.js:339 All notes: 16
+ContentArea.js:346 Note 2024-12-28: checking All Notes condition: Object
+ContentArea.js:338 Current selected category: All Notes
+ContentArea.js:339 All notes: 16
+ContentArea.js:346 Note Testar: checking All Notes condition: Object
+ContentArea.js:338 Current selected category: All Notes
+ContentArea.js:339 All notes: 16
+ContentArea.js:346 Note test123: checking All Notes condition: Object
+ContentArea.js:338 Current selected category: All Notes
+ContentArea.js:339 All notes: 16
+ContentArea.js:346 Note note10: checking All Notes condition: Object
+ContentArea.js:338 Current selected category: All Notes
+ContentArea.js:339 All notes: 16
+ContentArea.js:346 Note note11: checking All Notes condition: Object
+ContentArea.js:338 Current selected category: All Notes
+ContentArea.js:339 All notes: 16
+ContentArea.js:346 Note note12: checking All Notes condition: Object
+ContentArea.js:338 Current selected category: All Notes
+ContentArea.js:339 All notes: 16
+ContentArea.js:346 Note note13: checking All Notes condition: Object
+ContentArea.js:338 Current selected category: All Notes
+ContentArea.js:339 All notes: 16
+ContentArea.js:346 Note note15: checking All Notes condition: Object
+ContentArea.js:338 Current selected category: All Notes
+ContentArea.js:339 All notes: 16
+ContentArea.js:346 Note note14: checking All Notes condition: Object
+ContentArea.js:338 Current selected category: All Notes
+ContentArea.js:339 All notes: 16
+ContentArea.js:346 Note note16: checking All Notes condition: Object
+ContentArea.js:338 Current selected category: All Notes
+ContentArea.js:339 All notes: 16
+ContentArea.js:346 Note Firebase command: checking All Notes condition: Object
+ContentArea.js:338 Current selected category: All Notes
+ContentArea.js:339 All notes: 16
+ContentArea.js:346 Note Project Ideas 2024: checking All Notes condition: Object
+ContentArea.js:338 Current selected category: All Notes
+ContentArea.js:339 All notes: 16
+ContentArea.js:346 Note Weekly Goals: checking All Notes condition: Object
+ContentArea.js:338 Current selected category: All Notes
+ContentArea.js:339 All notes: 16
+ContentArea.js:346 Note Meeting Notes - Client Discussion: checking All Notes condition: Object
+ContentArea.js:338 Current selected category: All Notes
+ContentArea.js:339 All notes: 16
+ContentArea.js:346 Note testaaaa: checking All Notes condition: Object
+ContentArea.js:338 Current selected category: All Notes
+ContentArea.js:339 All notes: 16
+ContentArea.js:346 Note Testar image upload: checking All Notes condition: Object
+ContentArea.js:338 Current selected category: All Notes
+ContentArea.js:339 All notes: 16
+ContentArea.js:346 Note 2024-12-28: checking All Notes condition: Object
+ContentArea.js:338 Current selected category: All Notes
+ContentArea.js:339 All notes: 16
+ContentArea.js:346 Note Testar: checking All Notes condition: Object
+ContentArea.js:338 Current selected category: All Notes
+ContentArea.js:339 All notes: 16
+ContentArea.js:346 Note test123: checking All Notes condition: Object
+ContentArea.js:338 Current selected category: All Notes
+ContentArea.js:339 All notes: 16
+ContentArea.js:346 Note note10: checking All Notes condition: Object
+ContentArea.js:338 Current selected category: All Notes
+ContentArea.js:339 All notes: 16
+ContentArea.js:346 Note note11: checking All Notes condition: Object
+ContentArea.js:338 Current selected category: All Notes
+ContentArea.js:339 All notes: 16
+ContentArea.js:346 Note note12: checking All Notes condition: Object
+ContentArea.js:338 Current selected category: All Notes
+ContentArea.js:339 All notes: 16
+ContentArea.js:346 Note note13: checking All Notes condition: Object
+ContentArea.js:338 Current selected category: All Notes
+ContentArea.js:339 All notes: 16
+ContentArea.js:346 Note note15: checking All Notes condition: Object
+ContentArea.js:338 Current selected category: All Notes
+ContentArea.js:339 All notes: 16
+ContentArea.js:346 Note note14: checking All Notes condition: Object
+ContentArea.js:338 Current selected category: All Notes
+ContentArea.js:339 All notes: 16
+ContentArea.js:346 Note note16: checking All Notes condition: Object
+ContentArea.js:376 Final filtered notes: 13
+ContentArea.js:378 - Note: Object
+ContentArea.js:378 - Note: Object
+ContentArea.js:378 - Note: Object
+ContentArea.js:378 - Note: Object
+ContentArea.js:378 - Note: Object
+ContentArea.js:378 - Note: Object
+ContentArea.js:378 - Note: Object
+ContentArea.js:378 - Note: Object
+ContentArea.js:378 - Note: Object
+ContentArea.js:378 - Note: Object
+ContentArea.js:378 - Note: Object
+ContentArea.js:378 - Note: Object
+ContentArea.js:378 - Note: Object

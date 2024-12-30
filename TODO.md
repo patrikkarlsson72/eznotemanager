@@ -58,8 +58,8 @@
 
 ## Performance Optimizations
 - [ ] Implement note pagination
-- [ ] Add caching for better offline support
-- [ ] Optimize image loading and storage
+- [x] Add caching for better offline support
+- [x] Optimize image loading and storage
 
 ## Security Enhancements
 - [ ] Add end-to-end encryption option

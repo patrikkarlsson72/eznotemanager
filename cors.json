@@ -1,8 +1,8 @@
 [
   {
-    "origin": ["http://localhost:3000", "https://eznotemanagerpro.web.app"],
+    "origin": ["http://localhost:3000", "https://eznotemanager-95745.web.app"],
     "method": ["GET", "PUT", "POST", "DELETE", "HEAD"],
     "maxAgeSeconds": 3600,
-    "responseHeader": ["Content-Type", "Authorization"]
+    "responseHeader": ["Content-Type", "Authorization", "Content-Length", "User-Agent", "x-goog-resumable"]
   }
 ]

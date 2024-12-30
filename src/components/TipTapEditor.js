@@ -5,6 +5,7 @@ import CodeBlock from '@tiptap/extension-code-block';
 import Highlight from '@tiptap/extension-highlight';
 import Placeholder from '@tiptap/extension-placeholder';
 import Image from '@tiptap/extension-image';
+import Link from '@tiptap/extension-link';
 import TaskList from '@tiptap/extension-task-list';
 import TaskItem from '@tiptap/extension-task-item';
 import { Node } from '@tiptap/core';
@@ -560,6 +561,7 @@ const TipTapEditor = ({ content, onChange }) => {
             'Mod-Alt-`': () => editor?.chain().focus().toggleCode().run(),
           }
         },
+        codeBlock: false, // Disable codeBlock from StarterKit since we're using it separately
       }),
       ResizableImage.configure({
         HTMLAttributes: {
@@ -578,16 +580,12 @@ const TipTapEditor = ({ content, onChange }) => {
           return null;
         },
       }),
-      CodeBlock.configure({
-        HTMLAttributes: {
-          class: theme === 'light'
-            ? 'bg-gray-100 rounded p-4 font-mono text-sm text-gray-800'
-            : 'bg-gray-900 rounded p-4 font-mono text-sm text-blue-300 border border-gray-700',
-        },
-        // Add keyboard shortcut for code block
-        keymap: {
-          'Mod-Alt-Shift-`': () => editor?.chain().focus().toggleCodeBlock().run(),
-        }
+      Placeholder.configure({
+        placeholder: 'Write something...',
+      }),
+      CodeBlock,
+      Link.configure({
+        openOnClick: false,
       }),
       Highlight.configure({
         HTMLAttributes: {
@@ -595,12 +593,6 @@ const TipTapEditor = ({ content, onChange }) => {
             ? 'bg-yellow-200 text-gray-900 rounded px-1'
             : 'bg-yellow-900 text-gray-100 rounded px-1',
         },
-      }),
-      Placeholder.configure({
-        placeholder: 'Write something amazing...',
-        emptyEditorClass: theme === 'light'
-          ? 'cursor-text before:content-[attr(data-placeholder)] before:absolute before:text-gray-400 before:opacity-50 before:pointer-events-none'
-          : 'cursor-text before:content-[attr(data-placeholder)] before:absolute before:text-gray-500 before:opacity-50 before:pointer-events-none',
       }),
       FileAttachment,
       TaskList.configure({
