@@ -19,15 +19,36 @@ const HelpFaqModal = ({ isOpen, onRequestClose }) => {
         
         <h3 className="text-xl font-bold mb-2 mt-4">Key Features</h3>
         <ul className="list-disc ml-6 mb-4">
-          <li>Rich text editor with formatting options</li>
-          <li>Code block support with syntax highlighting</li>
-          <li>Markdown support</li>
-          <li>Image drag & drop</li>
+          <li>Advanced rich text editor with Markdown support</li>
+          <li>End-to-end encryption for secure note storage</li>
+          <li>Offline support for working without internet</li>
+          <li>Code blocks with syntax highlighting</li>
+          <li>Task lists and checkboxes</li>
+          <li>Image uploads with optimization</li>
           <li>File attachments</li>
-          <li>Checkboxes/todo lists within notes</li>
-          <li>Export notes to PDF or Markdown format</li>
-          <li>Import notes from Markdown files</li>
           <li>Dark/Light theme support</li>
+          <li>Real-time content updates</li>
+        </ul>
+
+        <h3 className="text-xl font-bold mb-2 mt-4">Security and Privacy</h3>
+        <p><strong>How does note encryption work?</strong></p>
+        <p>EzNoteManagerPro offers end-to-end encryption for your notes:</p>
+        <ul className="list-disc ml-6 mb-4">
+          <li>Enable encryption from the menu in the header</li>
+          <li>Notes are encrypted before being saved to the cloud</li>
+          <li>Encryption keys are stored securely in your browser</li>
+          <li>Encrypted notes show a lock icon in the preview</li>
+          <li>Only you can decrypt and read your encrypted notes</li>
+        </ul>
+
+        <h3 className="text-xl font-bold mb-2 mt-4">Offline Usage</h3>
+        <p><strong>Can I use the app offline?</strong></p>
+        <p>Yes! EzNoteManagerPro supports offline functionality:</p>
+        <ul className="list-disc ml-6 mb-4">
+          <li>Notes are cached locally for offline access</li>
+          <li>Continue working without internet connection</li>
+          <li>Changes sync automatically when back online</li>
+          <li>Attachments and images are also available offline</li>
         </ul>
 
         <p><strong>How do I create a new note?</strong></p>
@@ -35,15 +56,15 @@ const HelpFaqModal = ({ isOpen, onRequestClose }) => {
 
         <h3 className="text-xl font-bold mb-2 mt-4">Working with Notes</h3>
         <p><strong>How do I format my notes?</strong></p>
-        <p>The rich text editor provides several formatting options:</p>
+        <p>The advanced text editor provides several formatting options:</p>
         <ul className="list-disc ml-6 mb-4">
-          <li>Basic formatting (bold, italic, underline)</li>
+          <li>Markdown-style formatting (bold, italic, headers)</li>
           <li>Code blocks with syntax highlighting</li>
-          <li>Markdown syntax support</li>
+          <li>Task lists with checkboxes</li>
           <li>Bulleted and numbered lists</li>
-          <li>Checkboxes for todo lists</li>
-          <li>Image insertion via drag & drop</li>
-          <li>File attachments</li>
+          <li>Links and text highlights</li>
+          <li>Image uploads with automatic optimization</li>
+          <li>File attachments with preview</li>
         </ul>
 
         <h3 className="text-xl font-bold mb-2 mt-4">Import and Export</h3>
@@ -84,7 +105,7 @@ const HelpFaqModal = ({ isOpen, onRequestClose }) => {
 
         <h3 className="text-xl font-bold mb-2 mt-4">Data Management</h3>
         <p><strong>Is my data secure?</strong></p>
-        <p>EzNoteManagerPro uses Firebase to securely store your notes in the cloud. Your notes are automatically synchronized across devices when you're signed in to your account.</p>
+        <p>EzNoteManagerPro uses Firebase for secure cloud storage and offers end-to-end encryption for additional security. Your notes are automatically synchronized across devices when you're signed in, and you can work offline with automatic syncing when you're back online.</p>
 
         <h3 className="text-xl font-bold mb-2 mt-4">Getting Support</h3>
         <p>If you encounter issues or have questions not covered here, please reach out to me at <a href="https://www.linkedin.com/in/patrik-karlsson-808b5855/" target="_blank" rel="noopener noreferrer" className="text-blue-800 hover:text-yellow-400">LinkedIn</a>. I'm here to help!</p>

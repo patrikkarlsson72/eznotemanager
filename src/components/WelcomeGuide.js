@@ -3,6 +3,8 @@ import overviewImg from '../assets/guide-images/overview.png';
 import categoriesImg from '../assets/guide-images/categories.png';
 import tagsImg from '../assets/guide-images/tags.png';
 import noteDetailsImg from '../assets/guide-images/note-details.png';
+import advancededitorImg from '../assets/guide-images/advancededitor.png';
+import encryptionImg from '../assets/guide-images/encryption.png';
 
 const WelcomeGuide = ({ onClose }) => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -13,6 +15,18 @@ const WelcomeGuide = ({ onClose }) => {
       content: "A powerful and intuitive note-taking application.",
       image: overviewImg,
       description: "Your notes are displayed in an organized grid layout. Create, edit, and manage your notes with ease."
+    },
+    {
+      title: "Advanced Editor Features",
+      content: "Create rich content with our powerful editor.",
+      image: advancededitorImg,
+      description: "Use Markdown formatting, create code blocks with syntax highlighting, manage tasks with checkboxes, and embed images and files directly in your notes."
+    },
+    {
+      title: "Secure Your Notes",
+      content: "End-to-end encryption for your sensitive information.",
+      image: encryptionImg,
+      description: "Enable encryption to secure your private notes. Encrypted notes are marked with a lock icon and can only be read by you."
     },
     {
       title: "Organize with Categories",
@@ -27,10 +41,10 @@ const WelcomeGuide = ({ onClose }) => {
       description: "Tags make it easy to find related notes. Click on tags to filter your notes instantly."
     },
     {
-      title: "Rich Note Editing",
-      content: "Create detailed notes with our powerful editor.",
-      image: noteDetailsImg,
-      description: "Edit notes with a full-featured editor. Add formatting, lists, and more to keep your thoughts organized."
+      title: "Always Available",
+      content: "Work online or offline with automatic syncing.",
+      image: overviewImg,
+      description: "Your notes are cached locally for offline access. Changes sync automatically when you're back online."
     }
   ];
 

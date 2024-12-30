@@ -198,7 +198,7 @@ const Note = ({ title, color, content, tags = [], onDelete, onArchive, onPin, is
         }}
         title="Delete"
       >
-        <FontAwesomeIcon icon={faTrash} className="text-gray-600 hover:text-black" />
+        <FontAwesomeIcon icon={faTrash} className="text-red-500 hover:text-red-700" />
       </button>
 
       {/* Archive/Unarchive Button */}
@@ -212,7 +212,10 @@ const Note = ({ title, color, content, tags = [], onDelete, onArchive, onPin, is
         }}
         title={isArchived ? "Unarchive" : "Archive"}
       >
-        <FontAwesomeIcon icon={faBoxArchive} className="text-gray-600 hover:text-black" />
+        <FontAwesomeIcon 
+          icon={faBoxArchive} 
+          className={`${isArchived ? 'text-blue-500 hover:text-blue-700' : 'text-gray-600 hover:text-blue-500'}`}
+        />
       </button>
 
       {/* Pin/Unpin Button */}

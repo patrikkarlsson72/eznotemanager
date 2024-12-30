@@ -47,6 +47,26 @@ const WelcomeTour = () => {
       target: '.tag-section',
       content: 'Add tags to your notes for even better organization. You can filter notes by clicking on tags.',
       placement: 'right',
+    },
+    {
+      target: '.editor-toolbar',
+      content: 'Our advanced editor supports Markdown formatting, code blocks with syntax highlighting, task lists, and more!',
+      placement: 'bottom',
+    },
+    {
+      target: '.encryption-toggle',
+      content: 'Enable end-to-end encryption to secure your sensitive notes. Encrypted notes show a lock icon in the preview.',
+      placement: 'bottom',
+    },
+    {
+      target: '.theme-toggle',
+      content: 'Switch between light and dark themes to suit your preference. Your choice is automatically saved.',
+      placement: 'bottom',
+    },
+    {
+      target: '.menu-button',
+      content: 'Access additional features like importing/exporting notes, help documentation, and application settings.',
+      placement: 'bottom',
     }
   ];
 
