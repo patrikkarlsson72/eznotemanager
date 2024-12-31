@@ -17,7 +17,9 @@ const app = !getApps().length ? initializeApp(firebaseConfig) : getApps()[0];
 
 export const auth = getAuth(app);
 export const db = getFirestore(app);
-export const storage = getStorage(app);
+
+// Initialize storage with custom settings
+export const storage = getStorage(app, process.env.REACT_APP_FIREBASE_STORAGE_BUCKET);
 
 // Enable offline persistence
 enableIndexedDbPersistence(db)
