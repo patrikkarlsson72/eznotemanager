@@ -1,5 +1,37 @@
 # EzNoteManager - Future Enhancements
 
+## Future Pricing Model
+- [ ] Implement tiered pricing structure:
+  ### Basic Plan (Free)
+  - Up to 20 notes
+  - Basic features
+  - Basic categories/tags
+  - Standard support
+
+  ### Pro Plan (Paid)
+  - Unlimited notes
+  - End-to-end encryption
+  - Advanced features:
+    - Code highlighting
+    - File attachments
+    - Advanced export options
+  - Unlimited categories and tags
+  - Priority support
+
+  ### Team/Business Plan (Higher Tier)
+  - Everything in Pro
+  - Collaboration features
+  - Admin controls
+  - API access
+  - Team management
+  - Custom support options
+
+- [ ] Implement usage tracking for free tier limits
+- [ ] Create upgrade flow and payment integration
+- [ ] Design pricing page
+- [ ] Set up subscription management
+- [ ] Add grace period for users exceeding free limits
+
 ## Welcome Experience
 - [x] Add example notes for new users
   - Create a set of helpful example notes showing different features

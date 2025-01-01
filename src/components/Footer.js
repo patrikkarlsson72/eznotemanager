@@ -39,6 +39,17 @@ const Footer = () => {
         </a>
       </div>
 
+      {/* Contact Information */}
+      <div className="flex flex-col items-center">
+        <p className={`${theme === 'dark' ? 'text-white' : 'text-gray-800'} text-sm mb-1`}>Contact Us:</p>
+        <a href="mailto:contact@eznotemanagerpro.com" className={`${theme === 'dark' ? 'text-yellow-500 hover:text-yellow-400' : 'text-blue-600 hover:text-blue-700'} text-sm`}>
+          contact@eznotemanagerpro.com
+        </a>
+        <a href="mailto:info@eznotemanagerpro.com" className={`${theme === 'dark' ? 'text-yellow-500 hover:text-yellow-400' : 'text-blue-600 hover:text-blue-700'} text-sm`}>
+          info@eznotemanagerpro.com
+        </a>
+      </div>
+
       {/* Useful Links */}
       <div className="flex flex-col items-center">
         <button onClick={() => setIsPrivacyPolicyOpen(true)} className={`${theme === 'dark' ? 'text-yellow-500 hover:text-yellow-400' : 'text-blue-600 hover:text-blue-700'}`}>Privacy Policy</button>

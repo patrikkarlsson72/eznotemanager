@@ -134,7 +134,12 @@ const HelpFaqModal = ({ isOpen, onRequestClose }) => {
         <p>EzNoteManagerPro uses Firebase for secure cloud storage and offers end-to-end encryption for additional security. Your notes are automatically synchronized across devices when you're signed in, and you can work offline with automatic syncing when you're back online.</p>
 
         <h3 className="text-xl font-bold mb-2 mt-4">Getting Support</h3>
-        <p>If you encounter issues or have questions not covered here, please reach out to me at <a href="https://www.linkedin.com/in/patrik-karlsson-808b5855/" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:text-blue-600">LinkedIn</a>. I'm here to help!</p>
+        <p>If you encounter issues or have questions not covered here, you can:</p>
+        <ul className="list-disc ml-6 mb-4">
+          <li>Email us at <a href="mailto:contact@eznotemanagerpro.com" className="text-blue-500 hover:text-blue-600">contact@eznotemanagerpro.com</a> for general inquiries</li>
+          <li>Send information requests to <a href="mailto:info@eznotemanagerpro.com" className="text-blue-500 hover:text-blue-600">info@eznotemanagerpro.com</a></li>
+          <li>Connect with me on <a href="https://www.linkedin.com/in/patrik-karlsson-808b5855/" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:text-blue-600">LinkedIn</a></li>
+        </ul>
       </div>
       <button
         onClick={onRequestClose}

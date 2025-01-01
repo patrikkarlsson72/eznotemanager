@@ -1,5 +1,15 @@
 import React from 'react';
 import { signInWithGoogle } from '../firebase/auth';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { 
+  faFolder, 
+  faTags, 
+  faPen, 
+  faMagnifyingGlass, 
+  faLock, 
+  faLaptop 
+} from '@fortawesome/free-solid-svg-icons';
+import appScreenshot from '../assets/app-screenshot.png';
 
 const GoogleIcon = () => (
   <svg className="w-6 h-6 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
@@ -27,17 +37,63 @@ const LandingPage = () => {
       {/* Main Content */}
       <div className="container mx-auto px-4 py-12 text-center">
         <h1 className="text-5xl font-bold mb-2">
-          Welcome to <span className="text-yellow-400">EzNote</span>Manager
+          Welcome to <span className="text-yellow-400">EzNote</span>Manager<span className="text-blue-500">Pro</span>
         </h1>
-        <p className="text-xl mb-12">
+        <p className="text-xl mb-4">
           Your personal space for organizing thoughts, ideas, and tasks with ease.
         </p>
+        <div className="inline-block bg-gradient-to-r from-yellow-400/10 via-yellow-400/20 to-yellow-400/10 rounded-full px-6 py-2 mb-12">
+          <p className="text-yellow-400 text-lg font-semibold">
+            <span className="mr-2">✨</span>
+            Free to use - Start organizing your notes today
+            <span className="ml-2">✨</span>
+          </p>
+        </div>
+
+        {/* App Screenshot Section */}
+        <div className="mb-16 px-4">
+          <div className="relative mx-auto max-w-6xl">
+            {/* Multiple layered glows for more dramatic effect */}
+            <div className="absolute -inset-0.5 bg-blue-500 opacity-30 blur-2xl rounded-lg transform rotate-2"></div>
+            <div className="absolute -inset-1 bg-yellow-400 opacity-20 blur-2xl rounded-lg transform -rotate-1"></div>
+            <div className="absolute -inset-1 bg-blue-600 opacity-20 blur-xl rounded-lg"></div>
+            
+            {/* Frame effect */}
+            <div className="relative bg-gradient-to-br from-blue-900/50 via-transparent to-blue-900/50 p-2 rounded-xl backdrop-blur-sm">
+              {/* Browser-like top bar */}
+              <div className="bg-gray-900/80 rounded-t-lg p-3 flex items-center space-x-2 border-b border-gray-700">
+                <div className="flex space-x-2">
+                  <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                  <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+                  <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                </div>
+              </div>
+              
+              {/* Screenshot */}
+              <img 
+                src={appScreenshot} 
+                alt="EzNoteManagerPro Interface" 
+                className="rounded-b-lg w-full shadow-2xl border border-gray-700/50"
+              />
+            </div>
+          </div>
+          
+          {/* Enhanced caption */}
+          <div className="mt-6 text-center">
+            <p className="text-gray-300 text-lg font-light">
+              Clean, intuitive interface with powerful features at your fingertips
+            </p>
+            <p className="text-blue-400/80 text-sm mt-2">
+              Organize, create, and manage your notes with professional tools
+            </p>
+          </div>
+        </div>
 
         {/* Feature Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
           <div className="bg-blue-900 p-6 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-200 hover:shadow-xl">
             <div className="text-yellow-400 text-3xl mb-4">
-              <i className="fas fa-folder"></i>
+              <FontAwesomeIcon icon={faFolder} />
             </div>
             <h3 className="text-xl font-bold mb-2">Organize with Categories</h3>
             <p>Create custom categories with colors to keep your notes organized and easily accessible.</p>
@@ -45,7 +101,7 @@ const LandingPage = () => {
 
           <div className="bg-blue-900 p-6 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-200 hover:shadow-xl">
             <div className="text-yellow-400 text-3xl mb-4">
-              <i className="fas fa-tags"></i>
+              <FontAwesomeIcon icon={faTags} />
             </div>
             <h3 className="text-xl font-bold mb-2">Tag System</h3>
             <p>Add tags to your notes and filter them instantly. Drag and drop tags for quick organization.</p>
@@ -53,15 +109,15 @@ const LandingPage = () => {
 
           <div className="bg-blue-900 p-6 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-200 hover:shadow-xl">
             <div className="text-yellow-400 text-3xl mb-4">
-              <i className="fas fa-thumbtack"></i>
+              <FontAwesomeIcon icon={faPen} />
             </div>
-            <h3 className="text-xl font-bold mb-2">Pin Important Notes</h3>
-            <p>Keep your most important notes at the top by pinning them for quick access.</p>
+            <h3 className="text-xl font-bold mb-2">Advanced Editor</h3>
+            <p>Rich text editor with Markdown support, code blocks with syntax highlighting, and task lists with checkboxes.</p>
           </div>
 
           <div className="bg-blue-900 p-6 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-200 hover:shadow-xl">
             <div className="text-yellow-400 text-3xl mb-4">
-              <i className="fas fa-search"></i>
+              <FontAwesomeIcon icon={faMagnifyingGlass} />
             </div>
             <h3 className="text-xl font-bold mb-2">Powerful Search</h3>
             <p>Find any note instantly with our powerful search feature. Search by title, content, or tags.</p>
@@ -69,18 +125,18 @@ const LandingPage = () => {
 
           <div className="bg-blue-900 p-6 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-200 hover:shadow-xl">
             <div className="text-yellow-400 text-3xl mb-4">
-              <i className="fas fa-archive"></i>
+              <FontAwesomeIcon icon={faLock} />
             </div>
-            <h3 className="text-xl font-bold mb-2">Archive System</h3>
-            <p>Keep your workspace clean by archiving notes you don't need right now.</p>
+            <h3 className="text-xl font-bold mb-2">End-to-End Encryption</h3>
+            <p>Keep your sensitive notes secure with optional end-to-end encryption. Only you can read your encrypted notes.</p>
           </div>
 
           <div className="bg-blue-900 p-6 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-200 hover:shadow-xl">
             <div className="text-yellow-400 text-3xl mb-4">
-              <i className="fas fa-cloud"></i>
+              <FontAwesomeIcon icon={faLaptop} />
             </div>
-            <h3 className="text-xl font-bold mb-2">Cloud Storage</h3>
-            <p>Your notes are securely stored in the cloud and accessible from any device.</p>
+            <h3 className="text-xl font-bold mb-2">Work Anywhere</h3>
+            <p>Access your notes from any device, work offline, and let everything sync automatically when you're back online.</p>
           </div>
         </div>
 
@@ -100,7 +156,7 @@ const LandingPage = () => {
 
       {/* Footer */}
       <footer className="text-center py-4 mt-12">
-        <p>© 2024 EzNoteManager. All rights reserved.</p>
+        <p>© 2024 EzNoteManagerPro. All rights reserved.</p>
       </footer>
     </div>
   );

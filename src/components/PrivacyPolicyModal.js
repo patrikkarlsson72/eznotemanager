@@ -56,7 +56,12 @@ const PrivacyPolicyModal = ({ isOpen, onRequestClose }) => {
       <p>We may update this Privacy Policy as we add new features to EzNoteManagerPro. We will notify you of significant changes through the application.</p>
 
       <h3 className="text-lg font-semibold mt-4">Contact Us</h3>
-      <p>If you have questions about this Privacy Policy, please contact us through our LinkedIn profile.</p>
+      <p>If you have questions about this Privacy Policy, you can reach us through:</p>
+      <ul className="list-disc ml-6 mt-2 mb-4">
+        <li>Email: <a href="mailto:contact@eznotemanagerpro.com" className="text-blue-500 hover:text-blue-600">contact@eznotemanagerpro.com</a></li>
+        <li>Information requests: <a href="mailto:info@eznotemanagerpro.com" className="text-blue-500 hover:text-blue-600">info@eznotemanagerpro.com</a></li>
+        <li>LinkedIn: <a href="https://www.linkedin.com/in/patrik-karlsson-808b5855/" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:text-blue-600">Patrik Karlsson</a></li>
+      </ul>
 
       <button 
         onClick={onRequestClose}

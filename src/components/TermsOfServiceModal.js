@@ -69,7 +69,12 @@ const TermsOfServiceModal = ({ isOpen, onRequestClose }) => {
       <p>EzNoteManagerPro is provided "as is" without warranties of any kind. We are not liable for any damages that may occur from your use of the service.</p>
       
       <h3 className="text-lg font-semibold mt-4">Contact</h3>
-      <p>For questions about these Terms of Service, please contact us through our LinkedIn profile.</p>
+      <p>For questions about these Terms of Service, you can reach us through:</p>
+      <ul className="list-disc ml-6 mt-2 mb-4">
+        <li>General inquiries: <a href="mailto:contact@eznotemanagerpro.com" className="text-blue-500 hover:text-blue-600">contact@eznotemanagerpro.com</a></li>
+        <li>Information requests: <a href="mailto:info@eznotemanagerpro.com" className="text-blue-500 hover:text-blue-600">info@eznotemanagerpro.com</a></li>
+        <li>LinkedIn: <a href="https://www.linkedin.com/in/patrik-karlsson-808b5855/" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:text-blue-600">Patrik Karlsson</a></li>
+      </ul>
 
       <button 
         onClick={onRequestClose}
