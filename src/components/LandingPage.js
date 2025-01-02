@@ -42,13 +42,16 @@ const LandingPage = () => {
         <p className="text-xl mb-4">
           Your personal space for organizing thoughts, ideas, and tasks with ease.
         </p>
-        <div className="inline-block bg-gradient-to-r from-yellow-400/10 via-yellow-400/20 to-yellow-400/10 rounded-full px-6 py-2 mb-12">
+        <button
+          onClick={signInWithGoogle}
+          className="inline-block bg-gradient-to-r from-yellow-400/10 via-yellow-400/20 to-yellow-400/10 rounded-full px-6 py-2 mb-12 hover:from-yellow-400/20 hover:via-yellow-400/30 hover:to-yellow-400/20 transition-all duration-300 cursor-pointer transform hover:scale-105"
+        >
           <p className="text-yellow-400 text-lg font-semibold">
             <span className="mr-2">✨</span>
             Free to use - Start organizing your notes today
             <span className="ml-2">✨</span>
           </p>
-        </div>
+        </button>
 
         {/* App Screenshot Section */}
         <div className="mb-16 px-4">

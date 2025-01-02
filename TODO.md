@@ -52,6 +52,11 @@
   - Add smooth transition animations
   - Auto-detect system preference
 
+- [ ] Modal improvements
+  - [x] Add draggable functionality
+  - [ ] Add resizable functionality
+  - [ ] Remember last position/size
+
 ## User Onboarding
 - [x] Create tutorial walkthrough
   - First-time user guide

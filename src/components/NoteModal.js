@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import Draggable from 'react-draggable';
 import TipTapEditor from './TipTapEditor';
 import { useTheme } from '../context/ThemeContext';
 import { encryptData, decryptData } from '../utils/encryption';
@@ -99,126 +100,128 @@ const NoteModal = ({ isOpen, onRequestClose, title: initialTitle, content: initi
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className={`w-full max-w-4xl ${
-        theme === 'light'
-          ? 'bg-white'
-          : 'bg-gray-800'
-      } rounded-lg shadow-xl max-h-[90vh] flex flex-col`}>
-        <div className="p-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
-          <h2 className={`text-xl font-bold ${
-            theme === 'light' ? 'text-gray-800' : 'text-white'
-          }`}>
-            {initialTitle ? 'Edit Note' : 'Create Note'}
-          </h2>
-          <button
-            onClick={onRequestClose}
-            className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
-          >
-            <FontAwesomeIcon icon={faTimes} />
-          </button>
-        </div>
+      <Draggable handle=".modal-drag-handle" bounds="parent">
+        <div className={`w-full max-w-4xl ${
+          theme === 'light'
+            ? 'bg-white'
+            : 'bg-gray-800'
+        } rounded-lg shadow-xl max-h-[90vh] flex flex-col`}>
+          <div className="modal-drag-handle p-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center cursor-move">
+            <h2 className={`text-xl font-bold ${
+              theme === 'light' ? 'text-gray-800' : 'text-white'
+            }`}>
+              {initialTitle ? 'Edit Note' : 'Create Note'}
+            </h2>
+            <button
+              onClick={onRequestClose}
+              className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+            >
+              <FontAwesomeIcon icon={faTimes} />
+            </button>
+          </div>
 
-        <div className="flex-1 overflow-y-auto p-4">
-          <div className="space-y-4">
-            <div>
-              <input
-                type="text"
-                value={editedTitle}
-                onChange={(e) => setEditedTitle(e.target.value)}
-                onFocus={handleTitleFocus}
-                placeholder="Note Title"
-                className={`w-full p-2 border rounded ${
-                  theme === 'light'
-                    ? 'bg-white border-gray-300 text-gray-800'
-                    : 'bg-gray-700 border-gray-600 text-white'
-                }`}
-              />
-            </div>
+          <div className="flex-1 overflow-y-auto p-4">
+            <div className="space-y-4">
+              <div>
+                <input
+                  type="text"
+                  value={editedTitle}
+                  onChange={(e) => setEditedTitle(e.target.value)}
+                  onFocus={handleTitleFocus}
+                  placeholder="Note Title"
+                  className={`w-full p-2 border rounded ${
+                    theme === 'light'
+                      ? 'bg-white border-gray-300 text-gray-800'
+                      : 'bg-gray-700 border-gray-600 text-white'
+                  }`}
+                />
+              </div>
 
-            <div>
-              <TipTapEditor
-                content={editedContent}
-                onChange={handleContentChange}
-              />
-            </div>
+              <div>
+                <TipTapEditor
+                  content={editedContent}
+                  onChange={handleContentChange}
+                />
+              </div>
 
-            <div>
-              <select
-                value={selectedCat}
-                onChange={(e) => setSelectedCat(e.target.value)}
-                className={`w-full p-2 border rounded ${
-                  theme === 'light'
-                    ? 'bg-white border-gray-300 text-gray-800'
-                    : 'bg-gray-700 border-gray-600 text-white'
-                }`}
-              >
-                {categories
-                  .filter(category => category.name !== 'All Notes')
-                  .map((category, index) => (
-                    <option key={index} value={category.name}>
-                      {category.name}
-                    </option>
-                  ))}
-                <option value="Uncategorized">Uncategorized</option>
-              </select>
-            </div>
-
-            <div>
-              <input
-                type="text"
-                value={newTag}
-                onChange={(e) => setNewTag(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && addTag(newTag)}
-                placeholder="Add a tag and press Enter"
-                className={`w-full p-2 border rounded ${
-                  theme === 'light'
-                    ? 'bg-white border-gray-300 text-gray-800'
-                    : 'bg-gray-700 border-gray-600 text-white'
-                }`}
-              />
-              <div className="relative">
-                {tagSuggestions.length > 0 && (
-                  <ul className="absolute z-10 bg-white border border-gray-300 rounded-md shadow-md max-h-48 overflow-y-auto mt-1 w-64">
-                    {tagSuggestions.map((suggestion, index) => (
-                      <li 
-                        key={index} 
-                        onClick={() => addTag(suggestion)}
-                        className="cursor-pointer hover:bg-gray-100 p-2"
-                      >
-                        {suggestion}
-                      </li>
+              <div>
+                <select
+                  value={selectedCat}
+                  onChange={(e) => setSelectedCat(e.target.value)}
+                  className={`w-full p-2 border rounded ${
+                    theme === 'light'
+                      ? 'bg-white border-gray-300 text-gray-800'
+                      : 'bg-gray-700 border-gray-600 text-white'
+                  }`}
+                >
+                  {categories
+                    .filter(category => category.name !== 'All Notes')
+                    .map((category, index) => (
+                      <option key={index} value={category.name}>
+                        {category.name}
+                      </option>
                     ))}
-                  </ul>
-                )}
+                  <option value="Uncategorized">Uncategorized</option>
+                </select>
               </div>
-              <div className="flex flex-wrap gap-2 mt-2">
-                {tagList.map((tag, index) => (
-                  <span key={index} className="bg-gray-200 text-gray-700 px-2 py-1 rounded-full">
-                    {tag}
-                    <button onClick={() => removeTag(tag)} className="ml-2 text-red-500">×</button>
-                  </span>
-                ))}
-              </div>
-            </div>
 
-            <div className="flex justify-end space-x-2">
-              <button
-                onClick={onRequestClose}
-                className="px-4 py-2 border border-gray-300 rounded hover:bg-gray-100
-                  dark:border-gray-600 dark:hover:bg-gray-700 dark:text-white"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleSave}
-                className="note-save-button px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-              >
-                Save
-              </button>
+              <div>
+                <input
+                  type="text"
+                  value={newTag}
+                  onChange={(e) => setNewTag(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && addTag(newTag)}
+                  placeholder="Add a tag and press Enter"
+                  className={`w-full p-2 border rounded ${
+                    theme === 'light'
+                      ? 'bg-white border-gray-300 text-gray-800'
+                      : 'bg-gray-700 border-gray-600 text-white'
+                  }`}
+                />
+                <div className="relative">
+                  {tagSuggestions.length > 0 && (
+                    <ul className="absolute z-10 bg-white border border-gray-300 rounded-md shadow-md max-h-48 overflow-y-auto mt-1 w-64">
+                      {tagSuggestions.map((suggestion, index) => (
+                        <li 
+                          key={index} 
+                          onClick={() => addTag(suggestion)}
+                          className="cursor-pointer hover:bg-gray-100 p-2"
+                        >
+                          {suggestion}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+                <div className="flex flex-wrap gap-2 mt-2">
+                  {tagList.map((tag, index) => (
+                    <span key={index} className="bg-gray-200 text-gray-700 px-2 py-1 rounded-full">
+                      {tag}
+                      <button onClick={() => removeTag(tag)} className="ml-2 text-red-500">×</button>
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex justify-end space-x-2">
+                <button
+                  onClick={onRequestClose}
+                  className="px-4 py-2 border border-gray-300 rounded hover:bg-gray-100
+                    dark:border-gray-600 dark:hover:bg-gray-700 dark:text-white"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleSave}
+                  className="note-save-button px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                >
+                  Save
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </Draggable>
     </div>
   );
 };
