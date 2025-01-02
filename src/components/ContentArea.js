@@ -22,10 +22,8 @@ const ContentArea = ({
   selectedNote,
   setSelectedNote
 }) => {
-  const [contextMenu, setContextMenu] = useState({ visible: false, x: 0, y: 0, noteId: null });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const contextMenuRef = useRef(null);
   const [user, userLoading] = useAuthState(auth);
 
   // Subscribe to notes updates
@@ -68,49 +66,11 @@ const ContentArea = ({
   useEffect(() => {
     if (error) {
       console.error('Error:', error);
-      // You might want to show an error notification to the user here
     }
   }, [error]);
 
-  // Handle right-click to display custom context menu
-  const handleRightClick = (event, noteId) => {
-    event.preventDefault();
-    event.stopPropagation(); // Prevent triggering the onClick event
-    setContextMenu({
-      visible: true,
-      x: event.clientX,
-      y: event.clientY,
-      noteId: noteId,
-    });
-  };
-
-  // Function to hide the custom context menu
-  const closeContextMenu = () => {
-    setContextMenu({ visible: false, x: 0, y: 0, noteId: null });
-  };
-
-  // Close the context menu if clicked outside
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (contextMenuRef.current && !contextMenuRef.current.contains(event.target)) {
-        closeContextMenu();
-      }
-    };
-    
-    if (contextMenu.visible) {
-      document.addEventListener('mousedown', handleClickOutside);
-    } else {
-      document.removeEventListener('mousedown', handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [contextMenu.visible]);
-
   // Memoize createNote function
   const createNote = useCallback(async () => {
-    closeContextMenu();
     const user = auth.currentUser;
     if (!user) {
       setError('Please sign in to create notes');
@@ -132,7 +92,7 @@ const ContentArea = ({
       order: maxOrder + 1000 // Place new note at the end
     };
     setSelectedNote(newNote);
-  }, [closeContextMenu, notes, setError, setSelectedNote]);
+  }, [notes, setError, setSelectedNote]);
 
   // Handle the create note trigger
   useEffect(() => {
@@ -268,7 +228,6 @@ const ContentArea = ({
   const deleteNoteHandler = async (id) => {
     try {
       await deleteNote(id);
-      closeContextMenu();
     } catch (err) {
       setError(err.message);
     }
@@ -294,7 +253,6 @@ const ContentArea = ({
         delete duplicateData.id;
         await addNote(duplicateData);
       }
-      closeContextMenu();
     } catch (err) {
       setError(err.message);
     }
@@ -441,14 +399,7 @@ const ContentArea = ({
                             ref={provided.innerRef}
                             {...provided.draggableProps}
                             {...provided.dragHandleProps}
-                            onContextMenu={(e) => handleRightClick(e, note.id)}
-                            onClick={(e) => {
-                              if (contextMenu.visible && contextMenu.noteId === note.id) {
-                                e.stopPropagation();
-                              } else {
-                                setSelectedNote(note);
-                              }
-                            }}
+                            onClick={() => setSelectedNote(note)}
                             className="note-wrapper"
                             style={{
                               ...provided.draggableProps.style,
@@ -495,33 +446,6 @@ const ContentArea = ({
           tags={selectedNote.tags || []}
           availableTags={tags}
         />
-      )}
-
-      {contextMenu.visible && (
-        <ul
-          ref={contextMenuRef}
-          className="custom-context-menu bg-white shadow-lg rounded-md p-2 absolute"
-          style={{ top: `${contextMenu.y}px`, left: `${contextMenu.x}px` }}
-        >
-          <li
-            className="cursor-pointer hover:bg-gray-200 p-2"
-            onClick={() => deleteNoteHandler(contextMenu.noteId)}
-          >
-            Delete Note
-          </li>
-          <li
-            className="cursor-pointer hover:bg-gray-200 p-2"
-            onClick={() => duplicateNoteHandler(contextMenu.noteId)}
-          >
-            Duplicate Note
-          </li>
-          <li
-            className="cursor-pointer hover:bg-gray-200 p-2"
-            onClick={closeContextMenu}
-          >
-            Cancel
-          </li>
-        </ul>
       )}
     </DragDropContext>
   );
