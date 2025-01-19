@@ -7,7 +7,7 @@ import { useTheme } from '../context/ThemeContext';
 import { encryptData, decryptData } from '../utils/encryption';
 import { useEncryption } from '../context/EncryptionContext';
 
-const NoteModal = ({ isOpen, onRequestClose, title: initialTitle, content: initialContent, onSave, categories, selectedCategory, tags: initialTags = [], availableTags = [] }) => {
+const NoteModal = ({ isOpen, onRequestClose, title: initialTitle, content: initialContent, onSave, categories, selectedCategory, tags: initialTags = [], availableTags = [], onExport }) => {
   const [editedTitle, setEditedTitle] = useState('');
   const [editedContent, setEditedContent] = useState('');
   const [selectedCat, setSelectedCat] = useState(selectedCategory || 'Uncategorized');
@@ -96,6 +96,19 @@ const NoteModal = ({ isOpen, onRequestClose, title: initialTitle, content: initi
     setTagList(tagList.filter(tag => tag !== tagToRemove));
   };
 
+  const handleExportCurrentNote = (format) => {
+    if (onExport) {
+      const currentNote = {
+        id: Date.now().toString(),
+        title: editedTitle,
+        content: editedContent,
+        category: selectedCat,
+        tags: tagList
+      };
+      onExport(format, [currentNote]);
+    }
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -141,6 +154,7 @@ const NoteModal = ({ isOpen, onRequestClose, title: initialTitle, content: initi
                 <TipTapEditor
                   content={editedContent}
                   onChange={handleContentChange}
+                  onExport={(format) => handleExportCurrentNote(format)}
                 />
               </div>
 

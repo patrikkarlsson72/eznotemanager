@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import Modal from 'react-modal';
 import { saveAs } from 'file-saver';
+import html2pdf from 'html2pdf.js';
 
 // Firebase and Context imports
 import { auth } from './firebase';
@@ -250,13 +251,67 @@ function App() {
 
     try {
       if (format === 'markdown') {
+        // Create a temporary div for HTML to Markdown conversion
+        const tempDiv = document.createElement('div');
         let markdownContent = '# My Notes\n\n';
         
-        notesToExport.forEach(note => {
+        notesToExport.forEach((note, index) => {
+          // Add note title
           markdownContent += `## ${note.title}\n\n`;
-          if (note.category) markdownContent += `Category: ${note.category}\n\n`;
-          if (note.tags && note.tags.length > 0) markdownContent += `Tags: ${note.tags.join(', ')}\n\n`;
-          markdownContent += `${note.content}\n\n---\n\n`;
+          
+          // Add metadata in a Markdown-friendly format
+          if (note.category) {
+            markdownContent += `**Category:** ${note.category}\n\n`;
+          }
+          if (note.tags && note.tags.length > 0) {
+            markdownContent += `**Tags:** ${note.tags.join(', ')}\n\n`;
+          }
+          
+          // Convert HTML content to plain text while preserving basic formatting
+          tempDiv.innerHTML = note.content;
+          
+          // Process lists
+          const lists = tempDiv.querySelectorAll('ul, ol');
+          lists.forEach(list => {
+            const items = list.querySelectorAll('li');
+            items.forEach(item => {
+              const prefix = list.tagName === 'OL' ? '1. ' : '- ';
+              item.textContent = `${prefix}${item.textContent}\n`;
+            });
+          });
+          
+          // Process headings
+          const headings = tempDiv.querySelectorAll('h1, h2, h3, h4, h5, h6');
+          headings.forEach(heading => {
+            const level = heading.tagName[1];
+            heading.textContent = `${'#'.repeat(level)} ${heading.textContent}\n\n`;
+          });
+          
+          // Process paragraphs
+          const paragraphs = tempDiv.querySelectorAll('p');
+          paragraphs.forEach(p => {
+            p.textContent = `${p.textContent}\n\n`;
+          });
+          
+          // Process links
+          const links = tempDiv.querySelectorAll('a');
+          links.forEach(link => {
+            link.textContent = `[${link.textContent}](${link.href})`;
+          });
+          
+          // Process images
+          const images = tempDiv.querySelectorAll('img');
+          images.forEach(img => {
+            img.outerHTML = `![${img.alt || 'image'}](${img.src})\n\n`;
+          });
+          
+          // Add the processed content
+          markdownContent += `${tempDiv.textContent}\n`;
+          
+          // Add separator between notes
+          if (index < notesToExport.length - 1) {
+            markdownContent += '\n---\n\n';
+          }
         });
 
         console.log('Created markdown content, attempting to save...');
@@ -270,30 +325,160 @@ function App() {
         console.log('Markdown file download initiated');
       } 
       else if (format === 'pdf') {
-        console.log('Starting PDF generation...');
+        console.log('Starting PDF generation with html2pdf...');
         
-        // Import pdfmake and its fonts
-        const pdfMake = (await import('pdfmake/build/pdfmake')).default;
-        await import('pdfmake/build/vfs_fonts');
-        
-        const docDefinition = {
-          content: notesToExport.map(note => [
-            { text: note.title, style: 'header' },
-            note.category ? { text: `Category: ${note.category}`, style: 'metadata' } : '',
-            note.tags?.length ? { text: `Tags: ${note.tags.join(', ')}`, style: 'metadata' } : '',
-            { text: note.content.replace(/<[^>]*>/g, ''), margin: [0, 10, 0, 10] },
-            { text: '', pageBreak: 'after' }
-          ]).flat().filter(Boolean),
-          defaultStyle: { font: 'Roboto' },
-          styles: {
-            header: { fontSize: 18, bold: true, margin: [0, 0, 0, 10] },
-            metadata: { fontSize: 10, margin: [0, 0, 0, 5] }
+        // Create a temporary container for the HTML content
+        const container = document.createElement('div');
+        container.style.padding = '20px';
+        container.style.fontFamily = 'Roboto, sans-serif';
+        container.style.color = '#000000'; // Ensure dark text color
+
+        // Add each note's content to the container
+        notesToExport.forEach((note, index) => {
+          const noteDiv = document.createElement('div');
+          noteDiv.style.marginBottom = '30px';
+          noteDiv.style.pageBreakAfter = index < notesToExport.length - 1 ? 'always' : 'auto';
+          noteDiv.style.position = 'relative'; // Enable proper positioning
+
+          // Add title
+          const title = document.createElement('h1');
+          title.textContent = note.title;
+          title.style.fontSize = '24px';
+          title.style.marginBottom = '10px';
+          title.style.color = '#000000';
+          title.style.fontWeight = 'bold';
+          noteDiv.appendChild(title);
+
+          // Add metadata (category and tags)
+          if (note.category || (note.tags && note.tags.length)) {
+            const metadata = document.createElement('div');
+            metadata.style.marginBottom = '15px';
+            metadata.style.color = '#333333';
+            metadata.style.fontSize = '14px';
+
+            if (note.category) {
+              const category = document.createElement('div');
+              category.textContent = `Category: ${note.category}`;
+              metadata.appendChild(category);
+            }
+
+            if (note.tags && note.tags.length) {
+              const tags = document.createElement('div');
+              tags.textContent = `Tags: ${note.tags.join(', ')}`;
+              metadata.appendChild(tags);
+            }
+
+            noteDiv.appendChild(metadata);
+          }
+
+          // Add content with proper styling
+          const content = document.createElement('div');
+          content.innerHTML = note.content;
+          content.style.color = '#000000';
+          content.style.lineHeight = '1.6';
+          content.style.position = 'relative';
+          content.style.zIndex = '1';
+          
+          // Style all images within the content
+          const images = content.getElementsByTagName('img');
+          Array.from(images).forEach(img => {
+            img.style.display = 'block';
+            img.style.maxWidth = '90%';
+            img.style.height = 'auto';
+            img.style.marginTop = '20px';
+            img.style.marginBottom = '20px';
+            img.style.marginLeft = 'auto';
+            img.style.marginRight = 'auto';
+            img.style.pageBreakInside = 'avoid';
+          });
+
+          // Style all paragraphs and text elements
+          const paragraphs = content.getElementsByTagName('p');
+          Array.from(paragraphs).forEach(p => {
+            p.style.color = '#000000';
+            p.style.marginBottom = '10px';
+            p.style.position = 'relative';
+          });
+
+          // Style lists and list items
+          const lists = content.querySelectorAll('ul, ol');
+          Array.from(lists).forEach(list => {
+            list.style.paddingLeft = '40px';
+            list.style.marginBottom = '15px';
+            list.style.marginTop = '15px';
+            list.style.position = 'relative';
+            
+            if (list.tagName === 'UL') {
+              list.style.listStyle = 'disc';
+            } else if (list.tagName === 'OL') {
+              list.style.listStyle = 'decimal';
+            }
+          });
+
+          const listItems = content.getElementsByTagName('li');
+          Array.from(listItems).forEach((li, index) => {
+            li.style.color = '#000000';
+            li.style.marginBottom = '8px';
+            li.style.paddingLeft = '5px';
+            
+            // Fix the alignment by using flexbox
+            li.style.display = 'flex';
+            li.style.alignItems = 'flex-start';
+            
+            // Create a marker for the bullet/number
+            const marker = document.createElement('span');
+            marker.style.minWidth = '25px';
+            marker.style.marginLeft = '-25px';
+            marker.style.marginRight = '5px';
+            
+            if (li.parentElement.tagName === 'OL') {
+              marker.textContent = `${index + 1}.`;
+              li.style.listStyle = 'none';
+            } else {
+              marker.textContent = '•';
+              li.style.listStyle = 'none';
+            }
+            
+            // Wrap the content
+            const content = document.createElement('span');
+            content.innerHTML = li.innerHTML;
+            li.innerHTML = '';
+            
+            li.appendChild(marker);
+            li.appendChild(content);
+          });
+
+          noteDiv.appendChild(content);
+          container.appendChild(noteDiv);
+        });
+
+        // Configure html2pdf options
+        const opt = {
+          margin: [15, 15],
+          filename: `my_notes_${new Date().toISOString().split('T')[0]}.pdf`,
+          image: { type: 'jpeg', quality: 0.98 },
+          html2canvas: { 
+            scale: 2,
+            useCORS: true,
+            logging: true,
+            backgroundColor: '#ffffff'
+          },
+          jsPDF: { 
+            unit: 'mm', 
+            format: 'a4', 
+            orientation: 'portrait',
+            compress: true
           }
         };
 
-        console.log('PDF document definition created, generating PDF...');
-        pdfMake.createPdf(docDefinition).download(`my_notes_${new Date().toISOString().split('T')[0]}.pdf`);
-        console.log('PDF download initiated');
+        // Generate PDF
+        html2pdf().set(opt).from(container).save()
+          .then(() => {
+            console.log('PDF generation completed');
+          })
+          .catch(error => {
+            console.error('Error generating PDF:', error);
+          });
       }
     } catch (error) {
       console.error('Error in export process:', error);
@@ -382,6 +567,7 @@ function App() {
             tags={tags}
             selectedNote={selectedNote}
             setSelectedNote={setSelectedNote}
+            onExport={handleExport}
           />
         </div>
         

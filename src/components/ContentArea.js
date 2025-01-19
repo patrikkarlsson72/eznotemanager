@@ -20,7 +20,8 @@ const ContentArea = ({
   selectedTag, 
   tags,
   selectedNote,
-  setSelectedNote
+  setSelectedNote,
+  onExport
 }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -445,6 +446,7 @@ const ContentArea = ({
           selectedCategory={selectedNote.category}
           tags={selectedNote.tags || []}
           availableTags={tags}
+          onExport={onExport}
         />
       )}
     </DragDropContext>

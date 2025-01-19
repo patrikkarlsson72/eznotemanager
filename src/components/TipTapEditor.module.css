@@ -1,3 +1,7 @@
+.editor {
+  padding: 1rem !important;
+}
+
 .editor h1 {
   font-size: 2.25rem !important;
   font-weight: bold !important;

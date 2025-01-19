@@ -15,12 +15,14 @@ import {
   faBold, faItalic, faCode, faListUl, 
   faListOl, faHighlighter, faQuoteLeft,
   faHeading, faUndo, faRedo, faImage,
-  faPaperclip, faSquareCheck, faLink
+  faPaperclip, faSquareCheck, faLink,
+  faFileExport
 } from '@fortawesome/free-solid-svg-icons';
 import styles from './TipTapEditor.module.css';
 import MarkdownIt from 'markdown-it';
 import { uploadImage, uploadFile } from '../firebase/storage';
 import { auth } from '../firebase';
+import { createPortal } from 'react-dom';
 
 const md = new MarkdownIt();
 
@@ -224,13 +226,28 @@ const ResizableImage = Image.extend({
   },
 });
 
-const MenuBar = ({ editor }) => {
+const MenuBar = ({ editor, onExport }) => {
   const { theme } = useTheme();
   const imageInputRef = React.useRef(null);
   const fileInputRef = React.useRef(null);
   const [isLinkModalOpen, setIsLinkModalOpen] = React.useState(false);
   const [linkUrl, setLinkUrl] = React.useState('');
-  
+  const [showExportMenu, setShowExportMenu] = React.useState(false);
+  const exportButtonRef = React.useRef(null);
+  const exportMenuRef = React.useRef(null);
+
+  React.useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (exportMenuRef.current && !exportMenuRef.current.contains(event.target) &&
+          exportButtonRef.current && !exportButtonRef.current.contains(event.target)) {
+        setShowExportMenu(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
   if (!editor) {
     return null;
   }
@@ -524,6 +541,49 @@ const MenuBar = ({ editor }) => {
         >
           <FontAwesomeIcon icon={faLink} className={theme === 'light' ? 'text-gray-600' : 'text-gray-300'} />
         </button>
+        <div className="w-px h-6 bg-gray-300 dark:bg-gray-600 my-auto mx-1" />
+        <div className="relative">
+          <button
+            ref={exportButtonRef}
+            onClick={() => setShowExportMenu(!showExportMenu)}
+            className={`p-2 rounded-lg transition-colors ${theme === 'light' ? 'text-gray-700' : 'text-gray-300'} hover:bg-gray-100 dark:hover:bg-gray-700`}
+            title="Export Note"
+          >
+            <FontAwesomeIcon icon={faFileExport} />
+          </button>
+          
+          {showExportMenu && createPortal(
+            <div 
+              ref={exportMenuRef}
+              className="fixed bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 py-2 z-50"
+              style={{
+                top: exportButtonRef.current?.getBoundingClientRect().bottom + 5,
+                left: exportButtonRef.current?.getBoundingClientRect().left,
+                minWidth: '150px'
+              }}
+            >
+              <button
+                onClick={() => {
+                  onExport('pdf');
+                  setShowExportMenu(false);
+                }}
+                className="w-full px-4 py-2 text-left hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300"
+              >
+                Export as PDF
+              </button>
+              <button
+                onClick={() => {
+                  onExport('markdown');
+                  setShowExportMenu(false);
+                }}
+                className="w-full px-4 py-2 text-left hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300"
+              >
+                Export as Markdown
+              </button>
+            </div>,
+            document.body
+          )}
+        </div>
         <input
           ref={imageInputRef}
           type="file"
@@ -689,7 +749,7 @@ const FloatingLinkMenu = ({ editor }) => {
   );
 };
 
-const TipTapEditor = ({ content, onChange }) => {
+const TipTapEditor = ({ content, onChange, onExport }) => {
   const { theme } = useTheme();
 
   const editor = useEditor({
@@ -909,7 +969,7 @@ const TipTapEditor = ({ content, onChange }) => {
         ? 'light bg-white border-gray-200'
         : 'dark bg-gray-800 border-gray-700'
     }`}>
-      <MenuBar editor={editor} />
+      <MenuBar editor={editor} onExport={onExport} />
       <FloatingLinkMenu editor={editor} />
       <EditorContent 
         editor={editor} 
