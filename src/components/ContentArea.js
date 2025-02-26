@@ -422,6 +422,8 @@ const ContentArea = ({
                               onPin={() => pinNoteHandler(note.id, !note.pinned)}
                               onDuplicate={() => duplicateNoteHandler(note.id)}
                               onTagAdd={(tag) => handleAddTag(note.id, tag)}
+                              createdAt={note.createdAt}
+                              updatedAt={note.updatedAt}
                             />
                           </div>
                         )}
@@ -447,6 +449,8 @@ const ContentArea = ({
           tags={selectedNote.tags || []}
           availableTags={tags}
           onExport={onExport}
+          createdAt={selectedNote.createdAt}
+          updatedAt={selectedNote.updatedAt}
         />
       )}
     </DragDropContext>

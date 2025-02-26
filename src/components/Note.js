@@ -5,7 +5,7 @@ import { decryptData } from '../utils/encryption';
 import { useTheme } from '../context/ThemeContext';
 import { useEncryption } from '../context/EncryptionContext';
 
-const Note = ({ title, color, content, tags = [], onDelete, onArchive, onPin, isArchived, isPinned, onDuplicate, onTagAdd }) => {
+const Note = ({ title, color, content, tags = [], onDelete, onArchive, onPin, isArchived, isPinned, onDuplicate, onTagAdd, createdAt, updatedAt }) => {
   const [contextMenu, setContextMenu] = useState({ visible: false, x: 0, y: 0 });
   const [isDragOver, setIsDragOver] = useState(false);
   const { theme } = useTheme();
@@ -180,6 +180,17 @@ const Note = ({ title, color, content, tags = [], onDelete, onArchive, onPin, is
     >
       <h3 className="text-lg font-semibold text-center relative" style={{ left: '0rem' }}>{title}</h3>
       
+      {/* Timestamps */}
+      <div className="flex justify-center gap-2 text-xs text-gray-600 dark:text-gray-400 mt-1 mb-2">
+        <span>{createdAt?.toDate().toLocaleDateString()}</span>
+        {updatedAt && updatedAt?.toDate() > createdAt?.toDate() && (
+          <>
+            <span>•</span>
+            <span>Updated: {updatedAt.toDate().toLocaleDateString()}</span>
+          </>
+        )}
+      </div>
+
       {/* Encryption Indicator */}
       {content?.startsWith('encrypted:') && (
         <div className="absolute top-1 right-8" title="Encrypted note">

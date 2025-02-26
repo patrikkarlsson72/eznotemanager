@@ -7,7 +7,7 @@ import { useTheme } from '../context/ThemeContext';
 import { encryptData, decryptData } from '../utils/encryption';
 import { useEncryption } from '../context/EncryptionContext';
 
-const NoteModal = ({ isOpen, onRequestClose, title: initialTitle, content: initialContent, onSave, categories, selectedCategory, tags: initialTags = [], availableTags = [], onExport }) => {
+const NoteModal = ({ isOpen, onRequestClose, title: initialTitle, content: initialContent, onSave, categories, selectedCategory, tags: initialTags = [], availableTags = [], onExport, createdAt, updatedAt }) => {
   const [editedTitle, setEditedTitle] = useState('');
   const [editedContent, setEditedContent] = useState('');
   const [selectedCat, setSelectedCat] = useState(selectedCategory || 'Uncategorized');
@@ -120,11 +120,23 @@ const NoteModal = ({ isOpen, onRequestClose, title: initialTitle, content: initi
             : 'bg-gray-800'
         } rounded-lg shadow-xl max-h-[90vh] flex flex-col`}>
           <div className="modal-drag-handle p-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center cursor-move">
-            <h2 className={`text-xl font-bold ${
-              theme === 'light' ? 'text-gray-800' : 'text-white'
-            }`}>
-              {initialTitle ? 'Edit Note' : 'Create Note'}
-            </h2>
+            <div className="flex flex-col">
+              <h2 className={`text-xl font-bold ${
+                theme === 'light' ? 'text-gray-800' : 'text-white'
+              }`}>
+                {initialTitle ? 'Edit Note' : 'Create Note'}
+              </h2>
+              {createdAt && (
+                <div className="text-xs text-gray-600 dark:text-gray-400 mt-1">
+                  Created: {createdAt.toDate().toLocaleString()}
+                  {updatedAt && updatedAt.toDate() > createdAt.toDate() && (
+                    <span className="ml-4">
+                      Updated: {updatedAt.toDate().toLocaleString()}
+                    </span>
+                  )}
+                </div>
+              )}
+            </div>
             <button
               onClick={onRequestClose}
               className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
