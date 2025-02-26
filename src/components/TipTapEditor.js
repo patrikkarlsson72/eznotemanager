@@ -913,7 +913,7 @@ const TipTapEditor = ({ content, onChange, onExport }) => {
         }
         return false;
       },
-      handlePaste: async (view, event, slice) => {
+      handlePaste: (view, event) => {
         // Handle pasted images from clipboard
         const items = Array.from(event.clipboardData?.items || []);
         const imageItem = items.find(item => item.type.startsWith('image/'));
@@ -921,35 +921,54 @@ const TipTapEditor = ({ content, onChange, onExport }) => {
         if (imageItem && auth.currentUser) {
           event.preventDefault();
           const file = imageItem.getAsFile();
-          try {
-            const downloadURL = await uploadImage(file, auth.currentUser.uid);
-            if (downloadURL) {
-              editor.chain().focus().setImage({ src: downloadURL }).run();
-              return true;
-            }
-          } catch (error) {
-            console.error('Error uploading pasted image:', error);
-          }
+          uploadImage(file, auth.currentUser.uid)
+            .then(downloadURL => {
+              if (downloadURL) {
+                editor.chain().focus().setImage({ src: downloadURL }).run();
+              }
+            })
+            .catch(error => {
+              console.error('Error uploading pasted image:', error);
+            });
           return true;
         }
 
-        // Handle Markdown text paste
+        // Handle text paste
         const text = event.clipboardData?.getData('text/plain');
-        if (!text) return false;
+        const html = event.clipboardData?.getData('text/html');
 
-        const hasMarkdownSyntax = /[#*_`[\]()\\n\-+]/.test(text);
-        if (!hasMarkdownSyntax) return false;
-
-        try {
-          const html = md.render(text);
-          if (html) {
-            event.preventDefault();
-            editor?.commands.insertContent(html);
-            return true;
-          }
-        } catch (error) {
-          console.error('Error parsing Markdown:', error);
+        if (html) {
+          event.preventDefault();
+          view.dispatch(view.state.tr.replaceSelectionWith(
+            view.state.schema.text(html),
+            false
+          ));
+          return true;
         }
+
+        if (text) {
+          // Check if it's Markdown
+          const hasMarkdownSyntax = /[#*_`[\]()\\n\-+]/.test(text);
+          if (hasMarkdownSyntax) {
+            try {
+              event.preventDefault();
+              const renderedHtml = md.render(text);
+              editor?.commands.insertContent(renderedHtml);
+              return true;
+            } catch (error) {
+              console.error('Error parsing Markdown:', error);
+            }
+          }
+          
+          // Regular text paste
+          event.preventDefault();
+          view.dispatch(view.state.tr.replaceSelectionWith(
+            view.state.schema.text(text),
+            false
+          ));
+          return true;
+        }
+
         return false;
       },
     },
