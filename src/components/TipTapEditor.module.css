@@ -143,4 +143,36 @@
 /* Nested task lists */
 .editor :global(.task-list .task-list) {
   padding-left: 1.5rem !important;
+}
+
+/* File attachment delete button styles */
+.editor :global(.file-attachment-delete) {
+  position: absolute !important;
+  top: -8px !important;
+  right: -8px !important;
+  width: 24px !important;
+  height: 24px !important;
+  background-color: #EF4444 !important;
+  color: white !important;
+  border: 2px solid white !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 20px !important;
+  line-height: 1 !important;
+  cursor: pointer !important;
+  z-index: 50 !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+  transition: background-color 0.2s ease !important;
+}
+
+.editor :global(.file-attachment-delete:hover) {
+  background-color: #DC2626 !important;
+}
+
+/* Dark theme styles for delete button */
+:global(.dark) .editor :global(.file-attachment-delete) {
+  border-color: #374151 !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
 } 

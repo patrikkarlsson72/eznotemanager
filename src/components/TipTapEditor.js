@@ -27,6 +27,29 @@ import { createPortal } from 'react-dom';
 const md = new MarkdownIt();
 
 // Custom File Attachment Extension
+const getFileIcon = (type, mimeType) => {
+  if (type === 'video') return '🎥';
+  if (type === 'audio') return '🎵';
+  if (type === 'pdf') return '📄';
+  if (type.startsWith('image')) return '🖼️';
+  if (mimeType?.includes('word')) return '📝';
+  if (mimeType?.includes('excel') || mimeType?.includes('spreadsheet')) return '📊';
+  if (mimeType?.includes('powerpoint') || mimeType?.includes('presentation')) return '📽️';
+  return '📎';
+};
+
+const formatFileSize = (bytes) => {
+  if (!bytes) return '';
+  const units = ['B', 'KB', 'MB', 'GB'];
+  let size = bytes;
+  let unitIndex = 0;
+  while (size >= 1024 && unitIndex < units.length - 1) {
+    size /= 1024;
+    unitIndex++;
+  }
+  return `${Math.round(size * 10) / 10} ${units[unitIndex]}`;
+};
+
 const FileAttachment = Node.create({
   name: 'fileAttachment',
   group: 'block',
@@ -44,24 +67,18 @@ const FileAttachment = Node.create({
     return {
       filename: {
         default: null,
-        parseHTML: element => element.querySelector('.filename')?.textContent,
-        renderHTML: attributes => ({
-          'data-filename': attributes.filename
-        }),
       },
       url: {
         default: null,
-        parseHTML: element => element.querySelector('a')?.href,
-        renderHTML: attributes => ({
-          'data-url': attributes.url
-        }),
       },
       size: {
         default: null,
-        parseHTML: element => element.dataset.filesize,
-        renderHTML: attributes => ({
-          'data-filesize': attributes.size
-        }),
+      },
+      type: {
+        default: 'file',
+      },
+      mimeType: {
+        default: null,
       }
     };
   },
@@ -69,27 +86,110 @@ const FileAttachment = Node.create({
   parseHTML() {
     return [{
       tag: 'div[data-type="file-attachment"]',
+      getAttrs: (element) => {
+        const link = element.querySelector('a');
+        const filenameDiv = element.querySelector('.text-sm.font-medium');
+        const fileSizeDiv = element.querySelector('.text-xs.text-gray-500');
+        
+        return {
+          filename: filenameDiv?.textContent,
+          url: link?.href,
+          size: fileSizeDiv?.getAttribute('data-size'),
+          type: element.getAttribute('data-file-type') || 'file',
+          mimeType: element.getAttribute('data-mime-type')
+        };
+      }
     }];
   },
 
-  renderHTML({ node, HTMLAttributes }) {
-    return ['div', 
+  renderHTML({ node }) {
+    const previewContent = (() => {
+      if (node.attrs.type === 'video') {
+        return [
+          'video',
+          {
+            src: node.attrs.url,
+            controls: 'true',
+            class: 'w-full max-h-48 rounded',
+            style: 'max-width: 400px;'
+          }
+        ];
+      }
+      if (node.attrs.type === 'audio') {
+        return [
+          'audio',
+          {
+            src: node.attrs.url,
+            controls: 'true',
+            class: 'w-full',
+            style: 'max-width: 400px;'
+          }
+        ];
+      }
+      if (node.attrs.type === 'image') {
+        return [
+          'img',
+          {
+            src: node.attrs.url,
+            class: 'max-h-48 rounded object-contain',
+            style: 'max-width: 400px;'
+          }
+        ];
+      }
+      return null;
+    })();
+
+    return [
+      'div', 
       { 
+        class: 'relative flex flex-col p-4 my-2 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors cursor-pointer group',
         'data-type': 'file-attachment',
-        ...HTMLAttributes,
-        class: 'flex items-center gap-2 p-2 rounded-lg border border-gray-200 dark:border-gray-700 my-2'
+        'data-file-type': node.attrs.type,
+        'data-mime-type': node.attrs.mimeType
       },
-      ['span', { class: 'text-lg' }, '📎'],
-      ['div', { class: 'flex flex-col' },
-        ['span', { class: 'text-sm font-medium filename' }, node.attrs.filename || ''],
-        ['a', 
-          { 
-            href: node.attrs.url || '#',
-            target: '_blank',
-            rel: 'noopener noreferrer',
-            class: 'text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300'
-          }, 
-          'Download'
+      [
+        'button',
+        {
+          class: 'absolute top-0 right-0 -mt-3 -mr-3 w-8 h-8 bg-red-500 hover:bg-red-600 text-white rounded-full shadow-lg z-50 flex items-center justify-center text-xl font-bold border-2 border-white dark:border-gray-800',
+          'data-delete': 'true'
+        },
+        '×'
+      ],
+      ...(previewContent ? [[
+        'div',
+        { class: 'mb-3 flex justify-center' },
+        previewContent
+      ]] : []),
+      [
+        'a',
+        {
+          href: node.attrs.url,
+          download: node.attrs.filename,
+          target: '_blank',
+          rel: 'noopener noreferrer',
+          class: 'flex items-center space-x-3 w-full text-gray-700 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400'
+        },
+        [
+          'span',
+          { class: 'text-2xl' },
+          getFileIcon(node.attrs.type, node.attrs.mimeType)
+        ],
+        [
+          'div',
+          { class: 'flex-1' },
+          [
+            'div',
+            { class: 'text-sm font-medium group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-colors' },
+            node.attrs.filename
+          ],
+          [
+            'div',
+            { 
+              class: 'text-xs text-gray-500 dark:text-gray-400',
+              'data-size': node.attrs.size
+            },
+            formatFileSize(node.attrs.size)
+          ]
         ]
       ]
     ];
@@ -98,38 +198,93 @@ const FileAttachment = Node.create({
   addNodeView() {
     return ({ node, getPos, editor }) => {
       const dom = document.createElement('div');
+      dom.className = 'relative flex flex-col p-4 my-2 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors cursor-pointer group';
       dom.setAttribute('data-type', 'file-attachment');
-      dom.className = 'flex items-center gap-2 p-2 rounded-lg border border-gray-200 dark:border-gray-700 my-2';
 
-      const icon = document.createElement('span');
-      icon.className = 'text-lg';
-      icon.textContent = '📎';
+      // Create delete button
+      const deleteButton = document.createElement('button');
+      deleteButton.innerHTML = '×';
+      deleteButton.className = 'absolute top-0 right-0 -mt-3 -mr-3 w-8 h-8 bg-red-500 hover:bg-red-600 text-white rounded-full shadow-lg z-50 flex items-center justify-center text-xl font-bold border-2 border-white dark:border-gray-800';
+      
+      deleteButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (typeof getPos === 'function') {
+          editor.commands.deleteRange({ from: getPos(), to: getPos() + 1 });
+        }
+      });
 
-      const container = document.createElement('div');
-      container.className = 'flex flex-col';
+      // Add preview content if applicable
+      if (node.attrs.type === 'video') {
+        const preview = document.createElement('div');
+        preview.className = 'mb-3 flex justify-center';
+        const video = document.createElement('video');
+        video.src = node.attrs.url;
+        video.controls = true;
+        video.className = 'w-full max-h-48 rounded';
+        video.style.maxWidth = '400px';
+        preview.appendChild(video);
+        dom.appendChild(preview);
+      } else if (node.attrs.type === 'audio') {
+        const preview = document.createElement('div');
+        preview.className = 'mb-3 flex justify-center';
+        const audio = document.createElement('audio');
+        audio.src = node.attrs.url;
+        audio.controls = true;
+        audio.className = 'w-full';
+        audio.style.maxWidth = '400px';
+        preview.appendChild(audio);
+        dom.appendChild(preview);
+      } else if (node.attrs.type === 'image') {
+        const preview = document.createElement('div');
+        preview.className = 'mb-3 flex justify-center';
+        const img = document.createElement('img');
+        img.src = node.attrs.url;
+        img.className = 'max-h-48 rounded object-contain';
+        img.style.maxWidth = '400px';
+        preview.appendChild(img);
+        dom.appendChild(preview);
+      }
 
-      const filename = document.createElement('span');
-      filename.className = 'text-sm font-medium filename';
-      filename.textContent = node.attrs.filename || '';
-
+      // Add file info container with download link
       const link = document.createElement('a');
-      link.href = node.attrs.url || '#';
+      link.href = node.attrs.url;
+      link.download = node.attrs.filename;
       link.target = '_blank';
       link.rel = 'noopener noreferrer';
-      link.className = 'text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300';
-      link.textContent = 'Download';
+      link.className = 'flex items-center space-x-3 w-full text-gray-700 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400';
+      
+      const icon = document.createElement('span');
+      icon.className = 'text-2xl';
+      icon.textContent = getFileIcon(node.attrs.type, node.attrs.mimeType);
+      link.appendChild(icon);
 
-      container.append(filename, link);
-      dom.append(icon, container);
+      const details = document.createElement('div');
+      details.className = 'flex-1';
+      
+      const fileName = document.createElement('div');
+      fileName.className = 'text-sm font-medium group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-colors';
+      fileName.textContent = node.attrs.filename;
+      details.appendChild(fileName);
+
+      const fileSize = document.createElement('div');
+      fileSize.className = 'text-xs text-gray-500 dark:text-gray-400';
+      fileSize.textContent = formatFileSize(node.attrs.size);
+      details.appendChild(fileSize);
+
+      link.appendChild(details);
+
+      // Important: Append elements in the correct order
+      dom.appendChild(deleteButton);
+      dom.appendChild(link);
 
       return {
         dom,
         update: (updatedNode) => {
           if (updatedNode.type.name !== node.type.name) return false;
-          
-          filename.textContent = updatedNode.attrs.filename || '';
-          link.href = updatedNode.attrs.url || '#';
-          
+          fileName.textContent = updatedNode.attrs.filename;
+          fileSize.textContent = formatFileSize(updatedNode.attrs.size);
+          link.href = updatedNode.attrs.url;
           return true;
         },
       };
@@ -351,10 +506,20 @@ const MenuBar = ({ editor, onExport }) => {
     if (file && auth.currentUser) {
       try {
         const downloadURL = await uploadFile(file, auth.currentUser.uid);
+        
+        // Determine file type and create appropriate attachment
+        let type = 'file';
+        if (file.type.startsWith('video/')) type = 'video';
+        else if (file.type.startsWith('audio/')) type = 'audio';
+        else if (file.type.startsWith('image/')) type = 'image';
+        else if (file.type === 'application/pdf') type = 'pdf';
+        
         editor.chain().focus().setFileAttachment({ 
           filename: file.name,
           url: downloadURL,
-          size: file.size
+          size: file.size,
+          type: type,
+          mimeType: file.type
         }).run();
       } catch (error) {
         console.error('Error uploading file:', error);
@@ -595,6 +760,7 @@ const MenuBar = ({ editor, onExport }) => {
           ref={fileInputRef}
           type="file"
           onChange={handleFileUpload}
+          accept="video/*,audio/*,image/*,application/pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv"
           className="hidden"
         />
       </div>
@@ -933,35 +1099,46 @@ const TipTapEditor = ({ content, onChange, onExport }) => {
           return true;
         }
 
-        // Handle text paste
+        // Get clipboard data in different formats
         const text = event.clipboardData?.getData('text/plain');
         const html = event.clipboardData?.getData('text/html');
-
-        if (html) {
+        
+        // Check if it's tabular data (from Excel)
+        if (text && text.includes('\t')) {
           event.preventDefault();
-          view.dispatch(view.state.tr.replaceSelectionWith(
-            view.state.schema.text(html),
-            false
-          ));
+          
+          // Split into rows and columns
+          const rows = text.split(/[\n\r]+/).filter(row => row.trim());
+          const table = document.createElement('table');
+          table.className = 'min-w-full border-collapse border border-gray-300 dark:border-gray-600 my-4';
+          
+          rows.forEach((row, rowIndex) => {
+            const tr = document.createElement('tr');
+            tr.className = rowIndex === 0 
+              ? 'bg-gray-100 dark:bg-gray-700' 
+              : (rowIndex % 2 === 0 ? 'bg-white dark:bg-gray-800' : 'bg-gray-50 dark:bg-gray-900');
+            
+            const cells = row.split('\t');
+            cells.forEach((cell, cellIndex) => {
+              const td = document.createElement(rowIndex === 0 ? 'th' : 'td');
+              td.className = 'border border-gray-300 dark:border-gray-600 px-4 py-2 text-sm';
+              td.textContent = cell;
+              tr.appendChild(td);
+            });
+            
+            table.appendChild(tr);
+          });
+
+          // Insert the table at cursor position
+          const tableHtml = table.outerHTML;
+          editor.chain().focus().insertContent(tableHtml).run();
           return true;
         }
-
+        
+        // Handle regular text paste
         if (text) {
-          // Check if it's Markdown
-          const hasMarkdownSyntax = /[#*_`[\]()\\n\-+]/.test(text);
-          if (hasMarkdownSyntax) {
-            try {
-              event.preventDefault();
-              const renderedHtml = md.render(text);
-              editor?.commands.insertContent(renderedHtml);
-              return true;
-            } catch (error) {
-              console.error('Error parsing Markdown:', error);
-            }
-          }
-          
-          // Regular text paste
           event.preventDefault();
+          // Insert text as plain text without any formatting
           view.dispatch(view.state.tr.replaceSelectionWith(
             view.state.schema.text(text),
             false

@@ -9,7 +9,13 @@ Ez Note Manager is a web application designed to help users efficiently manage a
   - Code blocks with syntax highlighting
   - Task lists and checkboxes
   - Image uploads with Firebase Storage integration
-  - File attachments
+  - Enhanced file attachments:
+    - Prominent delete button for easy removal
+    - Files open in new tabs for better user experience
+    - Visual feedback on hover and interaction
+    - Support for various file types
+    - File size display and type-specific icons
+    - Secure file storage with Firebase
   - Links and highlights
   - Real-time content updates
 - **End-to-End Encryption**: Secure note content with AES-GCM encryption before saving to Firebase, with client-side encryption key management.
