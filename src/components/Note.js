@@ -181,12 +181,16 @@ const Note = ({ title, color, content, tags = [], onDelete, onArchive, onPin, is
       <h3 className="text-lg font-semibold text-center relative" style={{ left: '0rem' }}>{title}</h3>
       
       {/* Timestamps */}
-      <div className="flex justify-center gap-2 text-xs text-gray-600 dark:text-gray-400 mt-1 mb-2">
-        <span>{createdAt?.toDate().toLocaleDateString()}</span>
+      <div className="flex justify-center gap-2 text-sm font-medium mt-1 mb-2 px-2 py-1 rounded-full bg-black/10">
+        <span className="text-white" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.2)' }}>
+          {createdAt?.toDate().toLocaleDateString()}
+        </span>
         {updatedAt && updatedAt?.toDate() > createdAt?.toDate() && (
           <>
-            <span>•</span>
-            <span>Updated: {updatedAt.toDate().toLocaleDateString()}</span>
+            <span className="text-white" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.2)' }}>•</span>
+            <span className="text-white" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.2)' }}>
+              Updated: {updatedAt.toDate().toLocaleDateString()}
+            </span>
           </>
         )}
       </div>

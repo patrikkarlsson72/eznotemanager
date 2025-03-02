@@ -40,6 +40,11 @@ const NoteModal = ({
   
   // Initialize size with saved value or default
   const [size, setSize] = useState(() => {
+    // For new notes (no title and no content), always use default size
+    if (!initialTitle && !initialContent) {
+      return DEFAULT_SIZE;
+    }
+
     try {
       const savedSize = localStorage.getItem('noteModalSize');
       if (savedSize) {
@@ -57,6 +62,11 @@ const NoteModal = ({
   
   // Initialize position with saved value or default
   const [position, setPosition] = useState(() => {
+    // For new notes (no title and no content), always use center position
+    if (!initialTitle && !initialContent) {
+      return DEFAULT_POSITION;
+    }
+
     try {
       const savedPosition = localStorage.getItem('noteModalPosition');
       if (savedPosition) {

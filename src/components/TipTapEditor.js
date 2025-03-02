@@ -1099,53 +1099,6 @@ const TipTapEditor = ({ content, onChange, onExport }) => {
           return true;
         }
 
-        // Get clipboard data in different formats
-        const text = event.clipboardData?.getData('text/plain');
-        const html = event.clipboardData?.getData('text/html');
-        
-        // Check if it's tabular data (from Excel)
-        if (text && text.includes('\t')) {
-          event.preventDefault();
-          
-          // Split into rows and columns
-          const rows = text.split(/[\n\r]+/).filter(row => row.trim());
-          const table = document.createElement('table');
-          table.className = 'min-w-full border-collapse border border-gray-300 dark:border-gray-600 my-4';
-          
-          rows.forEach((row, rowIndex) => {
-            const tr = document.createElement('tr');
-            tr.className = rowIndex === 0 
-              ? 'bg-gray-100 dark:bg-gray-700' 
-              : (rowIndex % 2 === 0 ? 'bg-white dark:bg-gray-800' : 'bg-gray-50 dark:bg-gray-900');
-            
-            const cells = row.split('\t');
-            cells.forEach((cell, cellIndex) => {
-              const td = document.createElement(rowIndex === 0 ? 'th' : 'td');
-              td.className = 'border border-gray-300 dark:border-gray-600 px-4 py-2 text-sm';
-              td.textContent = cell;
-              tr.appendChild(td);
-            });
-            
-            table.appendChild(tr);
-          });
-
-          // Insert the table at cursor position
-          const tableHtml = table.outerHTML;
-          editor.chain().focus().insertContent(tableHtml).run();
-          return true;
-        }
-        
-        // Handle regular text paste
-        if (text) {
-          event.preventDefault();
-          // Insert text as plain text without any formatting
-          view.dispatch(view.state.tr.replaceSelectionWith(
-            view.state.schema.text(text),
-            false
-          ));
-          return true;
-        }
-
         return false;
       },
     },
