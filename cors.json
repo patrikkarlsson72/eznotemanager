@@ -1,0 +1,30 @@
+[
+  {
+    "origin": [
+      "http://localhost:3000",
+      "https://eznotemanager-95745.web.app",
+      "https://eznotemanagerpro.com",
+      "http://eznotemanagerpro.com",
+      "//eznotemanagerpro.com",
+      "eznotemanagerpro.com"
+    ],
+    "method": ["GET", "PUT", "POST", "DELETE", "HEAD", "OPTIONS"],
+    "maxAgeSeconds": 3600,
+    "responseHeader": [
+      "Content-Type",
+      "Authorization",
+      "Content-Length",
+      "User-Agent",
+      "X-Requested-With",
+      "Origin",
+      "Accept",
+      "x-goog-resumable",
+      "x-goog-*",
+      "x-firebase-*",
+      "accept-encoding",
+      "accept-language",
+      "access-control-request-headers",
+      "access-control-request-method"
+    ]
+  }
+]

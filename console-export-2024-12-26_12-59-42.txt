@@ -1,0 +1,205 @@
+Removing unpermitted intrinsics lockdown-install.js:1:52832
+Varningar om kakor 3
+Download the React DevTools for a better development experience: https://reactjs.org/link/react-devtools react-dom.development.js:29895
+Lagringsåtkomst beviljas automatiskt för ursprung “https://eznotemanager-95745.firebaseapp.com” på “http://localhost:3000”.
+Partitionerad kak- eller lagringsåtkomst tillhandahölls till "https://eznotemanager-95745.firebaseapp.com/__/auth/iframe?apiKey=AIzaSyAJt9QW45zTLthE3GkP2bppg1haDh9pZOo&appName=%5BDEFAULT%5D&v=10.14.1&eid=p&usegapi=1&jsh=m%3B%2F_%2Fscs%2Fabc-static%2F_%2Fjs%2Fk%3Dgapi.lb.sv.X6HqgANK6NU.O%2Fd%3D1%2Frs%3DAHpOoo9mItwkRvGIwBgZ2E_-WB77jf3I_Q%2Fm%3D__features__#id=I0_1735214296474&_gfid=I0_1735214296474&parent=http%3A%2F%2Flocalhost%3A3000&pfname=&rpctoken=39458924" eftersom den laddades i tredjepartssammanhang och partitionering av dynamiskt tillstånd är aktiverat.
+Removing unpermitted intrinsics lockdown-install.js:1:52832
+Setting up subscription for user: EMJEuNmU2HR3Ipg8Nxc4XeLUqw93 ContentArea.js:33
+Final filtered notes: 0 ContentArea.js:361
+Attempting to initialize user: EMJEuNmU2HR3Ipg8Nxc4XeLUqw93 App.js:109
+InstallTrigger är föråldrad och kommer att tas bort i framtiden. helpers.tsx:58
+Final filtered notes: 0 ContentArea.js:361
+Subscribing to notes for user: EMJEuNmU2HR3Ipg8Nxc4XeLUqw93 notes.js:123
+Received updated tags: 
+Array []
+App.js:42
+Received updated categories: 
+Array(5) [ {…}, {…}, {…}, {…}, {…} ]
+App.js:58
+Final filtered notes: 0 2 ContentArea.js:361
+Received snapshot with changes notes.js:141
+Processed notes: 0 notes.js:147
+Received notes update: 0 ContentArea.js:41
+Final filtered notes: 0 ContentArea.js:361
+Checking if user needs initialization: EMJEuNmU2HR3Ipg8Nxc4XeLUqw93 notes.js:374
+Creating new user document notes.js:383
+Received updated tags: 
+Array []
+App.js:42
+Received updated categories: 
+Array(5) [ {…}, {…}, {…}, {…}, {…} ]
+App.js:58
+Final filtered notes: 0 ContentArea.js:361
+Creating example notes notes.js:396
+Starting to create example notes for user: EMJEuNmU2HR3Ipg8Nxc4XeLUqw93 notes.js:269
+Adding note: 👋 Welcome to EzNoteManager! notes.js:319
+Received snapshot with changes notes.js:141
+Processed notes: 1 notes.js:147
+Received notes update: 1 ContentArea.js:41
+Current selected category: All Notes ContentArea.js:323
+All notes: 1 ContentArea.js:324
+Note 👋 Welcome to EzNoteManager!: checking All Notes condition: 
+Object { isArchived: undefined, matchesCategory: true }
+ContentArea.js:331
+Warning: Connect(Droppable): Support for defaultProps will be removed from memo components in a future major release. Use JavaScript default parameters instead.
+div
+div
+Provider@http://localhost:3000/static/js/bundle.js:125220:15
+App@http://localhost:3000/static/js/bundle.js:92721:19
+ErrorBoundary@http://localhost:3000/static/js/bundle.js:86934:35
+DragDropContext@http://localhost:3000/static/js/bundle.js:92845:19
+ContentArea@http://localhost:3000/static/js/bundle.js:325:21
+div
+div
+App@http://localhost:3000/static/js/bundle.js:53:98 react-dom.development.js:86
+Final filtered notes: 1 ContentArea.js:361
+- Note: 
+Object { id: "dKSxUsG0Voo48VWwIXWD", title: "👋 Welcome to EzNoteManager!", category: "Personal", isArchived: false, order: 1000 }
+ContentArea.js:363
+Note added successfully: dKSxUsG0Voo48VWwIXWD notes.js:49
+Received updated tags: 
+Array [ "welcome", "tutorial" ]
+App.js:42
+Received updated categories: 
+Array(5) [ {…}, {…}, {…}, {…}, {…} ]
+App.js:58
+Current selected category: All Notes ContentArea.js:323
+All notes: 1 ContentArea.js:324
+Note 👋 Welcome to EzNoteManager!: checking All Notes condition: 
+Object { isArchived: undefined, matchesCategory: true }
+ContentArea.js:331
+Final filtered notes: 1 ContentArea.js:361
+- Note: 
+Object { id: "dKSxUsG0Voo48VWwIXWD", title: "👋 Welcome to EzNoteManager!", category: "Personal", isArchived: false, order: 1000 }
+ContentArea.js:363
+Note added successfully: dKSxUsG0Voo48VWwIXWD notes.js:322
+Adding note: 🎨 Categories and Tags Demo notes.js:319
+Note added successfully: 82xhuX22ZpsAC3pmn78c notes.js:49
+Received updated tags: 
+Array(5) [ "welcome", "tutorial", "organization", "demo", "features" ]
+App.js:42
+Received updated categories: 
+Array(5) [ {…}, {…}, {…}, {…}, {…} ]
+App.js:58
+Current selected category: All Notes ContentArea.js:323
+All notes: 1 ContentArea.js:324
+Note 👋 Welcome to EzNoteManager!: checking All Notes condition: 
+Object { isArchived: undefined, matchesCategory: true }
+ContentArea.js:331
+Final filtered notes: 1 ContentArea.js:361
+- Note: 
+Object { id: "dKSxUsG0Voo48VWwIXWD", title: "👋 Welcome to EzNoteManager!", category: "Personal", isArchived: false, order: 1000 }
+ContentArea.js:363
+Note added successfully: 82xhuX22ZpsAC3pmn78c notes.js:322
+Adding note: 💡 Pro Tips notes.js:319
+Received snapshot with changes notes.js:141
+Processed notes: 2 notes.js:147
+Received notes update: 2 ContentArea.js:41
+Current selected category: All Notes ContentArea.js:323
+All notes: 2 ContentArea.js:324
+Note 👋 Welcome to EzNoteManager!: checking All Notes condition: 
+Object { isArchived: undefined, matchesCategory: true }
+ContentArea.js:331
+Current selected category: All Notes ContentArea.js:323
+All notes: 2 ContentArea.js:324
+Note 👋 Welcome to EzNoteManager!: checking All Notes condition: 
+Object { isArchived: undefined, matchesCategory: true }
+ContentArea.js:331
+Final filtered notes: 2 ContentArea.js:361
+- Note: 
+Object { id: "dKSxUsG0Voo48VWwIXWD", title: "👋 Welcome to EzNoteManager!", category: "Personal", isArchived: false, order: 1000 }
+ContentArea.js:363
+- Note: 
+Object { id: "SNuiZN6wzKzsBjamu78H", title: "👋 Welcome to EzNoteManager!", category: "Personal", isArchived: false, order: 2000 }
+ContentArea.js:363
+Note added successfully: xzDB1rLx2VwX9xRTpLBX notes.js:49
+Received updated tags: 
+Array(6) [ "welcome", "tutorial", "organization", "demo", "features", "tips" ]
+App.js:42
+Received updated categories: 
+Array(5) [ {…}, {…}, {…}, {…}, {…} ]
+App.js:58
+Current selected category: All Notes ContentArea.js:323
+All notes: 2 ContentArea.js:324
+Note 👋 Welcome to EzNoteManager!: checking All Notes condition: 
+Object { isArchived: undefined, matchesCategory: true }
+ContentArea.js:331
+Current selected category: All Notes ContentArea.js:323
+All notes: 2 ContentArea.js:324
+Note 👋 Welcome to EzNoteManager!: checking All Notes condition: 
+Object { isArchived: undefined, matchesCategory: true }
+ContentArea.js:331
+Final filtered notes: 2 ContentArea.js:361
+- Note: 
+Object { id: "dKSxUsG0Voo48VWwIXWD", title: "👋 Welcome to EzNoteManager!", category: "Personal", isArchived: false, order: 1000 }
+ContentArea.js:363
+- Note: 
+Object { id: "SNuiZN6wzKzsBjamu78H", title: "👋 Welcome to EzNoteManager!", category: "Personal", isArchived: false, order: 2000 }
+ContentArea.js:363
+Note added successfully: xzDB1rLx2VwX9xRTpLBX notes.js:322
+All example notes created successfully notes.js:334
+User tags updated with example tags notes.js:339
+User initialization complete notes.js:398
+Current selected category: All Notes ContentArea.js:323
+All notes: 2 ContentArea.js:324
+Note 👋 Welcome to EzNoteManager!: checking All Notes condition: 
+Object { isArchived: undefined, matchesCategory: true }
+ContentArea.js:331
+Current selected category: All Notes ContentArea.js:323
+All notes: 2 ContentArea.js:324
+Note 👋 Welcome to EzNoteManager!: checking All Notes condition: 
+Object { isArchived: undefined, matchesCategory: true }
+ContentArea.js:331
+Final filtered notes: 2 ContentArea.js:361
+- Note: 
+Object { id: "dKSxUsG0Voo48VWwIXWD", title: "👋 Welcome to EzNoteManager!", category: "Personal", isArchived: false, order: 1000 }
+ContentArea.js:363
+- Note: 
+Object { id: "SNuiZN6wzKzsBjamu78H", title: "👋 Welcome to EzNoteManager!", category: "Personal", isArchived: false, order: 2000 }
+ContentArea.js:363
+Received updated tags: 
+Array(5) [ "welcome", "tutorial", "organization", "demo", "features" ]
+App.js:42
+Received updated categories: 
+Array(5) [ {…}, {…}, {…}, {…}, {…} ]
+App.js:58
+Current selected category: All Notes ContentArea.js:323
+All notes: 2 ContentArea.js:324
+Note 👋 Welcome to EzNoteManager!: checking All Notes condition: 
+Object { isArchived: undefined, matchesCategory: true }
+ContentArea.js:331
+Current selected category: All Notes ContentArea.js:323
+All notes: 2 ContentArea.js:324
+Note 👋 Welcome to EzNoteManager!: checking All Notes condition: 
+Object { isArchived: undefined, matchesCategory: true }
+ContentArea.js:331
+Final filtered notes: 2 ContentArea.js:361
+- Note: 
+Object { id: "dKSxUsG0Voo48VWwIXWD", title: "👋 Welcome to EzNoteManager!", category: "Personal", isArchived: false, order: 1000 }
+ContentArea.js:363
+- Note: 
+Object { id: "SNuiZN6wzKzsBjamu78H", title: "👋 Welcome to EzNoteManager!", category: "Personal", isArchived: false, order: 2000 }
+ContentArea.js:363
+Received updated tags: 
+Array(6) [ "welcome", "tutorial", "organization", "demo", "features", "tips" ]
+App.js:42
+Received updated categories: 
+Array(5) [ {…}, {…}, {…}, {…}, {…} ]
+App.js:58
+Current selected category: All Notes ContentArea.js:323
+All notes: 2 ContentArea.js:324
+Note 👋 Welcome to EzNoteManager!: checking All Notes condition: 
+Object { isArchived: undefined, matchesCategory: true }
+ContentArea.js:331
+Current selected category: All Notes ContentArea.js:323
+All notes: 2 ContentArea.js:324
+Note 👋 Welcome to EzNoteManager!: checking All Notes condition: 
+Object { isArchived: undefined, matchesCategory: true }
+ContentArea.js:331
+Final filtered notes: 2 ContentArea.js:361
+- Note: 
+Object { id: "dKSxUsG0Voo48VWwIXWD", title: "👋 Welcome to EzNoteManager!", category: "Personal", isArchived: false, order: 1000 }
+ContentArea.js:363
+- Note: 
+Object { id: "SNuiZN6wzKzsBjamu78H", title: "👋 Welcome to EzNoteManager!", category: "Personal", isArchived: false, order: 2000 }
+ContentArea.js:363

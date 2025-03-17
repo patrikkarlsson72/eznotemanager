@@ -1,0 +1,13 @@
+/* src/components/CreateNote.css */
+.create-note {
+    width: 150px;
+    height: 150px;
+    background-color: #fdd835;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+    font-size: 18px;
+    cursor: pointer;
+  }
+  

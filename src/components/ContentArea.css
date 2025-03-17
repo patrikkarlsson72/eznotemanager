@@ -1,0 +1,70 @@
+/* src/components/ContentArea.css */
+.content-area {
+  width: 100%;
+  min-height: 100vh;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.notes-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 1600px;
+  width: 100%;
+  padding: 0 10px;
+}
+
+.notes-row {
+  display: flex;
+  gap: 26px;
+  min-height: 340px;
+  max-height: 340px;
+  width: 100%;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.notes-row.drop-target {
+  background: rgba(59, 130, 246, 0.1);
+  border-radius: 8px;
+}
+
+.note-wrapper {
+  width: calc(25% - 20px);
+  min-width: 300px;
+  max-width: 380px;
+  flex: 1 1 300px;
+  display: flex;
+  height: 340px;
+}
+
+.note-wrapper > div {
+  flex: 1;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Improve placeholder behavior */
+[data-rbd-placeholder-context-id] {
+  width: calc(25% - 20px) !important;
+  min-width: 300px !important;
+  max-width: 380px !important;
+  height: 340px !important;
+  margin: 0 !important;
+  opacity: 0.2;
+  background: rgba(59, 130, 246, 0.2);
+  border-radius: 12px;
+  border: 2px dashed #3b82f6;
+}
+
+/* Ensure dragged item maintains its size */
+[data-rbd-dragging-state-context-id] {
+  width: 100% !important;
+  height: 340px !important;
+  transform: rotate(2deg) !important;
+}

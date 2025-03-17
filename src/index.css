@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* Custom class for multi-line text truncation */
+.text-preview {
+  @apply overflow-hidden text-ellipsis; /* Tailwind utilities */
+  display: -webkit-box;
+  -webkit-line-clamp: 6; /* Limit to 3 lines */
+  -webkit-box-orient: vertical;
+}
+
+/* Global link styling */
+a {
+  @apply text-blue-500 underline;
+}
+
+a:hover {
+  @apply text-orange-500 no-underline;
+}
+
+
