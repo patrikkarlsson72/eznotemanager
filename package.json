@@ -16,7 +16,7 @@
     "@testing-library/react": "^14.2.1",
     "@testing-library/user-event": "^14.5.2",
     "@tiptap/extension-code-block": "^2.2.4",
-    "@tiptap/extension-highlight": "^2.2.4",
+    "@tiptap/extension-highlight": "^2.11.5",
     "@tiptap/extension-image": "^2.2.4",
     "@tiptap/extension-link": "^2.2.4",
     "@tiptap/extension-placeholder": "^2.2.4",
