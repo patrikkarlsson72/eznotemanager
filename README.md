@@ -32,6 +32,39 @@ Visit the live application at [eznotemanagerpro.com](https://eznotemanagerpro.co
 - ⚡ Optimized performance
 - 💾 Automatic data backup
 
+## Security Measures
+
+### API and Authentication
+- Firebase API key restrictions implemented for authorized domains:
+  - Local development (`localhost:3000`)
+  - Firebase hosting domains (`eznotemanager-95745.firebaseapp.com`, `eznotemanager-95745.web.app`)
+  - Production domains (`eznotemanagerpro.com`, `www.eznotemanagerpro.com`)
+- Environment variables used for all sensitive configuration
+- No hardcoded credentials in the codebase
+
+### Environment Configuration
+1. Copy `.env.example` to `.env`
+2. Add your Firebase configuration:
+   ```
+   REACT_APP_FIREBASE_API_KEY=your_api_key
+   REACT_APP_FIREBASE_AUTH_DOMAIN=your_domain
+   REACT_APP_FIREBASE_PROJECT_ID=your_project_id
+   REACT_APP_FIREBASE_STORAGE_BUCKET=your_storage_bucket
+   REACT_APP_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+   REACT_APP_FIREBASE_APP_ID=your_app_id
+   ```
+
+### Security Best Practices
+- `.env` files excluded from version control
+- API access restricted to specific services:
+  - Firebase Management API
+  - Identity Toolkit API
+  - Cloud Firestore API
+  - Cloud Storage for Firebase API
+- Firebase security rules implemented
+- Regular security audits performed
+- Dependencies kept up to date
+
 ## Technology Stack
 
 - **Frontend**: React.js, TailwindCSS
