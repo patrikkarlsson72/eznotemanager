@@ -139,3 +139,11 @@ fileupload*.log
 imagefeature.log
 shortcut*.log
 drag*.log
+
+# Fix documentation
+FIXES.md
+*FIXES.md
+
+# Console exports and logs
+console-export-*.txt
+*console-export*.txt
