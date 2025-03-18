@@ -114,3 +114,9 @@ logs/
 log/
 tmp/
 temp/
+
+# Private documentation
+/docs/
+TODO.md
+ROADMAP.md
+*-implementation-plan.md
