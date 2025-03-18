@@ -37,8 +37,8 @@ Visit the live application at [eznotemanagerpro.com](https://eznotemanagerpro.co
 ### API and Authentication
 - Firebase API key restrictions implemented for authorized domains:
   - Local development (`localhost:3000`)
-  - Firebase hosting domains (`eznotemanager-95745.firebaseapp.com`, `eznotemanager-95745.web.app`)
-  - Production domains (`eznotemanagerpro.com`, `www.eznotemanagerpro.com`)
+  - Firebase hosting domains (configured in Firebase Console)
+  - Production domain (`eznotemanagerpro.com`)
 - Environment variables used for all sensitive configuration
 - No hardcoded credentials in the codebase
 
