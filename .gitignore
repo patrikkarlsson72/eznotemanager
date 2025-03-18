@@ -117,6 +117,25 @@ temp/
 
 # Private documentation
 /docs/
+/documentation/
 TODO.md
 ROADMAP.md
 *-implementation-plan.md
+features.md
+game-plan.md
+example-notes.md
+
+# Logs and debugging
+/logs/
+*.log
+localhost-*.log
+*debug.log*
+storage*.log
+fileexport*.log
+encryption*.log
+pagi*.log
+importfiles*.log
+fileupload*.log
+imagefeature.log
+shortcut*.log
+drag*.log
