@@ -1,0 +1,13 @@
+---
+description: Best practices for React.js applications
+globs: **/*.{ts,tsx,js,jsx}
+---
+- Use functional components with hooks instead of class components
+
+- Implement proper memoization with useMemo and useCallback
+
+- Utilize React.memo for pure components to prevent unnecessary re-renders
+
+- Use useEffect for side effects and clean up resources properly
+
+- Implement error boundaries to catch and handle errors gracefully

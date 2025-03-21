@@ -25,17 +25,29 @@ service cloud.firestore {
       );
     }
 
+    // Helper function to validate encrypted content format
+    function isValidEncryptedContent(content) {
+      return content is string && 
+        (content.matches('^encrypted:.*') || !content.matches('^encrypted:'));
+    }
+
     // Notes collection rules
     match /notes/{noteId} {
       // Allow reading if authenticated and owner
       allow read: if isUserOwner(resource.data.userId);
       
-      // Allow creation if authenticated
+      // Allow creation if authenticated and content format is valid
       allow create: if isAuthenticated() && 
-        request.resource.data.userId == request.auth.uid;
+        request.resource.data.userId == request.auth.uid &&
+        isValidEncryptedContent(request.resource.data.content);
       
-      // Allow updates and deletes if authenticated, owner, and (email verified or non-email auth)
-      allow update, delete: if isUserOwner(resource.data.userId) && 
+      // Allow updates if authenticated, owner, verified, and content format is valid
+      allow update: if isUserOwner(resource.data.userId) && 
+        canPerformSensitiveOperations() &&
+        isValidEncryptedContent(request.resource.data.content);
+
+      // Allow deletion if authenticated and owner
+      allow delete: if isUserOwner(resource.data.userId) && 
         canPerformSensitiveOperations();
     }
 
@@ -45,7 +57,15 @@ service cloud.firestore {
       allow read: if isUserOwner(userId);
       
       // Allow creation and updates if authenticated and owner
-      allow create, update: if isUserOwner(userId);
+      allow create, update: if isUserOwner(userId) && 
+        // For encryption key updates, require sensitive operations check
+        (
+          (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['encryptedKey'])) ||
+          canPerformSensitiveOperations()
+        ) &&
+        // Validate encryptedKey format if it exists
+        (!request.resource.data.keys().hasAny(['encryptedKey']) || 
+          request.resource.data.encryptedKey is string);
       
       // Prevent deletion of user documents
       allow delete: if false;

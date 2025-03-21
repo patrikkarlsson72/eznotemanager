@@ -1,0 +1,10 @@
+---
+description: General rrules
+globs: 
+---
+Start all chats with 🤖
+
+
+## Commit Messages
+- When you finish applying changes, the last line of the message should "Don't forget to commit!" and give me a commit command as well.
+- Always prefix Commit Messages in the following way. No exceptions!

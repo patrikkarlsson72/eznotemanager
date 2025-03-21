@@ -31,6 +31,7 @@ import LandingPage from './components/LandingPage';
 import WelcomeGuide from './components/WelcomeGuide';
 import KeyboardShortcuts from './components/KeyboardShortcuts';
 import ImportModal from './components/ImportModal';
+import CloudKeyModal from './components/CloudKeyModal';
 
 // Styles
 import './App.css';
@@ -589,6 +590,7 @@ function App() {
           onRequestClose={() => setShowImportModal(false)}
           onImport={handleImport}
         />
+        <CloudKeyModal />
       </div>
     </EncryptionProvider>
   );

@@ -23,6 +23,8 @@ const Note = ({ title, color, content, tags = [], onDelete, onArchive, onPin, is
           const decrypted = await decryptData(encryptedContent, encryptionKey);
           if (decrypted) {
             setDecryptedContent(decrypted);
+          } else {
+            setDecryptedContent(null);
           }
         } catch (error) {
           console.error('Error decrypting content:', error);
@@ -30,7 +32,11 @@ const Note = ({ title, color, content, tags = [], onDelete, onArchive, onPin, is
         } finally {
           setIsDecrypting(false);
         }
+      } else if (content?.startsWith('encrypted:')) {
+        // Content is encrypted but we don't have the key
+        setDecryptedContent(null);
       } else {
+        // Content is not encrypted
         setDecryptedContent(content);
       }
     };
@@ -117,7 +123,7 @@ const Note = ({ title, color, content, tags = [], onDelete, onArchive, onPin, is
     }
 
     // Use decrypted content if available, otherwise use original content
-    const contentToRender = decryptedContent || content;
+    const contentToRender = content?.startsWith('encrypted:') ? decryptedContent : content;
     if (!contentToRender) return { __html: '' };
 
     const div = document.createElement('div');
@@ -197,8 +203,11 @@ const Note = ({ title, color, content, tags = [], onDelete, onArchive, onPin, is
 
       {/* Encryption Indicator */}
       {content?.startsWith('encrypted:') && (
-        <div className="absolute top-1 right-8" title="Encrypted note">
-          <FontAwesomeIcon icon={faLock} className="text-gray-600" />
+        <div className="absolute top-1 right-8" title={decryptedContent && decryptedContent !== 'Error: Failed to decrypt content. Please check your encryption settings.' ? "Note decrypted" : "Note encrypted"}>
+          <FontAwesomeIcon 
+            icon={faLock} 
+            className={`${decryptedContent && decryptedContent !== 'Error: Failed to decrypt content. Please check your encryption settings.' ? 'text-green-500' : 'text-yellow-500'} hover:opacity-80`} 
+          />
         </div>
       )}
 

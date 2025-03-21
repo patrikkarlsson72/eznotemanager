@@ -1,0 +1,13 @@
+---
+description: Best practices for using Firebase in web applications
+globs: **/*.{ts,tsx,js,jsx}
+---
+- Use Firebase Authentication for user management and security
+
+- Implement Firebase Firestore for real-time data synchronization
+
+- Use Firebase Storage for file uploads and management
+
+- Implement proper security rules to protect your data
+
+- Use Firebase Functions for server-side logic and to keep sensitive operations off the client-side

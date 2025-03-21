@@ -139,6 +139,7 @@ fileupload*.log
 imagefeature.log
 shortcut*.log
 drag*.log
+.cursorrules
 
 # Fix documentation
 FIXES.md

@@ -1,0 +1,14 @@
+---
+description: Best practices for using Tailwind CSS in React applications
+globs: **/*.{ts,tsx,js,jsx,css}
+---
+- Use utility-first approach for styling components
+
+- Create custom components for frequently used UI patterns
+
+- Utilize responsive design classes for mobile-first development
+
+- Use @apply directive to create custom utility classes
+
+- Implement dark mode support using Tailwind's built-in classes
+
